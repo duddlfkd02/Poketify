@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./styles/reset.css";
+import "../styles/reset.css";
+
+import SearchBar from "@/components/SearchBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <header className="p-6 shadow-md">
+          <SearchBar />
+        </header>
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
