@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { FormType } from "@/types/FormType";
+import browserClient from "@/supabase/client";
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
@@ -14,11 +15,22 @@ const initialData = {
 };
 
 type Props = {
-  loadData: FormType;
+  params?: string;
+  isEdit?: boolean;
 };
 
-const Form = ({ loadData }: Props) => {
-  const [formData, setFormData] = useState<FormType>(loadData ?? initialData);
+const Form = ({ params, isEdit }: Props) => {
+  const [formData, setFormData] = useState<FormType>(initialData);
+
+  const fetchData = async () => {
+    const { data } = await browserClient.from("posts").select().eq("id", params);
+
+    setFormData(data ? data[0] : initialData);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -37,8 +49,25 @@ const Form = ({ loadData }: Props) => {
     });
   };
 
-  const onAddClick = async () => {
-    await supabase.from("posts").insert(formData);
+  const writeHandler = async () => {
+    const data = await supabase.from("posts").insert(formData);
+    console.log("abc", data);
+  };
+
+  const editHandler = async () => {
+    await supabase
+      .from("posts")
+      .update({ ...formData })
+      .eq("id", params)
+      .select();
+  };
+
+  const onSubmit = () => {
+    if (isEdit) {
+      editHandler();
+    } else {
+      writeHandler();
+    }
   };
 
   return (
@@ -47,12 +76,12 @@ const Form = ({ loadData }: Props) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          onAddClick();
+          onSubmit();
         }}
       >
         <div>
           <label htmlFor="title">제목</label>
-          <input id="title" name="title" type="text" onChange={(e) => changeInput(e)} value={formData.title} />
+          <input id="title" name="title" type="text" onChange={(e) => changeInput(e)} value={formData?.title} />
         </div>
 
         <div>
@@ -62,13 +91,13 @@ const Form = ({ loadData }: Props) => {
             name="playlist_id"
             type="text"
             onChange={(e) => changeInput(e)}
-            value={formData.playlist_id}
+            value={formData?.playlist_id}
           />
         </div>
 
         <div>
           <label htmlFor="content">내용</label>
-          <input id="content" name="content" type="text" onChange={(e) => changeInput(e)} value={formData.content} />
+          <input id="content" name="content" type="text" onChange={(e) => changeInput(e)} value={formData?.content} />
         </div>
 
         <button type="submit">완료</button>
