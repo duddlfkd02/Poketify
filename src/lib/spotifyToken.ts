@@ -36,14 +36,17 @@ export async function getAccessToken() {
 }
 
 // Spotify API에서 검색 요청
-export async function searchTracks(query: string) {
+export async function searchTracks(query: string, offset: number = 0, limit: number = 20) {
   const token = await getAccessToken();
-  const response = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`
+  const response = await fetch(
+    `https://api.spotify.com/v1/search?q=${query}&type=track&limit=${limit}&offset=${offset}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     }
-  });
+  );
 
   if (!response.ok) {
     throw new Error(`Spotify API 요청 실패: ${response.statusText}`);
