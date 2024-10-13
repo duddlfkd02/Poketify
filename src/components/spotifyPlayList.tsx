@@ -8,7 +8,7 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 export default function SpotifyPlaylist() {
   const [tracks, setTracks] = useState<SpotifyTrack[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 5; // 한 번에 보여줄 항목 수
 
   useEffect(() => {
     const fetchSpotifyData = async () => {
@@ -35,7 +35,9 @@ export default function SpotifyPlaylist() {
 
   return (
     <div className="relative">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-5 gap-4">
+        {" "}
+        {/* 모든 화면에서 5개 열로 고정 */}
         {tracks.slice(currentIndex, currentIndex + itemsPerPage).map((item) => (
           <div key={crypto.randomUUID()} className="flex flex-col relative h-64">
             <img src={item.track.album.images[0].url} alt={item.track.name} className="rounded w-full h-auto" />
