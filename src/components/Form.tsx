@@ -42,7 +42,7 @@ const Form = ({ params, isEdit }: Props) => {
 
   const loginTest = async () => {
     await supabase.auth.signInWithOAuth({
-      provider: "github",
+      provider: "spotify",
       options: {
         redirectTo: `http://localhost:3000/community/write`
       }
