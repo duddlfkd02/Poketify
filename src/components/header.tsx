@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   return (
@@ -10,6 +11,9 @@ const Header = () => {
           </Link>
         </div>
 
+        <div>
+          <SearchBar />
+        </div>
         <nav>
           <ul className="flex space-x-6">
             <li>
