@@ -6,7 +6,6 @@ import { FeaturedPlaylistsResponse, SpotifyFeatured } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 export default function FeaturedPlaylists() {
-  // 상태 정의
   const [featuredPlaylists, setFeaturedPlaylists] = useState<SpotifyFeatured[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4; // 한 번에 보여줄 항목 수
@@ -39,7 +38,6 @@ export default function FeaturedPlaylists() {
 
   return (
     <div className="relative mb-8">
-      {/* 그리드로 플레이리스트 표시 */}
       <div className="grid grid-cols-4 gap-4">
         {featuredPlaylists.slice(currentIndex, currentIndex + itemsPerPage).map((playlist) => (
           <div key={playlist.id} className="flex flex-col">
