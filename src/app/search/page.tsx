@@ -2,16 +2,19 @@
 
 import { SearchTrack } from "@/types/search"; // 타입스크립트
 import { searchTracks } from "@/lib/spotifyToken"; // 토큰
-
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Pagination from "@/components/Pagination";
 import Image from "next/image";
 
-export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get("query") || "";
+export default function SearchPage({
+  searchParams
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const query = Array.isArray(searchParams?.query) ? searchParams.query[0] : searchParams?.query || "";
+  const pageQuery = searchParams?.page ? Number(searchParams.page) : 1;
+
   const [results, setResults] = useState<SearchTrack[]>([]);
 
   const [totalPages, setTotalPages] = useState(1);
@@ -46,15 +49,18 @@ export default function SearchPage() {
   useEffect(() => {
     if (query) {
       setResults([]);
-      setCurrentPage(1);
+      setCurrentPage(pageQuery);
       fetchTotalPages();
-      fetchData(1);
+      fetchData(pageQuery);
     }
-  }, [query]);
+  }, [query, pageQuery]);
 
   // 페이지 이동 함수
   const movePage = (page: number) => {
     setCurrentPage(page);
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", page.toString());
+    window.history.pushState({}, "", url.toString());
     fetchData(page);
   };
 
