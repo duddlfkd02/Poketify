@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-// import { SearchTrack, SearchTrackResponse } from "@/types/search";
 
 export default function SearchBar() {
   const [query, setQuery] = useState<string>("");
-  // const [results, setResults] = useState<SearchTrack[]>([]);
   const router = useRouter();
   const pathname = usePathname(); // 현재 경로 확인
 
@@ -21,12 +19,6 @@ export default function SearchBar() {
     if (!query.trim()) {
       alert("검색어를 입력해주세요");
       return;
-    }
-
-    if (pathname === "/search") {
-      router.push(`/search?query=${query}`);
-    } else {
-      router.push(`/search?query=${query}`);
     }
   };
 
