@@ -2,7 +2,7 @@ import { fetchSongsByPlaylist } from "@/utils/playlistApi";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Image from "next/image";
-import { TrackList } from "@/types/playlist";
+import { PlaylistData, TrackList } from "@/types/playlist";
 
 interface SongListProps {
   playlistId: string | null;
@@ -13,7 +13,7 @@ const SongList = ({ playlistId }: SongListProps) => {
     data: playlistData,
     isLoading,
     error
-  } = useQuery<{ tracks: { items: TrackList[] } }>({
+  } = useQuery<PlaylistData>({
     queryKey: ["songList", playlistId],
     queryFn: () => fetchSongsByPlaylist(playlistId!),
     enabled: !!playlistId
@@ -34,8 +34,8 @@ const SongList = ({ playlistId }: SongListProps) => {
   }
 
   return (
-    <div className="bg-blue-50 p-4 h-[85h]">
-      <h3 className="text-center font-extrabold text-[1.5rem] mb-4">SONG LIST</h3>
+    <div className="bg-blue-50 p-4 h-[85vh]">
+      <h3 className="text-center font-extrabold text-[1.5rem] mb-4">{playlistData.name}</h3>
       <ul className="max-h-[80vh] overflow-y-auto ">
         {playlistData.tracks.items.map((song) => (
           <li key={song.track.id} className="flex items-center space-x-4 mb-2">

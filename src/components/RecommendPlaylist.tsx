@@ -55,7 +55,7 @@ const RecommendPlaylist = ({ onPlaylistSelect }: RecommendPlaylistProps) => {
           이전
         </button>
         <div className="flex gap-4 overflow-hidden w-full justify-center">
-          <ul className="flex list-none gap-4 justify-start">
+          <ul className="w-[90%] flex list-none gap-4 justify-start">
             {playlists.items.map((playlist) => (
               <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer">
                 <PlaylistCard playlist={playlist} />

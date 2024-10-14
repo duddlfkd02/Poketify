@@ -13,7 +13,7 @@ export const fetchSongsByPlaylist = async (playlistId: string) => {
       Authorization: `Bearer ${accessToken}`
     }
   });
-
+  console.log(res.data);
   return res.data;
 };
 

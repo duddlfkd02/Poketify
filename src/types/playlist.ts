@@ -29,14 +29,24 @@ export interface AlbumList {
     width: number;
   }>;
 }
+
+export interface Track {
+  id: string;
+  name: string;
+  album: AlbumList;
+  artists: ArtistList[];
+  external_urls: {
+    spotify: string;
+  };
+}
+
 export interface TrackList {
-  track: {
-    id: string;
-    name: string;
-    album: AlbumList;
-    artists: ArtistList[];
-    external_urls: {
-      spotify: string;
-    };
+  track: Track;
+}
+
+export interface PlaylistData {
+  name: string;
+  tracks: {
+    items: TrackList[];
   };
 }

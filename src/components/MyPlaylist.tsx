@@ -76,7 +76,7 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
           className="flex gap-4 p-2 overflow-x-auto scroll-smooth 
            w-full justify-center"
         >
-          <ul className="w-full list-none flex justify-start gap-4">
+          <ul className="w-[90%] list-none flex justify-start gap-4">
             {myplaylist.items.map((playlist) => (
               <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer">
                 <PlaylistCard playlist={playlist} />
