@@ -1,4 +1,4 @@
-export interface SpotifyTrack {
+export interface SpotifyNewTrack {
   track: {
     name: string;
     album: {
@@ -8,6 +8,18 @@ export interface SpotifyTrack {
   };
 }
 
-export interface SpotifyPlaylistResponse {
-  items: SpotifyTrack[];
+export interface SpotifyNewlistResponse {
+  items: SpotifyNewTrack[];
+}
+
+export interface SpotifyFeatured {
+  id: string;
+  name: string;
+  images: Array<{ url: string }>;
+}
+
+export interface FeaturedPlaylistsResponse {
+  playlists: {
+    items: SpotifyFeatured[];
+  };
 }

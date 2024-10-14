@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getSpotifyToken, getSpotifyPlaylistItems } from "@/lib/spotify";
-import { SpotifyTrack } from "@/types/spotify";
+import { getSpotifyToken, getSpotifyNewlistItems } from "@/lib/spotify";
+import { SpotifyNewTrack } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
-export default function SpotifyPlaylist() {
-  const [tracks, setTracks] = useState<SpotifyTrack[]>([]);
+export default function SpotifyNewlist() {
+  const [tracks, setTracks] = useState<SpotifyNewTrack[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 5; // 한 번에 보여줄 항목 수
 
@@ -14,9 +14,8 @@ export default function SpotifyPlaylist() {
     const fetchSpotifyData = async () => {
       try {
         const token = await getSpotifyToken();
-        const playlistData = await getSpotifyPlaylistItems(token);
+        const playlistData = await getSpotifyNewlistItems(token);
         setTracks(playlistData.items);
-        console.log("get =>", playlistData);
       } catch (error) {
         console.error("Error fetching Spotify data:", error);
       }
@@ -34,22 +33,20 @@ export default function SpotifyPlaylist() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative mb-8">
       <div className="grid grid-cols-5 gap-4">
-        {" "}
-        {/* 모든 화면에서 5개 열로 고정 */}
         {tracks.slice(currentIndex, currentIndex + itemsPerPage).map((item) => (
           <div key={crypto.randomUUID()} className="flex flex-col relative h-64">
             <img src={item.track.album.images[0].url} alt={item.track.name} className="rounded w-full h-auto" />
             <p className="mt-5 text-left">{item.track.name}</p>
-            <p className="text-left text-sm text-gray-400">
+            <p className="text-left text-sm text-gray-400 mt-1">
               {item.track.artists.map((artist) => artist.name).join(", ")}
             </p>
           </div>
         ))}
       </div>
 
-      {/* 이전 버튼 */}
+      {/* 왼쪽 버튼 */}
       {currentIndex > 0 && (
         <button
           onClick={handlePrev}
@@ -59,7 +56,7 @@ export default function SpotifyPlaylist() {
         </button>
       )}
 
-      {/* 다음 버튼 */}
+      {/* 오른쪽 버튼 */}
       {currentIndex + itemsPerPage < tracks.length && (
         <button
           onClick={handleNext}
