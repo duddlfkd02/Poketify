@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getSpotifyToken, getFeaturedPlaylists } from "@/lib/spotify";
+import { getAccessToken, getFeaturedPlaylists } from "@/lib/spotifyToken";
 import { FeaturedPlaylistsResponse, SpotifyFeatured } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
@@ -13,9 +13,9 @@ export default function FeaturedPlaylists() {
   useEffect(() => {
     const fetchSpotifyData = async () => {
       try {
-        const token = await getSpotifyToken();
-        const featuredData: FeaturedPlaylistsResponse = await getFeaturedPlaylists(token);
-        setFeaturedPlaylists(featuredData.playlists.items);
+        const token = await getAccessToken();
+        const featuredData: FeaturedPlaylistsResponse = await getFeaturedPlaylists(token as string);
+        setFeaturedPlaylists(featuredData.playlists.items); // 가져온 데이터 상태에 저장
       } catch (error) {
         console.error("Error fetching featured playlists:", error);
       }
