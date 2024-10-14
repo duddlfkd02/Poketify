@@ -14,7 +14,8 @@ const nextConfig = {
         protocol: "https",
         hostname: "mosaic.scdn.co"
       }
-    ]
+    ],
+    domains: ["i.scdn.co"]
   }
 };
 
