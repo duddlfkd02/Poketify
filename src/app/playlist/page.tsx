@@ -11,13 +11,14 @@ const PlaylistPage = () => {
   useEffect(() => {
     recommandPlaylist();
   }, []);
+
   return (
-    <main className="w-[100%] h-[100vh] mx-auto  bg-primary flex justify-center items-center">
-      <section className="w-[95%] h-[95vh] mx-auto flex justify-center items-center gap-8">
-        <article className="w-[30%] h-[95%] bg-white p-7 ">
+    <main className="w-full h-screen mx-auto flex flex-col justify-center items-center ">
+      <section className="w-[95%] h-[90%] mx-auto flex gap-8">
+        <article className="w-[30%] h-full bg-white p-7 flex-grow">
           <SongList />
         </article>
-        <article className="w-[70%] h-[95%] bg-white flex flex-col justify-between p-7">
+        <article className="w-[70%] h-full bg-white p-7 flex flex-col justify-between flex-grow">
           <div>
             <SearchSong />
           </div>
