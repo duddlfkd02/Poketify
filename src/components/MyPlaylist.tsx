@@ -33,7 +33,7 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
     <div className="flex flex-col gap-8 pt-4 bg-blue-50 p-4 rounded">
       <h3 className="font-extrabold text-playlist-h3 text-left">내 플레이리스트</h3>
       <div>
-        {myplaylist.items.map((playlist) => (
+        {myplaylist.map((playlist) => (
           <div key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)}>
             <PlaylistCard playlist={playlist} />
           </div>
