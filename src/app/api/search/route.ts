@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { searchTracks } from "@/lib/spotifyToken";
 
 // GET 요청 처리
-export async function GET(req: Request) {
+export async function GET(req: Request): Promise<NextResponse> {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get("query");
 
