@@ -1,17 +1,12 @@
 import { fetchPlaylist } from "@/utils/playlistApi";
 import { useQuery } from "@tanstack/react-query";
 import PlaylistCard from "./PlaylistCard";
-import useUserStore from "@/store/userStore";
-import { PlaylistResponse, Playlists } from "@/types/playlist";
 
 interface MyPlaylistProps {
   onPlaylistSelect: (id: string) => void;
 }
 
 const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
-  // 유저 정보 불러오기
-  const { userId } = useUserStore((state) => state);
-
   // 내 플레이리스트 불러오기
   const {
     data: myplaylist,
