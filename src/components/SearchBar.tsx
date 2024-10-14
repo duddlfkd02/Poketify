@@ -20,6 +20,12 @@ export default function SearchBar() {
       alert("검색어를 입력해주세요");
       return;
     }
+
+    if (pathname === "/search") {
+      router.push(`/search?query=${query}`);
+    } else {
+      router.push(`/search?query=${query}`);
+    }
   };
 
   return (
