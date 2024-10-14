@@ -62,6 +62,7 @@ export async function searchTracks(
   return data;
 }
 
+/* 최신 앨범 */
 export const getSpotifyNewlistItems = async (token: string) => {
   const res = await fetch("https://api.spotify.com/v1/playlists/37i9dQZF1DXe5W6diBL5N4/tracks", {
     headers: {
@@ -72,6 +73,18 @@ export const getSpotifyNewlistItems = async (token: string) => {
   return res.json();
 };
 
+/* 애니메이션 앨범 */
+export const getSpotifyAnimelist = async (token: string) => {
+  const res = await fetch("https://api.spotify.com/v1/playlists/37i9dQZF1DWT8aqnwgRt92/tracks", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return res.json();
+};
+
+/* 플레이리스트 추천 */
 export const getFeaturedPlaylists = async (token: string) => {
   const res = await fetch("https://api.spotify.com/v1/browse/featured-playlists", {
     headers: {

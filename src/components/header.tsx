@@ -14,6 +14,7 @@ const Header = () => {
         <div>
           <SearchBar />
         </div>
+
         <nav>
           <ul className="flex space-x-6">
             <li>

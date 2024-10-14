@@ -6,15 +6,18 @@ import { FeaturedPlaylistsResponse, SpotifyFeatured } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 export default function FeaturedPlaylists() {
+  // 상태 정의
   const [featuredPlaylists, setFeaturedPlaylists] = useState<SpotifyFeatured[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 4; // 한 번에 보여줄 항목 수
 
+  // 데이터 Fetching
   useEffect(() => {
     const fetchSpotifyData = async () => {
       try {
         const token = await getAccessToken();
         const featuredData: FeaturedPlaylistsResponse = await getFeaturedPlaylists(token as string);
+        console.log("Fetched Spotify Data:", featuredData);
         setFeaturedPlaylists(featuredData.playlists.items); // 가져온 데이터 상태에 저장
       } catch (error) {
         console.error("Error fetching featured playlists:", error);
@@ -24,16 +27,19 @@ export default function FeaturedPlaylists() {
     fetchSpotifyData();
   }, []);
 
+  // 다음 페이지로 이동
   const handleNext = () => {
     setCurrentIndex((prevIndex) => Math.min(prevIndex + itemsPerPage, featuredPlaylists.length - itemsPerPage));
   };
 
+  // 이전 페이지로 이동
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => Math.max(prevIndex - itemsPerPage, 0));
   };
 
   return (
     <div className="relative mb-8">
+      {/* 그리드로 플레이리스트 표시 */}
       <div className="grid grid-cols-4 gap-4">
         {featuredPlaylists.slice(currentIndex, currentIndex + itemsPerPage).map((playlist) => (
           <div key={playlist.id} className="flex flex-col">
