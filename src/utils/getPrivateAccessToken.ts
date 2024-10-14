@@ -19,7 +19,7 @@ import { supabase } from "@/app/api/supabaseClient";
 //   return access_token;
 // };
 
-export const getAccessToken = async () => {
+export const getPrivateAccessToken = async () => {
   const {
     data: { session },
     error
