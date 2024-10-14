@@ -61,3 +61,23 @@ export async function searchTracks(
   console.log("Spotify 검색 결과:", data);
   return data;
 }
+
+export const getSpotifyNewlistItems = async (token: string) => {
+  const res = await fetch("https://api.spotify.com/v1/playlists/37i9dQZF1DXe5W6diBL5N4/tracks", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return res.json();
+};
+
+export const getFeaturedPlaylists = async (token: string) => {
+  const res = await fetch("https://api.spotify.com/v1/browse/featured-playlists", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return res.json();
+};
