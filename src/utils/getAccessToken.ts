@@ -20,7 +20,15 @@ import { supabase } from "@/app/api/supabaseClient";
 // };
 
 export const getAccessToken = async () => {
-  const session = supabase.auth.session(); // Supabase 세션에서 액세스 토큰 가져오기
+  const {
+    data: { session },
+    error
+  } = await supabase.auth.getSession();
+
+  if (error) {
+    throw new Error("Error fetching session: " + error.message);
+  }
+
   const accessToken = session?.provider_token;
 
   if (!accessToken) {
