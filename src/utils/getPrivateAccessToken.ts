@@ -5,7 +5,7 @@
 //     client_secret: SPOTIFY_CLIENT_SECRET
 //   });
 
-import { supabase } from "@/app/api/supabaseClient";
+import { supabase } from "@/supabase/supabase";
 
 //   const res = await fetch("https://accounts.spotify.com/api/token", {
 //     method: "POST",
