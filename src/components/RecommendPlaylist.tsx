@@ -1,11 +1,10 @@
-import { PlaylistResponse, Playlists } from "@/types/playlist";
+import { PlaylistResponse } from "@/types/playlist";
 import { recommandPlaylist } from "@/utils/playlistApi";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import React from "react";
+import PlaylistCard from "./PlaylistCard";
 
 const RecommendPlaylist = () => {
-  // 추천 플레이리스트 불러오기
   const {
     data: playlists,
     isLoading,
@@ -21,16 +20,16 @@ const RecommendPlaylist = () => {
   if (error) {
     return <div>error</div>;
   }
-  console.log(playlists);
+
+  if (!playlists) {
+    return <div>playlist가 없습니다</div>;
+  }
   return (
-    <section className="flex">
-      {playlists?.items.map((playlist) => (
-        <div key={playlist.id}>
-          <Image src={playlist.images[0]?.url} alt={playlist.name} width={100} height={100} />
-          <h1>{playlist.name}</h1>
-        </div>
-      ))}
-    </section>
+    <div className="flex flex-col justify-between gap-4 pt-4 bg-blue-50 p-4 rounded ">
+      <h3 className="font-extrabold text-playlist-h3 text-left">추천 플레이리스트</h3>
+
+      <PlaylistCard playlist={playlists} />
+    </div>
   );
 };
 

@@ -1,79 +1,79 @@
-import getAccessToken from "./getAccessToken"; // accessToken을 가져오는 함수
+import axios from "axios";
+import { getAccessToken } from "./getAccessToken"; // getAccessToken import
 
-const BASEURL = "https://api.spotify.com/v1/playlists";
+const BASEURL = "https://api.spotify.com/v1";
 
-// 공통 헤더 작성
-const getHeaders = (accessToken: string) => ({
-  Authorization: `Bearer ${accessToken}`
-});
+// 재생목록 항목 가져오기
+export const fetchPlaylistTracks = async (playlist_id: string | null) => {
+  const accessToken = await getAccessToken();
 
-// 데이터 불러오기
-export const fetchPlaylist = async (playlistId: string) => {
-  const accessToken = await getAccessToken(); // accessToken 가져오기
-
-  const res = await fetch(`${BASEURL}/${playlistId}`, {
-    method: "GET",
-    headers: getHeaders(accessToken)
+  const res = await axios.get(`${BASEURL}/playlists/${playlist_id}/tracks`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
   });
 
-  if (!res.ok) {
-    throw new Error("fetch 실패");
-  }
-  const playlistData = await res.json();
-  console.log(playlistData);
-  return playlistData;
+  console.log(res.data);
+  return res.data.items;
 };
 
-// 데이터 추가하기
-export const addPlaylist = async (newSong: string) => {
-  const accessToken = await getAccessToken(); // accessToken 가져오기
+// 플레이리스트 불러오기
+export const fetchPlaylist = async () => {
+  const accessToken = await getAccessToken();
 
-  const res = await fetch(BASEURL, {
-    method: "POST",
-    headers: getHeaders(accessToken),
-    body: JSON.stringify({ uris: [newSong] })
+  const res = await axios.get(`${BASEURL}/me/playlists`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
   });
 
-  if (!res.ok) {
-    throw new Error("add 실패");
-  }
-
-  const addedData = await res.json();
-  return addedData;
+  console.log(res.data);
+  return res.data.items; // items 배열 반환
 };
 
-// 데이터 삭제하기
-export const deletePlaylist = async (id: string) => {
-  const accessToken = await getAccessToken(); // accessToken 가져오기
+// 플레이리스트에 곡 추가하기
+export const addPlaylist = async (playlistId: string, newSongUri: string) => {
+  const accessToken = await getAccessToken();
 
-  const res = await fetch(`${BASEURL}/${id}/followers`, {
-    method: "DELETE",
-    headers: getHeaders(accessToken)
+  const res = await axios.post(
+    `${BASEURL}/playlists/${playlistId}/tracks`,
+    { uris: [newSongUri] },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json"
+      }
+    }
+  );
+
+  return res.data.playlist;
+};
+
+// 플레이리스트 삭제하기
+export const deletePlaylist = async (playlistId: string) => {
+  const accessToken = await getAccessToken();
+
+  const res = await axios.delete(`${BASEURL}/playlists/${playlistId}/followers`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json"
+    }
   });
 
-  if (!res.ok) {
-    throw new Error("delete 실패");
-  }
-
-  const deletedData = await res.json();
-  return deletedData;
+  return res.data;
 };
 
-// 추천 재생목록 불러오기
+// 추천 플레이리스트 불러오기
 export const recommandPlaylist = async () => {
-  const accessToken = await getAccessToken(); // accessToken 가져오기
+  const accessToken = await getAccessToken();
 
-  const res = await fetch("https://api.spotify.com/v1/browse/featured-playlists", {
-    method: "GET",
-    headers: getHeaders(accessToken)
+  const res = await axios.get(`${BASEURL}/browse/featured-playlists`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json"
+    }
   });
 
-  if (!res.ok) {
-    throw new Error("추천 재생목록 fetch 실패");
-  }
-
-  const recommendedData = await res.json();
-  const playlists = recommendedData.playlists;
-  console.log(playlists);
-  return playlists;
+  console.log(res.data);
+  return res.data.playlists;
 };

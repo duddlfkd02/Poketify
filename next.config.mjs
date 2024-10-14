@@ -9,6 +9,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "thisis-images.spotifycdn.com"
+      },
+      {
+        protocol: "https",
+        hostname: "mosaic.scdn.co"
       }
     ]
   }

@@ -10,9 +10,13 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#0079FF"
+      },
+      fontSize: {
+        "playlist-h3": "1.5rem"
       }
     }
   },
   plugins: []
 };
+
 export default config;
