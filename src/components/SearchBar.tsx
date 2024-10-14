@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { SearchTrack, SearchTrackResponse } from "@/types/search";
+// import { SearchTrack, SearchTrackResponse } from "@/types/search";
 
 export default function SearchBar() {
   const [query, setQuery] = useState<string>("");
-  const [results, setResults] = useState<SearchTrack[]>([]);
+  // const [results, setResults] = useState<SearchTrack[]>([]);
   const router = useRouter();
   const pathname = usePathname(); // 현재 경로 확인
 
@@ -23,19 +23,10 @@ export default function SearchBar() {
       return;
     }
 
-    try {
-      const response = await fetch(`/api/search?query=${query}`);
-      if (!response.ok) {
-        throw new Error("API 요청 실패" + response.status);
-      }
-      const data: SearchTrackResponse = await response.json();
-      setResults(data.tracks.items);
-
-      if (pathname === "/search") {
-        router.push(`/search?query=${query}`);
-      }
-    } catch (error) {
-      console.log("API 요청 중 오류 발생", error);
+    if (pathname === "/search") {
+      router.push(`/search?query=${query}`);
+    } else {
+      router.push(`/search?query=${query}`);
     }
   };
 
