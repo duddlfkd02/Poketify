@@ -1,4 +1,4 @@
-import { SearchTrackResponse } from "@/types/search";
+import { SearchTrack, SearchTrackResponse } from "@/types/search";
 
 let accessToken: string | null = null;
 let expireToken: number | null = null;
@@ -81,3 +81,39 @@ export const getFeaturedPlaylists = async (token: string) => {
 
   return res.json();
 };
+
+//상세페이지 id값으로 데이터 받아오기
+export async function getTrackById(id: string): Promise<SearchTrack> {
+  const token = await getAccessToken();
+  const response = await fetch(`https://api.spotify.com/v1/tracks/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error("곡 정보를 불러오는 데 실패했습니다.");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+// 추천 곡 가져오는 함수
+export async function getRecommendedTracks(id: string): Promise<SearchTrack[]> {
+  const token = await getAccessToken();
+  const response = await fetch(`https://api.spotify.com/v1/recommendations?seed_tracks=${id}&limit=5`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error("추천 곡 정보를 불러오는 데 실패했습니다.");
+  }
+
+  const data = await response.json();
+  return data.tracks;
+}

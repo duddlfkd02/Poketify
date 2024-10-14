@@ -4,6 +4,7 @@ import { SearchTrack } from "@/types/search";
 import { useSearchData } from "@/hooks/useSearchData";
 import Pagination from "@/components/Pagination";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SearchPage({
   searchParams
@@ -30,10 +31,12 @@ export default function SearchPage({
       <ul>
         {results.map((track: SearchTrack) => (
           <li key={track.id}>
-            <Image src={track.album.images[0].url} alt={track.name} width={100} height={100} />
-            <p>곡 제목: {track.name}</p>
-            <p>아티스트: {track.artists.map((artist) => artist.name).join(", ")}</p>
-            <p>출시일: {track.album.release_date}</p>
+            <Link href={`/search/${track.id}`} passHref>
+              <Image src={track.album.images[0].url} alt={track.name} width={100} height={100} />
+              <p>곡 제목: {track.name}</p>
+              <p>아티스트: {track.artists.map((artist) => artist.name).join(", ")}</p>
+              <p>출시일: {track.album.release_date}</p>
+            </Link>
           </li>
         ))}
       </ul>
