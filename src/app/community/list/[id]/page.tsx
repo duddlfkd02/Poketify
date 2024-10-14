@@ -25,6 +25,8 @@ const List = async ({ params }: { params: { id: string } }) => {
         );
       })}
 
+      <Link href={"/community/write"}>글쓰기</Link>
+
       <div className="paging">
         <Paging nowPage={parseInt(params.id)} totalCount={Math.ceil(count! / perPage)} />
       </div>

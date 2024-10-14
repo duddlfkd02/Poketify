@@ -1,4 +1,4 @@
-import Comment from "@/components/Comment";
+import DetailLayout from "@/components/DetailLayout";
 import { getAccessToken } from "@/lib/spotifyToken";
 import browserClient from "@/supabase/client";
 import { FormType } from "@/types/FormType";
@@ -21,55 +21,46 @@ const Detail = async ({ params }: { params: { id: string } }) => {
 
   const token = await getAccessToken();
 
-  const playlist = await fetch(`https://api.spotify.com/v1/playlists/${postData.playlist_id}?market=KR&locale=kr`, {
+  const playlist = await fetch(`https://api.spotify.com/v1/playlists/${postData.playlist_id}?market=KR`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
+  if (!playlist.ok) return <DetailLayout postData={postData} />;
+
   const playlistInfo = await playlist.json();
   const playlistItem = playlistInfo.tracks.items;
 
   return (
-    <div>
-      <h2>{postData.title}</h2>
-
-      <div className="content">
-        <div className="writer">{postData.user_nickname}</div>
-        <div className="playlist">
-          <div className="playlist_info">
-            <div className="thumbnail">
-              <img src={playlistInfo.images[0].url} alt="" className="w-16 h-16" />
-            </div>
-
-            <div className="playlist_title">{playlistInfo.name}</div>
-            <div className="playlist_description">{playlistInfo.description}</div>
+    <DetailLayout postData={postData}>
+      <>
+        <div className="playlist_info">
+          <div className="thumbnail">
+            <img src={playlistInfo.images[0].url} alt="" className="w-16 h-16" />
           </div>
 
-          <ul className="overflow-y-auto max-h-96">
-            {playlistItem.map((song: Song, idx: number) => {
-              return (
-                <li key={song.track.id} className="flex items-center">
-                  <div className="no">{idx + 1}</div>
-                  <div className="album">
-                    <img src={song.track.album.images[0].url} alt="" className="w-16 h-16" />
-                  </div>
-                  <div className="info flex flex-col">
-                    <div className="title">{song.track.name}</div>
-                    <div className="artist">{song.track.artists[0].name}</div>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="playlist_title">{playlistInfo.name}</div>
+          <div className="playlist_description">{playlistInfo.description}</div>
         </div>
 
-        {postData.content}
-      </div>
-
-      <div className="comment">
-        <Comment />
-      </div>
-    </div>
+        <ul className="overflow-y-auto max-h-96">
+          {playlistItem.map((song: Song, idx: number) => {
+            return (
+              <li key={song.track.id} className="flex items-center">
+                <div className="no">{idx + 1}</div>
+                <div className="album">
+                  <img src={song.track.album.images[0].url} alt="" className="w-16 h-16" />
+                </div>
+                <div className="info flex flex-col">
+                  <div className="title">{song.track.name}</div>
+                  <div className="artist">{song.track.artists[0].name}</div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </>
+    </DetailLayout>
   );
 };
 

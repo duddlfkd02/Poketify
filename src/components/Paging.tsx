@@ -26,14 +26,7 @@ const Paging = ({ nowPage, totalCount }: Props) => {
 
     for (let i = startPage; i <= lastPage; i++) {
       page.push(
-        <Link
-          key={"page" + i}
-          href={`/community/list/${i}`}
-          onClick={() => {
-            sessionStorage.setItem("myBoard", String(i));
-          }}
-          className={nowPage === i ? "nowPage" : undefined}
-        >
+        <Link key={"page" + i} href={`/community/list/${i}`} className={nowPage === i ? "nowPage" : undefined}>
           {i}
         </Link>
       );

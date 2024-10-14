@@ -16,7 +16,7 @@ export async function getAccessToken() {
       "grant_type=client_credentials&client_id=" +
       process.env.NEXT_PUBLIC_SPOTIFY_API_KEY +
       "&client_secret=" +
-      process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET
+      process.env.NEXT_PUBLIC_SPOTIFY_SECRET_KEY
   };
 
   const res = await fetch("https://accounts.spotify.com/api/token", authParam);
@@ -27,13 +27,32 @@ export async function getAccessToken() {
   }
 
   const data = await res.json();
-  console.log("토큰 응답 데이터:", data); //
 
   accessToken = data.access_token;
   expireToken = Date.now() + data.expires_in * 1000;
 
   return accessToken;
 }
+
+export const getSpotifyNewlistItems = async (token: string) => {
+  const res = await fetch("https://api.spotify.com/v1/playlists/37i9dQZF1DXe5W6diBL5N4/tracks", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return res.json();
+};
+
+export const getFeaturedPlaylists = async (token: string) => {
+  const res = await fetch("https://api.spotify.com/v1/browse/featured-playlists", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return res.json();
+};
 
 // Spotify API에서 검색 요청
 export async function searchTracks(query: string) {
@@ -49,6 +68,5 @@ export async function searchTracks(query: string) {
     throw new Error(`Spotify API 요청 실패: ${response.statusText}`);
   }
   const data = await response.json();
-  console.log("Spotify 검색 결과:", data);
   return data.tracks.items;
 }

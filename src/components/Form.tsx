@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { FormType } from "@/types/FormType";
 import browserClient from "@/supabase/client";
-
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+import { supabase } from "@/supabase/supabase";
 
 const initialData = {
   title: "",
@@ -22,6 +20,12 @@ type Props = {
 const Form = ({ params, isEdit }: Props) => {
   const [formData, setFormData] = useState<FormType>(initialData);
 
+  useEffect(() => {
+    // 로그인 로직 ( 추후 삭제 예정 )
+    supabase.auth.onAuthStateChange((event, session) => {
+      localStorage.setItem("loginId", String(session?.user.id));
+    });
+  }, []);
   const fetchData = async () => {
     const { data } = await browserClient.from("posts").select().eq("id", params);
 
@@ -40,6 +44,7 @@ const Form = ({ params, isEdit }: Props) => {
     });
   };
 
+  // 로그인 로직 ( 추후 삭제 예정 )
   const loginTest = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "spotify",
@@ -50,8 +55,7 @@ const Form = ({ params, isEdit }: Props) => {
   };
 
   const writeHandler = async () => {
-    const data = await supabase.from("posts").insert(formData);
-    console.log("abc", data);
+    await supabase.from("posts").insert(formData);
   };
 
   const editHandler = async () => {
