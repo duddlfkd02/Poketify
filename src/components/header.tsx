@@ -27,7 +27,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/login" className="hover:text-gray-300">
+              <Link href="/auth" className="hover:text-gray-300">
                 Login
               </Link>
             </li>
