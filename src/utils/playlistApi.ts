@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken } from "./getAccessToken"; // getAccessToken import
+import { getAccessToken } from "./getAccessToken";
 
 const BASEURL = "https://api.spotify.com/v1";
 
@@ -14,7 +14,7 @@ export const fetchPlaylistTracks = async (playlist_id: string | null) => {
   });
 
   console.log(res.data);
-  return res.data.items;
+  return res.data;
 };
 
 // 플레이리스트 불러오기
@@ -28,7 +28,7 @@ export const fetchPlaylist = async () => {
   });
 
   console.log(res.data);
-  return res.data.items; // items 배열 반환
+  return res.data;
 };
 
 // 플레이리스트에 곡 추가하기
