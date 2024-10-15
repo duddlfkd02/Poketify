@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { FormType } from "@/types/FormType";
 import browserClient from "@/supabase/client";
 import { supabase } from "@/supabase/supabase";
+import { useRouter } from "next/navigation";
 
+const randomId = crypto.randomUUID();
 const initialData = {
+  id: randomId,
   title: "",
   playlist_id: "",
   content: "",
@@ -18,14 +21,9 @@ type Props = {
 };
 
 const Form = ({ params, isEdit }: Props) => {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormType>(initialData);
 
-  useEffect(() => {
-    // 로그인 로직 ( 추후 삭제 예정 )
-    supabase.auth.onAuthStateChange((event, session) => {
-      localStorage.setItem("loginId", String(session?.user.id));
-    });
-  }, []);
   const fetchData = async () => {
     const { data } = await browserClient.from("posts").select().eq("id", params);
 
@@ -33,7 +31,9 @@ const Form = ({ params, isEdit }: Props) => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (!!isEdit) {
+      fetchData();
+    }
   }, []);
 
   const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,16 +41,6 @@ const Form = ({ params, isEdit }: Props) => {
     setFormData({
       ...formData,
       [id]: value
-    });
-  };
-
-  // 로그인 로직 ( 추후 삭제 예정 )
-  const loginTest = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "spotify",
-      options: {
-        redirectTo: `http://localhost:3000/community/write`
-      }
     });
   };
 
@@ -66,45 +56,89 @@ const Form = ({ params, isEdit }: Props) => {
       .select();
   };
 
-  const onSubmit = () => {
-    if (isEdit) {
-      editHandler();
-    } else {
-      writeHandler();
+  const handleSubmit = async () => {
+    if (!formData.title || !formData.playlist_id || !formData.content) {
+      return alert("빈칸 없이 모두 작성해주세요");
     }
+
+    if (isEdit) {
+      await editHandler();
+    } else {
+      await writeHandler();
+    }
+
+    router.push(`/community/detail/${randomId}`);
   };
 
   return (
     <>
-      <button onClick={() => loginTest()}>TEST LOGIN</button>
       <form
+        className="flex flex-col border-t-2 border-solid border-black"
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmit();
+          handleSubmit();
         }}
       >
-        <div>
-          <label htmlFor="title">제목</label>
-          <input id="title" name="title" type="text" onChange={(e) => changeInput(e)} value={formData?.title} />
+        <div className="flex flex-col sm:flex-row items-stretch border-b border-solid border-[#e9e9e9]">
+          <label
+            className="flex items-center w-full sm:w-1/4 py-3 px-4 bg-[#F8F8F8] leading-snug break-keep"
+            htmlFor="title"
+          >
+            제목
+          </label>
+          <div className="w-full sm:w-3/4  py-3 px-4">
+            <input
+              className="w-full h-10 px-3 border border-[#e9e9e9] outline-none"
+              id="title"
+              name="title"
+              type="text"
+              onChange={(e) => changeInput(e)}
+              value={formData?.title}
+            />
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="playlist_id">플레이리스트 아이디</label>
-          <input
-            id="playlist_id"
-            name="playlist_id"
-            type="text"
-            onChange={(e) => changeInput(e)}
-            value={formData?.playlist_id}
-          />
+        <div className="flex flex-col sm:flex-row items-stretch border-b border-solid border-[#e9e9e9]">
+          <label
+            className="flex items-center w-full sm:w-1/4 py-3 px-4 bg-[#F8F8F8] leading-snug break-keep"
+            htmlFor="playlist_id"
+          >
+            플레이리스트 아이디
+          </label>
+          <div className="w-full sm:w-3/4  py-3 px-4">
+            <input
+              className="w-full h-10 px-3 border border-[#e9e9e9] outline-none"
+              id="playlist_id"
+              name="playlist_id"
+              type="text"
+              onChange={(e) => changeInput(e)}
+              value={formData?.playlist_id}
+            />
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="content">내용</label>
-          <input id="content" name="content" type="text" onChange={(e) => changeInput(e)} value={formData?.content} />
+        <div className="flex flex-col sm:flex-row items-stretch border-b border-solid border-[#e9e9e9]">
+          <label
+            className="flex items-center w-full sm:w-1/4 py-3 px-4 bg-[#F8F8F8] leading-snug break-keep"
+            htmlFor="content"
+          >
+            내용
+          </label>
+          <div className="w-full sm:w-3/4  py-3 px-4">
+            <input
+              className="w-full h-10 px-3 h-10 border border-[#e9e9e9] outline-none"
+              id="content"
+              name="content"
+              type="text"
+              onChange={(e) => changeInput(e)}
+              value={formData?.content}
+            />
+          </div>
         </div>
 
-        <button type="submit">완료</button>
+        <button type="submit" className="button">
+          완료
+        </button>
       </form>
     </>
   );

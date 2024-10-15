@@ -1,3 +1,4 @@
+import { CommunityGetPlaylist } from "@/components/CommunityGetPlaylist";
 import DetailLayout from "@/components/DetailLayout";
 import { getAccessToken } from "@/lib/spotifyToken";
 import browserClient from "@/supabase/client";
@@ -16,16 +17,13 @@ export function generateMetadata({ params }: Props) {
 }
 
 const Detail = async ({ params }: { params: { id: string } }) => {
+  const token = await getAccessToken();
+
   const { data } = await browserClient.from("posts").select().eq("id", params.id);
   const postData: FormType = data![0];
 
-  const token = await getAccessToken();
+  const playlist = await CommunityGetPlaylist(postData.playlist_id, token);
 
-  const playlist = await fetch(`https://api.spotify.com/v1/playlists/${postData.playlist_id}?market=KR`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
   if (!playlist.ok) return <DetailLayout postData={postData} />;
 
   const playlistInfo = await playlist.json();
@@ -52,7 +50,7 @@ const Detail = async ({ params }: { params: { id: string } }) => {
                   <img src={song.track.album.images[0].url} alt="" className="w-16 h-16" />
                 </div>
                 <div className="info flex flex-col">
-                  <div className="title">{song.track.name}</div>
+                  <div className="track">{song.track.name}</div>
                   <div className="artist">{song.track.artists[0].name}</div>
                 </div>
               </li>

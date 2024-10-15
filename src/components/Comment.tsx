@@ -1,32 +1,54 @@
 "use client";
 import { supabase } from "@/supabase/supabase";
-import { useEffect, useState } from "react";
+import { CommentType } from "@/types/CommentType";
+import { useState } from "react";
 
 type Props = {
-  postId: string;
+  commentData: CommentType;
+  loginId: string | null;
+  getCommentList: () => Promise<void>;
 };
 
-const Comment = ({ postId }: Props) => {
-  const [loginId, setLoginId] = useState("");
-  const [commentData, setCommentData] = useState<string>("");
+export const Comment = ({ commentData, loginId, getCommentList }: Props) => {
+  const [editComment, setEditComment] = useState<string | null>(commentData.comment);
+  const [readOnly, setReadOnly] = useState<boolean>(true);
 
-  useEffect(() => {
-    setLoginId(String(localStorage.getItem("loginId")));
-  }, []);
+  const changeReadOnly = () => {
+    setReadOnly(!readOnly);
+  };
 
-  const addComment = async () => {
-    await supabase.from("posts").insert({
-      comment: commentData,
-      user_id: loginId,
-      post_id: postId
-    });
+  const updateComment = async () => {
+    if (!editComment) return alert("댓글을 입력해주세요");
+
+    await supabase.from("comment").update({ comment: editComment }).eq("id", commentData.id).select();
+    setReadOnly(!readOnly);
+  };
+
+  const deleteComment = async () => {
+    const { error } = await supabase.from("comment").delete().eq("id", commentData.id);
+    if (error) {
+      console.error(error);
+    }
+    alert("삭제되었습니다.");
+    await getCommentList();
   };
 
   return (
     <>
-      <h2>Comment</h2>
-      {loginId ? <div>로그인 되어있음</div> : <div>회원에게만 댓글 권한이 있습니다.</div>}
+      <input
+        type="text"
+        onChange={(e) => setEditComment(e.target.value)}
+        value={editComment!}
+        readOnly={readOnly}
+        style={{ border: readOnly ? "none" : "1px solid #121212" }}
+      />
+
+      {commentData.user_id === loginId ? (
+        <div>
+          <button onClick={() => (readOnly ? changeReadOnly() : updateComment())}>{readOnly ? "수정" : "완료"}</button>
+          <button onClick={() => deleteComment()}>삭제</button>
+        </div>
+      ) : undefined}
     </>
   );
 };
-export default Comment;

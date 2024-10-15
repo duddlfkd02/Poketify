@@ -58,7 +58,9 @@ export default function Auth() {
         setError(error.message);
       } else {
         console.log("Fetched session:", session);
+
         setSession(session);
+        localStorage.setItem("loginId", String(session?.user.id));
 
         if (session) {
           router.push("/auth");

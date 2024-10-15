@@ -4,3 +4,13 @@
 
 :root {
 }
+
+@layer components {
+  .button {
+    @apply flex w-fit py-2 px-4 border-solid border border-[#121212];
+  }
+
+  .title {
+    @apply text-3xl font-bold py-4;
+  }
+}

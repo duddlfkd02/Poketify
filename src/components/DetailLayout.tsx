@@ -1,5 +1,5 @@
 "use client";
-import Comment from "@/components/Comment";
+import CommentList from "@/components/CommentList";
 import { FormType } from "@/types/FormType";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
@@ -33,12 +33,16 @@ const DetailLayout = ({ postData, children }: Props) => {
 
   return (
     <div>
-      <h2>{postData.title}</h2>
+      <div className="headerArea">
+        <h2>{postData.title}</h2>
+        <div className="writer">{postData.user_nickname}</div>
+        <div className="date">{postData.created_at?.slice(0, 10)}</div>
+      </div>
 
       <div className="content">
-        <div className="writer">{postData.user_nickname}</div>
-
         <div className="playlist">{children ? children : "플레이 리스트 정보가 없습니다."}</div>
+
+        {postData.content}
 
         {loginId === postData.user_id ? (
           <div>
@@ -46,12 +50,10 @@ const DetailLayout = ({ postData, children }: Props) => {
             <button onClick={() => deletePost()}>삭제</button>
           </div>
         ) : null}
-
-        {postData.content}
       </div>
 
       <div className="comment">
-        <Comment postId={postData.id!} />
+        <CommentList postId={postData.id!} />
       </div>
     </div>
   );
