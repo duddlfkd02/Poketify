@@ -41,12 +41,14 @@ export default function FeaturedPlaylists() {
       <div className="grid grid-cols-4 gap-4">
         {featuredPlaylists.slice(currentIndex, currentIndex + itemsPerPage).map((playlist) => (
           <div key={playlist.id} className="flex flex-col">
-            <img
-              src={playlist.images[0]?.url || "/default-image.jpg"} // 이미지가 없을 경우 기본 이미지 사용
-              alt={playlist.name}
-              className="rounded w-full h-auto"
-            />
-            <p className="mt-5 text-left">{playlist.name}</p>
+            <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              <img
+                src={playlist.images[0]?.url || "/default-image.jpg"} // 이미지가 없을 경우 기본 이미지 사용
+                alt={playlist.name}
+                className="rounded w-full h-auto"
+              />
+              <p className="mt-5 text-left">{playlist.name}</p>
+            </a>
           </div>
         ))}
       </div>

@@ -1,6 +1,6 @@
-import SpotifyNewlist from "@/components/spotifyNewList";
-import FeaturedPlaylists from "@/components/featuredPlayLists";
-import SpotifyAnimelist from "@/components/spotifyAnimeList";
+import SpotifyNewlist from "@/components/SpotifyNewList";
+import FeaturedPlaylists from "@/components/FeaturedPlayLists";
+import SpotifyAnimelist from "@/components/SpotifyAnimeList";
 
 export default function MainPage() {
   return (

@@ -3,6 +3,9 @@ interface Artist {
   name: string;
   id: string;
   uri: string;
+  external_urls: {
+    spotify: string;
+  }; // 추가
 }
 
 // 앨범 이미지 타입
@@ -39,6 +42,9 @@ export interface SpotifyNewTrack {
     name: string;
     id: string;
     uri: string;
+    external_urls: {
+      spotify: string;
+    }; // 추가
   };
 }
 
@@ -49,6 +55,9 @@ export interface SpotifyAnimelistTrack {
     name: string;
     id: string;
     uri: string;
+    external_urls: {
+      spotify: string;
+    }; // 추가
   };
 }
 
@@ -57,7 +66,9 @@ export interface SpotifyFeatured {
   name: string;
   description: string;
   images: { url: string }[];
-  external_urls: { spotify: string };
+  external_urls: {
+    spotify: string;
+  };
 }
 
 export interface FeaturedPlaylistsResponse {
