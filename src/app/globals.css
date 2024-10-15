@@ -18,7 +18,7 @@
   font-style: normal;
 }
 
-body {
+* {
   font-family: "NEXON Lv1 Gothic OTF", sans-serif;
 }
 @layer components {
@@ -36,5 +36,12 @@ body {
 
   .blue_button {
     @apply border-custom-blue bg-custom-blue hover:border-custom-skyblue hover:bg-custom-skyblue transition duration-300 text-white rounded;
+  }
+
+  .left_button {
+    @apply transition duration-300 scale-125 hover:scale-150;
+  }
+  .right_button {
+    @apply ml-auto transition duration-300 scale-125 hover:scale-150;
   }
 }
