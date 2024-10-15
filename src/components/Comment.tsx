@@ -5,7 +5,7 @@ import { useState } from "react";
 
 type Props = {
   commentData: CommentType;
-  loginId: string | null;
+  loginId: string | undefined;
   getCommentList: () => Promise<void>;
 };
 

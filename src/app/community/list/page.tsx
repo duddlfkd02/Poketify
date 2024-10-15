@@ -37,7 +37,7 @@ const List = () => {
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [page]);
 
   return (
     <div>

@@ -1,6 +1,7 @@
 "use client";
 import CommentList from "@/components/CommentList";
 import { FormType } from "@/types/FormType";
+import { UserToken } from "@/types/UserData";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,11 +15,12 @@ type Props = {
 };
 
 const DetailLayout = ({ postData, children }: Props) => {
-  const [loginId, setLoginId] = useState("");
+  const [loginId, setLoginId] = useState<UserToken | null>();
   const router = useRouter();
 
   useEffect(() => {
-    setLoginId(String(localStorage.getItem("loginId")));
+    const loginData = localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token");
+    setLoginId(JSON.parse(loginData as string));
   }, []);
 
   const deletePost = async () => {
@@ -44,7 +46,7 @@ const DetailLayout = ({ postData, children }: Props) => {
 
         {postData.content}
 
-        {loginId === postData.user_id ? (
+        {loginId?.user.id === postData.user_id ? (
           <div>
             <Link href={`/community/edit/${postData.id}`}>수정</Link>
             <button onClick={() => deletePost()}>삭제</button>

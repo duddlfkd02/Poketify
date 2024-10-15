@@ -7,7 +7,7 @@ const WriteButton = () => {
   const [isLogin, setIsLogin] = useState<string>("undefined");
 
   useEffect(() => {
-    setIsLogin(String(localStorage.getItem("loginId")));
+    setIsLogin(String(localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token")));
   }, []);
   return (
     <>

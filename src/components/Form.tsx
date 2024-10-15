@@ -5,6 +5,7 @@ import { FormType } from "@/types/FormType";
 import browserClient from "@/supabase/client";
 import { supabase } from "@/supabase/supabase";
 import { useRouter } from "next/navigation";
+import { UserToken } from "@/types/UserData";
 
 const randomId = crypto.randomUUID();
 const initialData = {
@@ -31,6 +32,10 @@ const Form = ({ params, isEdit }: Props) => {
   };
 
   useEffect(() => {
+    const loginData: UserToken = JSON.parse(localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token") as string);
+
+    setFormData({ ...formData, user_nickname: loginData.user.identities[0].identity_data.name });
+
     if (!!isEdit) {
       fetchData();
     }
@@ -45,7 +50,9 @@ const Form = ({ params, isEdit }: Props) => {
   };
 
   const writeHandler = async () => {
-    await supabase.from("posts").insert(formData);
+    await supabase
+      .from("posts")
+      .insert({ ...formData, playlist_id: formData.playlist_id.split("playlist/")[1].trim() });
   };
 
   const editHandler = async () => {
@@ -103,7 +110,7 @@ const Form = ({ params, isEdit }: Props) => {
             className="flex items-center w-full sm:w-1/4 py-3 px-4 bg-[#F8F8F8] leading-snug break-keep"
             htmlFor="playlist_id"
           >
-            플레이리스트 아이디
+            플레이리스트 주소
           </label>
           <div className="w-full sm:w-3/4  py-3 px-4">
             <input
