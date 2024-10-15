@@ -1,12 +1,12 @@
 import SpotifyNewlist from "@/components/SpotifyNewList";
-import FeaturedPlaylists from "@/components/FeaturedPlayLists";
+import FeaturedPlaylists from "@/components/FeaturedPlaylists";
 import SpotifyAnimelist from "@/components/SpotifyAnimeList";
 
 export default function MainPage() {
   return (
     <div className="min-h-screen container mx-auto mt-24 ">
       <h1 className="text-5xl font-bold mb-5">홈</h1>
-      <hr className="mt-3 mb-8 border-t border-gray-300" />
+      <hr className="mt-3 mb-8 border-t border-custom-blue" />
       {/* 최신 발매 */}
       <section className="mb-3">
         <h2 className="text-xl font-semibold mb-2">최신 발매</h2>
