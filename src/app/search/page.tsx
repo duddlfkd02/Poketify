@@ -26,26 +26,30 @@ export default function SearchPage({
   };
 
   return (
-    <div className="pt-36 pb-20 flex flex-col justify-center items-center">
-      <div className="w-full max-w-3xl mx-auto">
-        <h1 className="text-4xl mb-8 text-center font-semibold text-custom-blue">Pick your Track!</h1>
+    <div className="min-h-screen wrap mx-auto mt-32 ">
+      <div className="flex flex-col justify-center">
+        <h1 className="text-left text-black text-5xl font-bold mb-5">검색 결과</h1>
+        <hr className="mb-8 border-t border-custom-blue" />
 
         {isLoading ? (
           <SkeletonList count={10} />
         ) : (
-          <ul>
+          <div className="flex flex-wrap">
             {results.map((track: SearchTrack) => (
-              <li
+              <div
                 key={track.id}
-                className="p-4 mb-6 rounded-lg hover:bg-[#fdfdfd] hover:shadow-lg transition-all duration-300 ease-in-out"
+                className="w-full sm:w-1/3 p-2" // 작은 화면에서는 1열, 큰 화면에서는 2열
               >
-                <TrackCard track={track} />
-              </li>
+                <div className="p-4">
+                  <TrackCard track={track} />
+                </div>
+                {/* <hr className="mb-4 border-t border-custom-blue" /> */}
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
-      <div className="mt-8 w-full max-w-3xl flex justify-center">
+      <div className="mx-auto w-full max-w-3xl flex justify-center mt-20 mb-20">
         <Pagination totalPages={totalPages} currentPage={currentPage} pageRange={10} movePage={movePage} />
       </div>
     </div>

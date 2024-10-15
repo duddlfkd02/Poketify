@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { BsSearchHeart } from "react-icons/bs";
+import { Search } from "lucide-react";
 
 export default function SearchBar() {
   const [query, setQuery] = useState<string>("");
@@ -22,30 +22,29 @@ export default function SearchBar() {
       return;
     }
 
-    if (pathname === "/search") {
-      router.push(`/search?query=${query}`);
-    } else {
-      router.push(`/search?query=${query}`);
-    }
+    // 검색어를 쿼리 파라미터로 추가하여 리디렉션
+    router.push(`/search?query=${query}`);
   };
 
   return (
     <div>
-      <form onSubmit={handleSearch} className="flex justify-center align-middle gap-2">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="곡 이름이나 아티스트를 검색하세요"
-          className="w-60 py-2 px-4 text-sm border-solid border-2 rounded-full focus:outline-custom-blue"
-        />
-        <button
-          type="submit"
-          onClick={handleFocus}
-          className="rounded-full p-3 cursor-pointer text-primary hover:bg-custom-blue hover:text-white transition-all"
-        >
-          <BsSearchHeart size={20} />
-        </button>
+      <form onSubmit={handleSearch}>
+        <div className="relative w-full max-w-md">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="곡 이름이나 아티스트를 검색하세요"
+            className="w-96 py-2 px-4 text-sm border-solid border border-gray-200 rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue transition duration-300"
+          />
+          <button
+            type="submit"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 "
+            onClick={handleFocus} // 포커스 핸들러
+          >
+            <Search strokeWidth={2} size={20} className="text-custom-blue " />
+          </button>
+        </div>
       </form>
     </div>
   );
