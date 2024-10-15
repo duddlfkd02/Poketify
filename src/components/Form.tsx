@@ -6,6 +6,7 @@ import browserClient from "@/supabase/client";
 import { supabase } from "@/supabase/supabase";
 import { useRouter } from "next/navigation";
 import { UserToken } from "@/types/UserData";
+import splitPlaylistId from "@/utils/splitPlaylistId";
 
 const randomId = crypto.randomUUID();
 const initialData = {
@@ -50,9 +51,8 @@ const Form = ({ params, isEdit }: Props) => {
   };
 
   const writeHandler = async () => {
-    await supabase
-      .from("posts")
-      .insert({ ...formData, playlist_id: formData.playlist_id.split("playlist/")[1].trim() });
+    const playlistId = await splitPlaylistId(formData.playlist_id);
+    await supabase.from("posts").insert({ ...formData, playlist_id: playlistId });
   };
 
   const editHandler = async () => {
