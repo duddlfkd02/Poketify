@@ -64,6 +64,8 @@ export default function FeaturedPlaylists() {
               <img
                 src={playlist.images[0]?.url || "/default-image.jpg"} // 이미지가 없을 경우 기본 이미지 사용
                 alt={playlist.name}
+                width={600}
+                height={600}
                 className="rounded w-full h-auto"
               />
               <p className="mt-5 text-left">{playlist.name}</p>
