@@ -69,18 +69,20 @@ const CommentList = ({ postId }: Props) => {
       </div>
 
       {!!userData ? (
-        <div>
-          <input
-            type="text"
+        <div className="flex gap-2 w-full p-3 mt-6 border border-solid border-[#e9e9e9] h-20">
+          <textarea
+            placeholder="댓글을 입력해주세요."
             name="comment"
             id="comment"
             value={commentData!}
             onChange={(e) => {
               setCommentData(e.target.value);
             }}
-            className="outline-none"
+            className="!h-full w-full leading-snug outline-none resize-none"
           />
-          <button onClick={() => addComment()}>등록</button>
+          <button className="flex-shrink-0 min-w-20 blue_button" onClick={() => addComment()}>
+            등록
+          </button>
         </div>
       ) : (
         <div className="flex items-center justify-center py-8 bg-[#f4f4f4]">회원에게만 댓글 권한이 있습니다.</div>

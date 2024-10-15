@@ -143,7 +143,7 @@ const Form = ({ params, isEdit }: Props) => {
           </div>
         </div>
 
-        <button type="submit" className="button">
+        <button type="submit" className="button mt-8">
           완료
         </button>
       </form>

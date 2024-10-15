@@ -34,27 +34,33 @@ const DetailLayout = ({ postData, children }: Props) => {
   };
 
   return (
-    <div>
-      <div className="headerArea">
-        <h2>{postData.title}</h2>
-        <div className="writer">{postData.user_nickname}</div>
-        <div className="date">{postData.created_at?.slice(0, 10)}</div>
+    <div className="wrap">
+      <div className="headerArea flex flex-col items-center gap-4 pb-6 border-b-2 border-solid border-black">
+        <h2 className="text-3xl font-bold">{postData.title}</h2>
+        <div className="flex justify-center gap-3">
+          <span className="writer">{postData.user_nickname}</span>
+          <span className="date text-[#888888]">{postData.created_at?.slice(0, 10)}</span>
+        </div>
       </div>
 
-      <div className="content">
+      <div className="content border-b border-solid border-custom-blue pb-6">
         <div className="playlist">{children ? children : "플레이 리스트 정보가 없습니다."}</div>
 
-        {postData.content}
+        <div className="mt-6">{postData.content}</div>
 
         {loginId?.user.id === postData.user_id ? (
-          <div>
-            <Link href={`/community/edit/${postData.id}`}>수정</Link>
-            <button onClick={() => deletePost()}>삭제</button>
+          <div className="flex gap-2 justify-end mt-6">
+            <Link className="button blue_button" href={`/community/edit/${postData.id}`}>
+              수정
+            </Link>
+            <button className="button" onClick={() => deletePost()}>
+              삭제
+            </button>
           </div>
         ) : null}
       </div>
 
-      <div className="comment">
+      <div className="comment mt-16">
         <CommentList postId={postData.id!} />
       </div>
     </div>

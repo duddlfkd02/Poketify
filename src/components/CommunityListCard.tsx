@@ -43,7 +43,8 @@ export const Card = ({ post, imgUrl }: CardProps) => {
       className="flex flex-col gap-3 items-center w-[calc(50%-8px)] sm:w-[calc(25%-12px)] md:w-[calc(20%-12.8px)]"
     >
       <img src={imgUrl} alt="album_cover" className="w-full" />
-      {post.title}
+
+      <div className="font-bold leading-tight">{post.title}</div>
     </Link>
   );
 };

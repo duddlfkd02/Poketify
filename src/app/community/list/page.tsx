@@ -40,16 +40,18 @@ const List = () => {
   }, [page]);
 
   return (
-    <div>
-      <div className="flex flex-wrap gap-4">
+    <div className="wrap">
+      <div className="flex flex-wrap gap-4 gap-y-6">
         {listData?.data?.map((post) => {
           return <CommunityListCard key={post.id} post={post} />;
         })}
       </div>
 
-      <WriteButton />
+      <div className="flex justify-end my-6">
+        <WriteButton />
+      </div>
 
-      <div className="paging flex items-center justify-center">
+      <div className="paging flex items-center justify-center gap-4">
         <Paging nowPage={parseInt(page)} totalCount={Math.ceil(listData?.count / perPage)} />
       </div>
     </div>

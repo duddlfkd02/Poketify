@@ -27,7 +27,13 @@ const Paging = ({ nowPage, totalCount }: Props) => {
 
     for (let i = startPage; i <= lastPage; i++) {
       page.push(
-        <Link key={"page" + i} href={`/community/list?page=${i}`} className={nowPage === i ? "nowPage" : undefined}>
+        <Link
+          key={"page" + i}
+          href={`/community/list?page=${i}`}
+          className={`flex items-center justify-center w-8 h-8 ${
+            nowPage === i ? "font-bold text-custom-blue" : undefined
+          }`}
+        >
           {i}
         </Link>
       );
@@ -59,11 +65,11 @@ const Paging = ({ nowPage, totalCount }: Props) => {
 
   return (
     <>
-      <div className="prev" onClick={handleClickPrev}>
+      <div className="prev cursor-pointer" onClick={handleClickPrev}>
         <ChevronLeft />
       </div>
       {makePaging(pageOfPaging)}
-      <div className="next" onClick={handleClickNext}>
+      <div className="next cursor-pointer" onClick={handleClickNext}>
         <ChevronRight />
       </div>
     </>

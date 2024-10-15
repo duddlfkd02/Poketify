@@ -12,7 +12,7 @@ const WriteButton = () => {
   return (
     <>
       {isLogin !== "undefined" ? (
-        <Link className="button" href={"/community/write"}>
+        <Link className="button blue_button" href={"/community/write"}>
           글쓰기
         </Link>
       ) : null}
