@@ -22,15 +22,20 @@ export default function TrackCard({
         isDetailPage ? "bg-[#f0f0f0] p-6 rounded-lg" : ""
       }`}
     >
-      <Link href={`/search/${track.id}`} className={`flex ${isRecommended ? "flex-col items-center" : "gap-6"}`}>
-        <Image src={track.album.images[0].url} alt={track.name} width={150} height={150} className="rounded h-auto" />
+      <Link href={`/search/${track.id}`} className={`flex ${isRecommended ? "flex-col items-center" : "gap-5"}`}>
+        <Image src={track.album.images[0].url} alt={track.name} width={100} height={100} className="rounded h-fit" />
 
-        <div className={`flex ${isRecommended ? "flex-col text-center  mt-2" : "flex-col gap-2"}`}>
-          <h3 className={`${isRecommended ? "text-lg leading-5 font-semibold" : "text-2xl font-semibold"}`}>
+        <div className={`flex ${isRecommended ? "flex-col text-center mt-2" : "flex-col"}`}>
+          <h3 className={`${isRecommended ? "text-lg leading-5 font-semibold" : "line-clamp-2 text-xl font-semibold"}`}>
             {track.name}
           </h3>
-          <p className="pt-2">{track.artists.map((artist) => artist.name).join(", ")}</p>
-          <p className="text-sm">{track.album.release_date}</p>
+          <p
+            className="text-base text-gray-400
+          "
+          >
+            {track.artists.map((artist) => artist.name).join(", ")}
+          </p>
+          <p className="text-xs text-gray-400">{track.album.release_date}</p>
           {showPopularity && <p className="text-sm">선호도: {track.popularity} / 100</p>}
         </div>
       </Link>

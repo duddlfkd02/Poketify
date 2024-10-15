@@ -54,7 +54,5 @@ export default function Pagination({ totalPages, currentPage, pageRange, movePag
     return pageNumbers;
   };
 
-  return (
-    <div className="flex justify-center items-center font-cafe24meongi text-3xl font-thin">{renderPageNumbers()}</div>
-  );
+  return <div className="flex items-center font-cafe24meongi text-3xl font-thin">{renderPageNumbers()}</div>;
 }
