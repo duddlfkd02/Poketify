@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAccessToken, getSpotifyNewlistItems } from "@/lib/spotifyToken";
+import { getSpotifyNewlistItems } from "@/lib/spotifyToken";
 import { SpotifyNewTrack } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
@@ -13,8 +13,7 @@ export default function SpotifyNewlist() {
   useEffect(() => {
     const fetchSpotifyData = async () => {
       try {
-        const token = await getAccessToken();
-        const playlistData = await getSpotifyNewlistItems(token as string);
+        const playlistData = await getSpotifyNewlistItems();
         setTracks(playlistData.items);
       } catch (error) {
         console.error("Error fetching Spotify data:", error);
@@ -37,11 +36,17 @@ export default function SpotifyNewlist() {
       <div className="grid grid-cols-5 gap-4">
         {tracks.slice(currentIndex, currentIndex + itemsPerPage).map((item) => (
           <div key={crypto.randomUUID()} className="flex flex-col relative h-64">
-            <img src={item.track.album.images[0].url} alt={item.track.name} className="rounded w-full h-auto" />
-            <p className="mt-5 text-left">{item.track.name}</p>
-            <p className="text-left text-sm text-gray-400 mt-1">
-              {item.track.artists.map((artist) => artist.name).join(", ")}
-            </p>
+            <a href={item.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+              <img
+                src={item.track.album.images[0].url}
+                alt={item.track.name}
+                className="rounded w-full h-auto cursor-pointer"
+              />
+              <p className="mt-5 text-left cursor-pointer">{item.track.name}</p>
+              <p className="text-left text-sm text-gray-400 mt-1">
+                {item.track.artists.map((artist) => artist.name).join(", ")}
+              </p>
+            </a>
           </div>
         ))}
       </div>

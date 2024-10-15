@@ -73,6 +73,11 @@ export const getSpotifyNewlistItems = async () => {
   return spotifyFetch("/playlists/37i9dQZF1DXe5W6diBL5N4/tracks");
 };
 
+/* 애니메이션 앨범 */
+export const getSpotifyAnimelist = async () => {
+  return spotifyFetch("/playlists/37i9dQZF1DWT8aqnwgRt92/tracks");
+};
+
 // 플레이리스트 취향? 불러오기
 export const getFeaturedPlaylists = async () => {
   return spotifyFetch("/browse/featured-playlists");
