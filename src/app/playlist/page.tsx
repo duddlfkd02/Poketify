@@ -17,12 +17,13 @@ const PlaylistPage = () => {
   };
 
   return (
-    <main className="w-full h-screen mx-auto flex flex-col justify-center items-center mt-8">
-      <section className="w-[95%] mx-auto flex">
-        <article className="w-[30%] bg-white p-7 flex-grow min-h-[700px]">
+    <main className="w-full md:h-screen mx-auto flex flex-col justify-center items-center mt-8">
+      <section className="w-full md:w-[95%] mx-auto flex flex-col md:flex-row">
+        <article className="w-full md:w-[30%] bg-white p-7 flex-grow min-h-[700px]">
           <SongList playlistId={selectedPlaylist} />
         </article>
-        <article className="w-[70%] min-h-[80vh] bg-white p-7 flex flex-col justify-between flex-grow gap-3">
+
+        <article className="w-full md:w-[70%] min-h-[80vh] bg-white p-7 flex flex-col justify-between flex-grow gap-3">
           <div className="flex-1 flex gap-3">
             <div className="flex-1">
               <SearchSong />

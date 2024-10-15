@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
+      <body id="root" className="min-h-screen flex flex-col">
         <Providers>
           <ClientLayout>{children}</ClientLayout>
         </Providers>
