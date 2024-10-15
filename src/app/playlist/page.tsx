@@ -25,7 +25,7 @@ const PlaylistPage = () => {
         <article className="w-[70%] min-h-[80vh] bg-white p-7 flex flex-col justify-between flex-grow gap-3">
           <div className="flex-1 flex gap-3">
             <div className="flex-1">
-              <SearchSong />
+              <SearchSong playlistId={selectedPlaylist} />
             </div>
             <div className="flex-1">
               <SelectedPlaylist />
