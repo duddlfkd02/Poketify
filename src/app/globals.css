@@ -4,7 +4,6 @@
 
 :root {
 }
-
 @font-face {
   font-family: "Cafe24Meongi";
   src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Meongi-W-v1.0.woff2") format("woff2");
@@ -21,4 +20,21 @@
 
 body {
   font-family: "NEXON Lv1 Gothic OTF", sans-serif;
+}
+@layer components {
+  .wrap {
+    @apply w-[96%] max-w-[1600px] mx-auto mt-10 mb-20;
+  }
+
+  .title {
+    @apply text-3xl font-bold py-4;
+  }
+
+  .button {
+    @apply flex w-fit py-2 px-4 border-solid border border-[#121212] rounded;
+  }
+
+  .blue_button {
+    @apply border-custom-blue bg-custom-blue hover:border-custom-skyblue hover:bg-custom-skyblue transition duration-300 text-white rounded;
+  }
 }
