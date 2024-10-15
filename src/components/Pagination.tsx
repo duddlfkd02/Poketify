@@ -1,4 +1,4 @@
-import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
 type PaginationProps = {
   totalPages: number;
@@ -20,7 +20,7 @@ export default function Pagination({ totalPages, currentPage, pageRange, movePag
           onClick={() => movePage(Math.max(1, currentPage - pageRange))}
           className=" transition-all duration-300 ease-in-out"
         >
-          <IoIosArrowDropleftCircle className="text-gray-500 hover:text-custom-blue mb-1 text-2xl" />
+          <ChevronLeft strokeWidth={1} size={30} className="text-gray-500 hover:text-custom-blue text-2xl" />
         </button>
       );
     }
@@ -46,7 +46,7 @@ export default function Pagination({ totalPages, currentPage, pageRange, movePag
           onClick={() => movePage(Math.min(totalPages, currentPage + pageRange))}
           className="mt-2 transition-all duration-300 ease-in-out"
         >
-          <IoIosArrowDroprightCircle className="text-gray-500 hover:text-custom-blue mb-2 text-2xl" />
+          <ChevronRight strokeWidth={1} size={30} className="text-gray-500 hover:text-custom-blue mb-2 text-2xl" />
         </button>
       );
     }
@@ -54,5 +54,7 @@ export default function Pagination({ totalPages, currentPage, pageRange, movePag
     return pageNumbers;
   };
 
-  return <div className="flex justify-center items-center">{renderPageNumbers()}</div>;
+  return (
+    <div className="flex justify-center items-center font-cafe24meongi text-3xl font-thin">{renderPageNumbers()}</div>
+  );
 }
