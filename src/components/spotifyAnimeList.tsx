@@ -46,10 +46,10 @@ export default function SpotifyAnimelist() {
         {/* 80 + 5 =85 84번 트랙까지 있, 85가 없음 */}
         {tracks.slice(currentIndex, currentIndex + itemsPerPage).map((item) => (
           <div key={crypto.randomUUID()}>
-            <a href={item.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-              {/* item.track이 있을 때만 렌더링  */}
-              {item.track && (
-                <div key={item.track.id} className="flex flex-col relative h-64">
+            {/* item.track이 있을 때만 렌더링  */}
+            {item.track && (
+              <div key={item.track.id} className="flex flex-col relative h-64">
+                <a href={item.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
                   <img
                     src={item.track.album?.images?.[0]?.url || "/default-image.jpg"} // album과 images가 존재하는지 확인
                     alt={item.track.name}
@@ -59,9 +59,9 @@ export default function SpotifyAnimelist() {
                   <p className="text-left text-sm text-gray-400 mt-1">
                     {item.track.artists.map((artist) => artist.name).join(", ")}
                   </p>
-                </div>
-              )}
-            </a>
+                </a>
+              </div>
+            )}
           </div>
         ))}
       </div>

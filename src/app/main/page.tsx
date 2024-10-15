@@ -6,7 +6,7 @@ export default function MainPage() {
   return (
     <div className="min-h-screen container mx-auto mt-24 ">
       <h1 className="text-5xl font-bold mb-5">홈</h1>
-      <hr className="my-4 border-t border-gray-300" />
+      <hr className="mt-3 mb-8 border-t border-gray-300" />
       {/* 최신 발매 */}
       <section className="mb-3">
         <h2 className="text-xl font-semibold mb-2">최신 발매</h2>

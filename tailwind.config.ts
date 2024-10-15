@@ -16,7 +16,7 @@ const config: Config = {
         "custom-green": "#A3FF5E"
       },
       fontFamily: {
-        cafe24meongi: ["Cafe24Meongi-W-v1.0", "sans-serif"] // 커스텀 폰트 추가
+        cafe24meongi: ["Cafe24Meongi", "sans-serif"] // 커스텀 폰트 추가
       }
     }
   },

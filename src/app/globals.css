@@ -6,12 +6,19 @@
 }
 
 @font-face {
-  font-family: "Cafe24Meongi-W-v1.0";
+  font-family: "Cafe24Meongi";
   src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Meongi-W-v1.0.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: "NEXON Lv1 Gothic OTF";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: "Cafe24Meongi-W-v1.0", sans-serif;
+  font-family: "NEXON Lv1 Gothic OTF", sans-serif;
 }
