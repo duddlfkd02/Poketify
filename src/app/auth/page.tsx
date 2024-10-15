@@ -77,7 +77,7 @@ export default function Auth() {
   }
 
   return (
-    <div>
+    <div className="mt-52">
       <h1>로그인 페이지</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!session ? (
