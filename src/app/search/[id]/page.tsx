@@ -13,7 +13,7 @@ export default function SearchTrackDetail() {
     isLoading: isTrackLoading,
     isError: isTrackError
   } = useQuery<SearchTrack>({ queryKey: ["track", id], queryFn: () => getTrackById(id as string) });
-
+  console.log(track);
   const {
     data: recommendedTracks,
     isLoading: isRecommendedLoading,
