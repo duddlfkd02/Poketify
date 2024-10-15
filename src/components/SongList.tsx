@@ -3,7 +3,6 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import Image from "next/image";
 import { PlaylistData } from "@/types/playlist";
-import { IoIosClose } from "react-icons/io";
 
 interface SongListProps {
   playlistId: string | null;
@@ -78,10 +77,10 @@ const SongList = ({ playlistId }: SongListProps) => {
               {/* 버튼의 가시성을 상태에 따라 조정 */}
               {hoveredTrackId === song.track.id && (
                 <button
-                  className="absolute right-2 top-4 transform -translate-y-1/2"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-custom-green p-2 border border-solid"
                   onClick={() => handleRemoveTrack(song.track.uri)}
                 >
-                  <IoIosClose size={30} />
+                  삭제
                 </button>
               )}
             </li>

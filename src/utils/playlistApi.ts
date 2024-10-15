@@ -56,17 +56,24 @@ export const recommandPlaylist = async (offset = 0, limit = 5) => {
 // 플레이리스트에 곡 추가하기
 export const addPlaylist = async (playlistId: string | null, uri: string) => {
   const accessToken = await getPrivateAccessToken();
+  console.log("ididid", playlistId);
+  console.log("추가", uri);
   console.log("Access Token:", accessToken);
-  const res = await axios.post(`${BASEURL}/playlists/${playlistId}/tracks`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json"
-    },
-    data: {
-      uris: [{ uri }],
+
+  const res = await axios.post(
+    `${BASEURL}/playlists/${playlistId}/tracks`,
+    {
+      uris: [uri], // 배열로 수정
       position: 0
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json"
+      }
     }
-  });
+  );
+
   console.log(res.data);
   return res.data;
 };

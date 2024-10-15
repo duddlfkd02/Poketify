@@ -1,6 +1,6 @@
 import { SongMenu } from "@/types/playlist";
 import { addPlaylist, searchMenu } from "@/utils/playlistApi";
-import { useMutation, useQuery } from "@tanstack/react-query"; // useQueryClient 추가
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { FaRegSquarePlus } from "react-icons/fa6";
@@ -22,9 +22,10 @@ const useThrottle = <T,>(value: T, limit: number): T => {
   return throttledValue;
 };
 
-const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => {
+const SearchSong: React.FC<{ playlistId: string }> = ({ playlistId }) => {
   const [song, setSong] = useState<string>("");
   const throttledSong = useThrottle(song, 300);
+  const queryClient = useQueryClient();
 
   const { data: searchResult = [], error } = useQuery<SongMenu[], Error>({
     queryKey: ["searchSong", throttledSong],
@@ -37,6 +38,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
   const addTrackMutation = useMutation({
     mutationFn: (uri: string) => addPlaylist(playlistId, uri),
     onSuccess: () => {
+      queryClient.invalidateQueries(["getPlaylistTracks", playlistId]);
       setSong("");
     }
   });
@@ -44,6 +46,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
   const handleAddTrack = (uri: string) => {
     addTrackMutation.mutate(uri);
   };
+  console.log("playlistIdplaylistIdplaylistId", playlistId);
 
   if (error) {
     return <div>곡을 찾아 오는 도중 에러가 발생했습니다.</div>;
