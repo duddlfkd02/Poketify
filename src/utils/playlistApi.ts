@@ -54,7 +54,7 @@ export const recommandPlaylist = async (offset = 0, limit = 5) => {
 };
 
 // 플레이리스트에 곡 추가하기
-export const addPlaylist = async (playlistId: string, newSongUri: string) => {
+export const addPlaylist = async (playlistId: string | null, newSongUri: string) => {
   const accessToken = await getPrivateAccessToken();
 
   const res = await axios.post(
@@ -102,3 +102,6 @@ export const searchMenu = async (query: string | null) => {
   console.log(res.data.tracks.items);
   return res.data.tracks.items;
 };
+
+// 플레이리스트 불러오기
+const getPlaylist = async;

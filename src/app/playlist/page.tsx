@@ -28,7 +28,7 @@ const PlaylistPage = () => {
               <SearchSong playlistId={selectedPlaylist} />
             </div>
             <div className="flex-1">
-              <SelectedPlaylist />
+              <SelectedPlaylist playlistId={selectedPlaylist} />
             </div>
           </div>
           <div className="flex-1">
