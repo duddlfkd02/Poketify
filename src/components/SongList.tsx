@@ -1,26 +1,56 @@
-import { fetchPlaylistTracks } from "@/utils/playlistApi";
+import { fetchSongsByPlaylist } from "@/utils/playlistApi";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import Image from "next/image";
+import { PlaylistData } from "@/types/playlist";
 
-const SongList = ({ playlistId }) => {
+interface SongListProps {
+  playlistId: string | null;
+}
+
+const SongList = ({ playlistId }: SongListProps) => {
   const {
-    data: tracks,
+    data: playlistData,
     isLoading,
     error
-  } = useQuery({
+  } = useQuery<PlaylistData>({
     queryKey: ["songList", playlistId],
-    queryFn: () => fetchPlaylistTracks(playlistId)
+    queryFn: () => fetchSongsByPlaylist(playlistId!),
+    enabled: !!playlistId
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>SongList Error</div>;
-  }
   return (
-    <div>
-      <h3>SONG LIST</h3>
+    <div className="bg-blue-100 p-4 h-[85vh]">
+      <h3 className="text-center font-extrabold text-[1.5rem] mb-4 border-2 border-solid border-r-0 border-t-0 border-l-0 pb-4">
+        TRACK LIST
+      </h3>
+      <ul className="h-[70vh] max-h-[70vh] overflow-y-auto">
+        {isLoading && <li className="flex justify-center items-center h-full text-lg font-bold">Loading...</li>}
+        {error && (
+          <li className="flex justify-center items-center h-full text-lg font-bold">
+            곡 목록을 불러오는 데 실패했습니다.
+          </li>
+        )}
+        {playlistData && playlistData.tracks.items.length === 0 && (
+          <li className="flex justify-center items-center h-full text-lg font-bold">재생목록이 비어있습니다.</li>
+        )}
+        {playlistData &&
+          playlistData.tracks.items.map((song) => (
+            <li key={song.track.id} className="flex items-center space-x-4 mb-2">
+              <Image
+                src={song.track.album.images[0]?.url}
+                alt={song.track.name}
+                width={80}
+                height={80}
+                className="rounded"
+              />
+              <div className="h-full flex flex-col gap-2">
+                <p className="font-bold">{song.track.name}</p>
+                <p>{song.track.artists.map((artist) => artist.name).join(", ")}</p>
+              </div>
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };
