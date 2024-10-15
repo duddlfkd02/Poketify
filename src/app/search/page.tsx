@@ -25,17 +25,21 @@ export default function SearchPage({
   };
 
   return (
-    <div>
-      <h1>검색 결과 : {query}</h1>
-      <ul>
-        {results.map((track: SearchTrack) => (
-          <li key={track.id}>
-            <TrackCard track={track} />
-          </li>
-        ))}
-      </ul>
-
-      <div style={{ marginTop: "20px" }}>
+    <div className="pt-36 pb-20 flex flex-col justify-center items-center">
+      <div className="w-full max-w-3xl mx-auto">
+        <h1 className="text-4xl mb-8 text-center font-semibold text-custom-blue">Pick your Track!</h1>
+        <ul>
+          {results.map((track: SearchTrack) => (
+            <li
+              key={track.id}
+              className="p-4 mb-6 rounded-lg hover:bg-[#fdfdfd] hover:shadow-lg transition-all duration-300 ease-in-out"
+            >
+              <TrackCard track={track} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="mt-8 w-full max-w-3xl flex justify-center">
         <Pagination totalPages={totalPages} currentPage={currentPage} pageRange={10} movePage={movePage} />
       </div>
     </div>

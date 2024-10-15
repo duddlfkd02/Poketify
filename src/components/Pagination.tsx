@@ -1,3 +1,5 @@
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+
 type PaginationProps = {
   totalPages: number;
   currentPage: number;
@@ -16,24 +18,24 @@ export default function Pagination({ totalPages, currentPage, pageRange, movePag
         <button
           key="prev"
           onClick={() => movePage(Math.max(1, currentPage - pageRange))}
-          className="mx-2 px-4 py-2 bg-gray-200 border border-gray-300 rounded hover:bg-gray-300"
+          className=" transition-all duration-300 ease-in-out"
         >
-          이전
+          <IoIosArrowDropleftCircle className="text-gray-500 hover:text-custom-blue mb-1 text-2xl" />
         </button>
       );
     }
 
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
-        <button
+        <span
           key={i}
           onClick={() => movePage(i)}
-          className={`mx-1 px-3 py-2 border border-gray-300 rounded ${
-            i === currentPage ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
-          }`}
+          className={`mx-1 px-3 py-1 cursor-pointer ${
+            i === currentPage ? "text-custom-blue font-semibold" : "text-gray-500 hover:text-custom-blue"
+          } transition-all duration-300 ease-in-out`}
         >
           {i}
-        </button>
+        </span>
       );
     }
 
@@ -42,9 +44,9 @@ export default function Pagination({ totalPages, currentPage, pageRange, movePag
         <button
           key="next"
           onClick={() => movePage(Math.min(totalPages, currentPage + pageRange))}
-          className="mx-2 px-4 py-2 bg-gray-200 border border-gray-300 rounded hover:bg-gray-300"
+          className="mt-2 transition-all duration-300 ease-in-out"
         >
-          다음
+          <IoIosArrowDroprightCircle className="text-gray-500 hover:text-custom-blue mb-2 text-2xl" />
         </button>
       );
     }
@@ -52,5 +54,5 @@ export default function Pagination({ totalPages, currentPage, pageRange, movePag
     return pageNumbers;
   };
 
-  return <div>{renderPageNumbers()}</div>;
+  return <div className="flex justify-center items-center">{renderPageNumbers()}</div>;
 }

@@ -39,19 +39,21 @@ export default function SearchTrackDetail() {
   }
 
   return (
-    <div>
-      <h1>곡 상세 정보</h1>
-      {track && <TrackCard track={track} showPopularity={true} />}
+    <div className="pt-36 pb-20 flex flex-col justify-center items-center">
+      <div>
+        <h1 className="text-4xl mb-8 text-center font-semibold text-custom-blue">Now Your Pick!</h1>
+        {track && <TrackCard track={track} showPopularity={true} isDetailPage={true} />}
 
-      <div style={{ marginTop: "20px" }}>
-        <h3>추천 곡</h3>
-        <ul className="flex justify-center items-center gap-5">
-          {recommendedTracks?.map((recommendedTrack) => (
-            <li key={recommendedTrack.id} className="max-w-40 flex justify-center items-center">
-              <TrackCard track={recommendedTrack} />
-            </li>
-          ))}
-        </ul>
+        <div className="mt-10">
+          <h3 className="mb-4 text-xl font-semibold">Recommand Albums</h3>
+          <ul className="flex justify-center items-start gap-5">
+            {recommendedTracks?.map((recommendedTrack) => (
+              <li key={recommendedTrack.id} className="max-w-40 flex justify-center items-start">
+                <TrackCard track={recommendedTrack} isRecommended={true} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
