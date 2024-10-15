@@ -3,44 +3,50 @@
 import { getTrackById, getRecommendedTracks } from "@/lib/spotifyToken";
 import { SearchTrack } from "@/types/search";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import TrackCard from "@/components/TrackCard";
 
 export default function SearchTrackDetail() {
   const { id } = useParams();
-  const [track, setTrack] = useState<SearchTrack | null>(null);
-  const [recommendedTracks, setRecommendedTracks] = useState<SearchTrack[]>([]);
+  const {
+    data: track,
+    isLoading: isTrackLoading,
+    isError: isTrackError
+  } = useQuery<SearchTrack>({ queryKey: ["track", id], queryFn: () => getTrackById(id as string) });
 
-  useEffect(() => {
-    const fetchTrack = async () => {
-      if (typeof id === "string") {
-        try {
-          const trackDetail = await getTrackById(id);
-          setTrack(trackDetail);
+  const {
+    data: recommendedTracks,
+    isLoading: isRecommendedLoading,
+    isError: isRecommendedError
+  } = useQuery<SearchTrack[]>({
+    queryKey: ["recommendedTrack", id],
+    queryFn: () => getRecommendedTracks(id as string)
+  });
 
-          const recommendTracks = await getRecommendedTracks(id);
-          setRecommendedTracks(recommendTracks);
-        } catch (error) {
-          console.log("곡 상세정보를 불러오던 중 오류 발생", error);
-        }
-      }
-    };
-    fetchTrack();
-  }, [id]);
-
-  if (!track) {
+  if (isTrackLoading) {
     return <div>로딩 중...</div>;
+  }
+
+  if (isTrackError) {
+    return <div>곡 상세정보를 불러오지 못했습니다.</div>;
+  }
+  if (isRecommendedLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (isRecommendedError) {
+    return <div>추천정보를 불러오지 못했습니다.</div>;
   }
 
   return (
     <div>
       <h1>곡 상세 정보</h1>
-      <TrackCard track={track} showPopularity={true} />
+      {track && <TrackCard track={track} showPopularity={true} />}
 
       <div style={{ marginTop: "20px" }}>
         <h3>추천 곡</h3>
         <ul className="flex justify-center items-center gap-5">
-          {recommendedTracks.map((recommendedTrack) => (
+          {recommendedTracks?.map((recommendedTrack) => (
             <li key={recommendedTrack.id} className="max-w-40 flex justify-center items-center">
               <TrackCard track={recommendedTrack} />
             </li>
