@@ -1,5 +1,5 @@
-import "./globals.css";
 import "../styles/reset.css";
+import "./globals.css";
 import ClientLayout from "./clientLayout"; // 클라이언트 전용 레이아웃 불러오기
 
 export const metadata = {

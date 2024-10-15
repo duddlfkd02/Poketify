@@ -45,7 +45,7 @@ export default function SpotifyAnimelist() {
       <div className="grid grid-cols-5 gap-4">
         {/* 80 + 5 =85 84번 트랙까지 있, 85가 없음 */}
         {tracks.slice(currentIndex, currentIndex + itemsPerPage).map((item) => (
-          <>
+          <div key={crypto.randomUUID()}>
             {/* item.track이 있을 때만 렌더링  */}
             {item.track && (
               <div key={item.track.id} className="flex flex-col relative h-64">
@@ -60,7 +60,7 @@ export default function SpotifyAnimelist() {
                 </p>
               </div>
             )}
-          </>
+          </div>
         ))}
       </div>
 
