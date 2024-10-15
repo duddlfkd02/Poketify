@@ -11,37 +11,59 @@ export default function Auth() {
   const [error, setError] = useState<string | null>(null);
   const [session, setSession] = useState<Session | null>(null);
 
-  // Login handler
+  // 로그인 핸들러
   const handleSpotifyLogin = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "spotify",
       options: {
-        redirectTo: "http://localhost:3000/auth/callback"
+        redirectTo: "http://localhost:3000/auth/callback",
+        scopes: "user-read-private playlist-read-private playlist-read-collaborative"
       }
     });
 
     if (error) {
-      console.error("Error during login: ", error.message);
+      console.error("로그인 중 오류: ", error.message);
       setError(error.message);
     }
   };
 
-  // Logout handler
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut(); // Supabase 로그아웃
+  // 로그인 완료
+  const handleLoginSuccess = async (session: Session) => {
+    const { user } = session;
 
-    if (error) {
-      console.error("Error during logout:", error.message);
+    const profileData = {
+      id: user.id,
+      display_name: user.user_metadata.full_name || "",
+      profile_image: user.user_metadata.avatar_url || ""
+    };
+
+    const { data: existingProfile, error: fetchError } = await supabase
+      .from("profile")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    if (fetchError && fetchError.code !== "PGRST116") {
+      console.error("기존 프로필을 가져오는 중에 오류가 발생 했습니다:", fetchError);
+      return;
+    }
+
+    if (existingProfile) {
+      const { error: updateError } = await supabase.from("profile").update(profileData).eq("id", user.id);
+
+      if (updateError) {
+        console.error("기존 프로필을 업데이트 하는 중에 오류가 발생했습니다.:", updateError);
+      } else {
+        console.log("프로필이 업데이트 되었습니다.:", profileData);
+      }
     } else {
-      setSession(null); // 세션 초기화
+      const { error: insertError } = await supabase.from("profile").insert([profileData]);
 
-      // Spotify 세션 강제로 만료시킴 (작은 새 창을 열었다가 자동으로 닫음)
-      const logoutWindow = window.open("https://accounts.spotify.com/logout", "_blank", "width=500,height=600");
-
-      setTimeout(() => {
-        logoutWindow?.close(); // 로그아웃 창을 1초 후 닫음
-        router.push("/auth"); // auth 페이지로 리다이렉트
-      }, 2000);
+      if (insertError) {
+        console.error("프로필을 삽입하는 중에 오류가 발생했습니다:", insertError);
+      } else {
+        console.log("프로필이 삽입되었습니다.:", profileData);
+      }
     }
   };
 
@@ -53,14 +75,15 @@ export default function Auth() {
       } = await supabase.auth.getSession();
 
       if (error) {
-        console.error("Error fetching session:", error.message);
+        console.error("세션을 가져오는 중에 오류가 발생했습니다.:", error.message);
         setError(error.message);
       } else {
         console.log("Fetched session:", session);
         setSession(session);
 
         if (session) {
-          router.push("/auth");
+          await handleLoginSuccess(session);
+          router.push("/main");
         }
       }
       setLoading(false);
@@ -74,14 +97,21 @@ export default function Auth() {
   }
 
   return (
-    <div>
-      <h1>로그인 페이지</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!session ? (
-        <button onClick={handleSpotifyLogin}>Login with Spotify</button>
-      ) : (
-        <button onClick={handleLogout}>Logout</button>
-      )}
+    <div className="flex items-center justify-center min-h-screen bg-blue-200">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h1 className="text-2xl font-semibold mb-4 text-center">Spotify 계정이 필요합니다.</h1>
+        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
+        {!session && (
+          <div className="flex justify-center">
+            <button
+              onClick={handleSpotifyLogin}
+              className=" bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-800 transition duration-200 font-bold"
+            >
+              Spotify login
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
