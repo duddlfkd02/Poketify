@@ -6,15 +6,19 @@ export const useSearchData = (query: string, pageQuery: number, limit = 20) => {
   const [results, setResults] = useState<SearchTrack[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 전체 데이터 수 페이지네이션 생성
   const fetchTotalPages = async (): Promise<void> => {
     try {
+      setIsLoading(true);
       const response = await searchTracks(query, 0, limit);
       const { total } = response.tracks;
       setTotalPages(Math.ceil(total / limit));
     } catch (error) {
       console.error("전체 데이터 가져오기 실패:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -22,11 +26,14 @@ export const useSearchData = (query: string, pageQuery: number, limit = 20) => {
   const fetchData = async (page: number): Promise<void> => {
     const offset = (page - 1) * limit;
     try {
+      setIsLoading(true);
       const response = await searchTracks(query, offset, limit);
       const { items } = response.tracks;
       setResults(items);
     } catch (error) {
       console.error("데이터 가져오기 실패:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -40,5 +47,5 @@ export const useSearchData = (query: string, pageQuery: number, limit = 20) => {
     }
   }, [query, pageQuery]);
 
-  return { results, totalPages, currentPage, setCurrentPage, fetchData };
+  return { results, totalPages, currentPage, setCurrentPage, fetchData, isLoading };
 };
