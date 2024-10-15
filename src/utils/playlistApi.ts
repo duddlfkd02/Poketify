@@ -104,4 +104,8 @@ export const searchMenu = async (query: string | null) => {
 };
 
 // 플레이리스트 불러오기
-const getPlaylist = async;
+export const getPlaylist = async ({ playlistId }: string | null) => {
+  const res = await axios.get(`${BASEURL}/playlists/${playlistId}`);
+  console.log(res.data);
+  return res.data;
+};
