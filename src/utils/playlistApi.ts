@@ -17,7 +17,7 @@ export const fetchSongsByPlaylist = async (playlistId: string) => {
   return res.data;
 };
 
-// 내 플레이리스트 불러오기 (페이지네이션 추가)
+// 내 플레이리스트 불러오기
 export const fetchPlaylist = async (offset = 0, limit = 20) => {
   const accessToken = await getPrivateAccessToken();
 
@@ -66,7 +66,7 @@ export const deletePlaylist = async (playlistId: string) => {
   return res.data;
 };
 
-// 추천 플레이리스트 불러오기 (페이지네이션 추가)
+// 추천 플레이리스트 불러오기
 export const recommandPlaylist = async (offset = 0, limit = 20) => {
   const accessToken = await getAccessToken();
 
@@ -82,4 +82,12 @@ export const recommandPlaylist = async (offset = 0, limit = 20) => {
   });
 
   return res.data.playlists;
+};
+
+// 항목 검색
+export const searchMenu = async () => {
+  const res = await fetch(`${BASEURL}/search`);
+  const data = res.json();
+  console.log(data);
+  return data;
 };

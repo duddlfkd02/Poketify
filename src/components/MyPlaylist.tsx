@@ -31,27 +31,6 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
     setOffset((prev) => Math.max(0, prev - limit));
   };
 
-  const scrollToNext = () => {
-    const container = document.getElementById("playlist-container");
-    if (container) {
-      container.scrollTo({
-        left: container.scrollLeft + container.offsetWidth,
-        behavior: "smooth" // 부드러운 스크롤
-      });
-      handleNextPage(); // 다음 페이지로 이동
-    }
-  };
-
-  const scrollToPrev = () => {
-    const container = document.getElementById("playlist-container");
-    if (container) {
-      container.scrollTo({
-        left: container.scrollLeft - container.offsetWidth
-      });
-      handlePrevPage(); // 이전 페이지로 이동
-    }
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -68,7 +47,7 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
     <div className="flex flex-col gap-8 pt-4 bg-blue-50 p-4 rounded">
       <h3 className="font-bold text-playlist-h3 text-left">내 플레이리스트</h3>
       <div className="flex justify-between items-center">
-        <button onClick={scrollToPrev} disabled={offset === 0} className="bg-gray-300 rounded p-2">
+        <button onClick={handleNextPage} disabled={offset === 0} className="bg-gray-300 rounded p-2">
           이전
         </button>
         <div
@@ -84,7 +63,7 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
             ))}
           </ul>
         </div>
-        <button onClick={scrollToNext} disabled={myplaylist.items.length < limit} className="bg-gray-300 rounded p-2">
+        <button onClick={handlePrevPage} disabled={myplaylist.items.length < limit} className="bg-gray-300 rounded p-2">
           다음
         </button>
       </div>

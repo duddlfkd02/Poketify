@@ -5,22 +5,20 @@ import React, { useState } from "react";
 import PlaylistCard from "./PlaylistCard";
 
 interface RecommendPlaylistProps {
-  onPlaylistSelect: (id: string) => void; // onPlaylistSelect props 타입 정의
+  onPlaylistSelect: (id: string) => void;
 }
 
 const RecommendPlaylist = ({ onPlaylistSelect }: RecommendPlaylistProps) => {
-  // 페이지네이션 상태 관리
   const [offset, setOffset] = useState(0);
-  const limit = 5; // 한 번에 가져올 아이템 수를 5로 설정
+  const limit = 5;
 
-  // 추천 플레이리스트 불러오기
   const {
     data: playlists,
     isLoading,
     error
   } = useQuery<PlaylistResponse>({
-    queryKey: ["recommendPlaylist", offset], // offset을 쿼리 키에 추가
-    queryFn: () => recommandPlaylist(offset, limit) // offset과 limit을 인자로 넘김
+    queryKey: ["recommendPlaylist", offset],
+    queryFn: () => recommandPlaylist(offset, limit)
   });
 
   if (isLoading) {
@@ -38,13 +36,13 @@ const RecommendPlaylist = ({ onPlaylistSelect }: RecommendPlaylistProps) => {
   // 다음 페이지로 이동하는 함수
   const handleNextPage = () => {
     if (playlists.items.length === limit) {
-      setOffset((prev) => prev + limit); // limit 만큼 더하여 다음 페이지로 이동
+      setOffset((prev) => prev + limit);
     }
   };
 
   // 이전 페이지로 이동하는 함수
   const handlePrevPage = () => {
-    setOffset((prev) => Math.max(0, prev - limit)); // 0보다 작지 않게 조정
+    setOffset((prev) => Math.max(0, prev - limit));
   };
 
   return (
