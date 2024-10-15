@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -26,7 +27,13 @@ const Paging = ({ nowPage, totalCount }: Props) => {
 
     for (let i = startPage; i <= lastPage; i++) {
       page.push(
-        <Link key={"page" + i} href={`/community/list/${i}`} className={nowPage === i ? "nowPage" : undefined}>
+        <Link
+          key={"page" + i}
+          href={`/community/list?page=${i}`}
+          className={`flex items-center justify-center w-8 h-8 ${
+            nowPage === i ? "font-bold text-custom-blue" : undefined
+          }`}
+        >
           {i}
         </Link>
       );
@@ -42,7 +49,7 @@ const Paging = ({ nowPage, totalCount }: Props) => {
       setPageOfPaging(pageOfPaging - 1);
     }
 
-    router.push(`/community/list/${nowPage - 1}`);
+    router.push(`/community/list?page=${nowPage - 1}`);
   };
 
   // 페이징 다음 버튼 클릭 시
@@ -53,17 +60,17 @@ const Paging = ({ nowPage, totalCount }: Props) => {
       setPageOfPaging(pageOfPaging + 1);
     }
 
-    router.push(`/community/list/${nowPage + 1}`);
+    router.push(`/community/list?page=${nowPage + 1}`);
   };
 
   return (
     <>
-      <div className="prev" onClick={handleClickPrev}>
-        이전 버튼
+      <div className="prev cursor-pointer" onClick={handleClickPrev}>
+        <ChevronLeft />
       </div>
       {makePaging(pageOfPaging)}
-      <div className="next" onClick={handleClickNext}>
-        다음 버튼
+      <div className="next cursor-pointer" onClick={handleClickNext}>
+        <ChevronRight />
       </div>
     </>
   );

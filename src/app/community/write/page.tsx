@@ -2,8 +2,8 @@ import Form from "@/components/Form";
 
 const Write = () => {
   return (
-    <div>
-      <h2>Write</h2>
+    <div className="max-w-[96%] mx-auto ">
+      <h2 className="title">글쓰기 페이지</h2>
       <Form />
     </div>
   );
