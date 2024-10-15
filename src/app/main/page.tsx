@@ -4,7 +4,7 @@ import SpotifyAnimelist from "@/components/SpotifyAnimeList";
 
 export default function MainPage() {
   return (
-    <div className="min-h-screen container mx-auto mt-32 ">
+    <div className="min-h-screen wrap mx-auto mt-32 ">
       <h1 className="text-5xl font-bold mb-5">홈</h1>
       <hr className="mt-3 mb-8 border-t border-custom-blue" />
       {/* 최신 발매 */}

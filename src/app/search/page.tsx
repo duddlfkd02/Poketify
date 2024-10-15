@@ -26,7 +26,7 @@ export default function SearchPage({
   };
 
   return (
-    <div className="min-h-screen container mx-auto mt-32 ">
+    <div className="min-h-screen wrap mx-auto mt-32 ">
       <div className="flex flex-col justify-center">
         <h1 className="text-left text-black text-5xl font-bold mb-5">검색 결과</h1>
         <hr className="mb-8 border-t border-custom-blue" />
