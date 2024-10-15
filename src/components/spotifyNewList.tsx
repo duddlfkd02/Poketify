@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAccessToken, getSpotifyNewlistItems } from "@/lib/spotifyToken";
+import { getSpotifyNewlistItems } from "@/lib/spotifyToken";
 import { SpotifyNewTrack } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
@@ -13,8 +13,7 @@ export default function SpotifyNewlist() {
   useEffect(() => {
     const fetchSpotifyData = async () => {
       try {
-        const token = await getAccessToken();
-        const playlistData = await getSpotifyNewlistItems(token as string);
+        const playlistData = await getSpotifyNewlistItems();
         setTracks(playlistData.items);
       } catch (error) {
         console.error("Error fetching Spotify data:", error);

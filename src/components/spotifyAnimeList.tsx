@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAccessToken, getSpotifyAnimelist } from "@/lib/spotifyToken";
+import { getSpotifyAnimelist } from "@/lib/spotifyToken";
 import { SpotifyAnimelistTrack } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
@@ -16,8 +16,7 @@ export default function SpotifyAnimelist() {
   useEffect(() => {
     const fetchSpotifyData = async () => {
       try {
-        const token = await getAccessToken();
-        const playlistData = await getSpotifyAnimelist(token as string);
+        const playlistData = await getSpotifyAnimelist();
         console.log("Fetched Spotify Data:", playlistData);
         setTracks(playlistData.items); // 받아온 데이터를 상태에 저장
       } catch (error) {

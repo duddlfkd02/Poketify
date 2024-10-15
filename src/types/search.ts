@@ -4,6 +4,7 @@ export type SearchTrack = {
   artists: { name: string }[];
   album: { images: { url: string }[]; release_date: string };
   popularity: number;
+  external_urls: { spotify: string };
 };
 
 export type SearchTrackResponse = {
