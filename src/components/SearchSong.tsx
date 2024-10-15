@@ -1,6 +1,6 @@
 import { SongMenu } from "@/types/playlist";
 import { addPlaylist, searchMenu } from "@/utils/playlistApi";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // useQueryClient 추가
+import { useMutation, useQuery } from "@tanstack/react-query"; // useQueryClient 추가
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { FaRegSquarePlus } from "react-icons/fa6";
@@ -26,11 +26,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
   const [song, setSong] = useState<string>("");
   const throttledSong = useThrottle(song, 300);
 
-  const {
-    data: searchResult = [],
-    error,
-    isLoading
-  } = useQuery<SongMenu[], Error>({
+  const { data: searchResult = [], error } = useQuery<SongMenu[], Error>({
     queryKey: ["searchSong", throttledSong],
     queryFn: () => searchMenu(throttledSong),
     enabled: !!throttledSong,
@@ -54,14 +50,14 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
   }
 
   return (
-    <div className="relative flex flex-col gap-4 pt-4 bg-blue-100 p-4 rounded h-full">
-      <h3 className="font-bold">곡을 찾아서 재생목록에 추가하세요</h3>
+    <div className="relative flex flex-col gap-4 pt-4 border border-solid border-custom-blue p-4 rounded h-full ">
+      <h3 className="font-bold text-[1.3rem] text-center bg-gray-200 pt-2 pb-2">곡을 찾아서 재생목록에 추가하세요</h3>
       <input
         type="search"
         placeholder="곡을 입력해주세요"
         value={song}
         onChange={(e) => setSong(e.target.value)}
-        className="w-full h-[2rem] p-2 focus:outline-none focus:bg-gray-300 pl-4"
+        className="w-full h-[2.5rem] p-2 focus:outline-none bg-blue-100 pl-4 mx-auto"
       />
       {throttledSong && (
         <div className="absolute top-24 left-4 bg-white border mt-2 p-4 w-[calc(100%-2rem)] z-10">

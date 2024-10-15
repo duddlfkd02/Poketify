@@ -12,7 +12,7 @@ interface MyPlaylistProps {
 
 const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
   const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(5); // 동적 limit 설정을 위한 state
+  const [limit, setLimit] = useState(5);
 
   // 화면 크기에 따라 limit 동적 설정
   useEffect(() => {
@@ -57,8 +57,8 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-4 bg-blue-100 p-4 rounded min-h-full relative">
-      <h3 className="font-bold text-playlist-h3 text-left">내 플레이리스트</h3>
+    <div className="flex flex-col gap-4 pt-4 border border-solid border-custom-skyblue p-4 rounded min-h-full relative">
+      <h3 className="font-bold text-playlist-h3 text-left text-[1.3rem] ">내 플레이리스트</h3>
 
       <div>
         <button onClick={handlePrevPage} disabled={offset === 0} className="absolute top-1/2 l-5">
@@ -81,7 +81,7 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
               </li>
             )}
             {myplaylist?.items?.map((playlist) => (
-              <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer">
+              <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer ">
                 <PlaylistCard playlist={playlist} />
               </li>
             ))}
