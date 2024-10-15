@@ -17,8 +17,9 @@ export const fetchSongsByPlaylist = async (playlistId: string) => {
   return res.data;
 };
 
-// 내 플레이리스트 불러오기
-export const fetchPlaylist = async (offset = 0, limit = 20) => {
+// 내 플레이리스트 불러오기 (limit을 화면 크기에 맞게 동적 설정)
+// playlistApi.ts
+export const fetchPlaylist = async (offset = 0, limit = 5) => {
   const accessToken = await getPrivateAccessToken();
 
   const res = await axios.get(`${BASEURL}/me/playlists`, {
@@ -32,6 +33,24 @@ export const fetchPlaylist = async (offset = 0, limit = 20) => {
   });
 
   return res.data;
+};
+
+// 추천 플레이리스트 불러오기 (limit을 화면 크기에 맞게 동적 설정)
+export const recommandPlaylist = async (offset = 0, limit = 5) => {
+  const accessToken = await getAccessToken();
+
+  const res = await axios.get(`${BASEURL}/browse/featured-playlists`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json"
+    },
+    params: {
+      offset: offset,
+      limit: limit
+    }
+  });
+
+  return res.data.playlists;
 };
 
 // 플레이리스트에 곡 추가하기
@@ -66,28 +85,20 @@ export const deletePlaylist = async (playlistId: string) => {
   return res.data;
 };
 
-// 추천 플레이리스트 불러오기
-export const recommandPlaylist = async (offset = 0, limit = 20) => {
-  const accessToken = await getAccessToken();
+// 항목 검색 (곡 & 아티스트)
+export const searchMenu = async (query: string | null) => {
+  const accessToken = await getPrivateAccessToken();
 
-  const res = await axios.get(`${BASEURL}/browse/featured-playlists`, {
+  const res = await axios.get(`${BASEURL}/search`, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json"
+      Authorization: `Bearer ${accessToken}`
     },
     params: {
-      offset: offset,
-      limit: limit
+      q: query,
+      type: "track,artist",
+      limit: 10
     }
   });
-
-  return res.data.playlists;
-};
-
-// 항목 검색
-export const searchMenu = async () => {
-  const res = await fetch(`${BASEURL}/search`);
-  const data = res.json();
-  console.log(data);
-  return data;
+  console.log(res.data.tracks.items);
+  return res.data.tracks.items;
 };

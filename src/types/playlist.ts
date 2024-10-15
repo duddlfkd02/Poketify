@@ -50,3 +50,17 @@ export interface PlaylistData {
     items: TrackList[];
   };
 }
+
+interface Artist {
+  name: string;
+}
+
+export interface SongMenu {
+  id: string;
+  name: string;
+  uri: string; // 여기에 uri 추가
+  artists: { name: string }[];
+  album: {
+    images: { url: string }[];
+  };
+}

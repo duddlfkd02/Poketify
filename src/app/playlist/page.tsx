@@ -3,6 +3,7 @@
 import MyPlaylist from "@/components/MyPlaylist";
 import RecommendPlaylist from "@/components/RecommendPlaylist";
 import SearchSong from "@/components/SearchSong";
+import SelectedPlaylist from "@/components/SelectedPlaylist";
 import SongList from "@/components/SongList";
 import { useState } from "react";
 
@@ -22,8 +23,13 @@ const PlaylistPage = () => {
           <SongList playlistId={selectedPlaylist} />
         </article>
         <article className="w-[70%] min-h-[80vh] bg-white p-7 flex flex-col justify-between flex-grow gap-3">
-          <div className="flex-1">
-            <SearchSong />
+          <div className="flex-1 flex gap-3">
+            <div className="flex-1">
+              <SearchSong />
+            </div>
+            <div className="flex-1">
+              <SelectedPlaylist />
+            </div>
           </div>
           <div className="flex-1">
             <MyPlaylist onPlaylistSelect={onPlaylistSelect} />

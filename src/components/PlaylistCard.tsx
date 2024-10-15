@@ -18,7 +18,7 @@ const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
           <Image src={playlist.images[0].url} alt={playlist.name} width={130} height={130} style={{ height: "auto" }} />
         )}
       </div>
-      <p className="text-center text-sm w-[130px] h-[1rem]">{playlist.name}</p>
+      <p className="text-center text-sm w-[130px] h-[1rem] font-semibold">{playlist.name}</p>
     </div>
   );
 };

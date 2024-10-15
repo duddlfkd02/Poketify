@@ -1,8 +1,10 @@
 import { PlaylistResponse } from "@/types/playlist";
 import { recommandPlaylist } from "@/utils/playlistApi";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PlaylistCard from "./PlaylistCard";
+import { IoMdArrowDropleft } from "react-icons/io";
+import { IoMdArrowDropright } from "react-icons/io";
 
 interface RecommendPlaylistProps {
   onPlaylistSelect: (id: string) => void;
@@ -10,59 +12,76 @@ interface RecommendPlaylistProps {
 
 const RecommendPlaylist = ({ onPlaylistSelect }: RecommendPlaylistProps) => {
   const [offset, setOffset] = useState(0);
-  const limit = 5;
+  const [limit, setLimit] = useState(5); // 동적 limit 설정을 위한 state
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setLimit(3);
+      } else if (width >= 640 && width < 1600) {
+        setLimit(5);
+      } else {
+        setLimit(7);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const {
     data: playlists,
     isLoading,
     error
   } = useQuery<PlaylistResponse>({
-    queryKey: ["recommendPlaylist", offset],
+    queryKey: ["recommendPlaylist", offset, limit],
     queryFn: () => recommandPlaylist(offset, limit)
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>플레이리스트를 불러오는 데 실패했습니다. 다시 시도해 주세요.</div>;
-  }
-
-  if (!playlists || !Array.isArray(playlists.items) || playlists.items.length === 0) {
-    return <div>playlist가 없습니다</div>;
-  }
-
-  // 다음 페이지로 이동하는 함수
   const handleNextPage = () => {
-    if (playlists.items.length === limit) {
+    if (playlists && playlists.items.length === limit) {
       setOffset((prev) => prev + limit);
+    } else {
+      setOffset(0);
     }
   };
 
-  // 이전 페이지로 이동하는 함수
   const handlePrevPage = () => {
     setOffset((prev) => Math.max(0, prev - limit));
   };
 
   return (
-    <div className="flex flex-col justify-between gap-4 pt-4 bg-blue-50 p-4 rounded">
+    <div className="flex flex-col justify-between gap-4 pt-4 bg-blue-100 p-4 rounded min-h-full relative">
       <h3 className="font-bold text-playlist-h3 text-left">추천 플레이리스트</h3>
-      <div className="flex justify-between items-center">
-        <button onClick={handlePrevPage} disabled={offset === 0} className="bg-gray-300 rounded p-2">
-          이전
+      <div className="min-h-[90%]">
+        <button onClick={handlePrevPage} disabled={offset === 0} className="absolute top-1/2 left-5">
+          <IoMdArrowDropleft size={30} />
         </button>
-        <div className="flex gap-4 overflow-hidden w-full justify-center">
-          <ul className="w-[90%] flex list-none gap-4 justify-start">
-            {playlists.items.map((playlist) => (
-              <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer">
-                <PlaylistCard playlist={playlist} />
+        <div className="flex gap-4 overflow-hidden w-full justify-center p-4">
+          <ul className="w-[30%] flex list-none gap-4 items-center justify-center ">
+            {isLoading && (
+              <li className="flex justify-center items-center w-full text-lg font-bold min-h-[130px]">Loading...</li>
+            )}
+            {error && (
+              <li className="flex justify-center items-center w-full text-lg font-bold min-h-[130px]">
+                플레이리스트를 불러오는 데 실패했습니다. 다시 시도해 주세요.
               </li>
-            ))}
+            )}
+            {playlists &&
+              playlists.items.map((playlist) => (
+                <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer">
+                  <PlaylistCard playlist={playlist} />
+                </li>
+              ))}
           </ul>
         </div>
-        <button onClick={handleNextPage} disabled={playlists.items.length < limit} className="bg-gray-300 rounded p-2">
-          다음
+        <button onClick={handleNextPage} className="absolute top-1/2 right-5">
+          <IoMdArrowDropright size={30} />
         </button>
       </div>
     </div>
