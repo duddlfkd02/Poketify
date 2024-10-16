@@ -4,7 +4,6 @@ import { SearchTrack } from "@/types/search";
 import { useSearchData } from "@/hooks/useSearchData";
 import TrackCard from "@/components/TrackCard";
 import Pagination from "@/components/Pagination";
-import SkeletonList from "@/components/skeleton/SkeletonList";
 
 export default function SearchPage({
   searchParams
@@ -14,7 +13,7 @@ export default function SearchPage({
   const query = Array.isArray(searchParams?.query) ? searchParams.query[0] : searchParams?.query || "";
   const pageQuery = searchParams?.page ? Number(searchParams.page) : 1;
 
-  const { results, totalPages, currentPage, setCurrentPage, fetchData, isLoading } = useSearchData(query, pageQuery);
+  const { results, totalPages, currentPage, setCurrentPage, fetchData } = useSearchData(query, pageQuery);
 
   // 페이지 이동 함수
   const movePage = (page: number) => {
@@ -31,23 +30,19 @@ export default function SearchPage({
         <h1 className="text-left text-black text-5xl font-bold mb-5">검색 결과</h1>
         <hr className="mb-8 border-t border-custom-blue" />
 
-        {isLoading ? (
-          <SkeletonList count={10} />
-        ) : (
-          <div className="flex flex-wrap">
-            {results.map((track: SearchTrack) => (
-              <div
-                key={track.id}
-                className="w-full sm:w-1/3 p-2" // 작은 화면에서는 1열, 큰 화면에서는 2열
-              >
-                <div className="p-4">
-                  <TrackCard track={track} />
-                </div>
-                {/* <hr className="mb-4 border-t border-custom-blue" /> */}
+        <div className="flex flex-wrap">
+          {results.map((track: SearchTrack) => (
+            <div
+              key={track.id}
+              className="w-full sm:w-1/3 p-2" // 작은 화면에서는 1열, 큰 화면에서는 2열
+            >
+              <div className="p-4">
+                <TrackCard track={track} />
               </div>
-            ))}
-          </div>
-        )}
+              {/* <hr className="mb-4 border-t border-custom-blue" /> */}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="mx-auto w-full max-w-3xl flex justify-center mt-20 mb-20">
         <Pagination totalPages={totalPages} currentPage={currentPage} pageRange={10} movePage={movePage} />
