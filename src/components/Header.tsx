@@ -55,45 +55,46 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full p-4 shadow-md bg-white z-50">
-      <div className="container mx-auto flex justify-between items-center">
-        <div>
-          <Link href="/main" className="text-2xl font-medium font-cafe24meongi text-custom-blue">
+      <div className="relative   w-[98%] mx-auto flex flex-col gap-4">
+        <div className="flex justify-between md:justify-end items-start">
+          <Link
+            href="/main"
+            className="md:absolute md:top-1/2 md:left-0 md:-translate-y-1/2 text-4xl font-medium font-cafe24meongi text-custom-blue"
+          >
             poketify
           </Link>
-        </div>
 
-        <div>
           <SearchBar />
         </div>
 
-        <nav>
+        <nav className="ml-auto">
           <ul className="flex space-x-6">
             <li>
-              <Link href={"/community/list"} className="hover:text-custom-blue">
+              <Link href={"/community/list"} className="nexon hover:text-custom-blue">
                 Community
               </Link>
             </li>
             {session ? (
               <>
                 <li>
-                  <Link href="/playlist" className="hover:text-custom-blue">
+                  <Link href="/playlist" className="nexon hover:text-custom-blue">
                     Playlist
                   </Link>
                 </li>
                 <li>
-                  <Link href="/mypage" className="hover:text-custom-blue">
+                  <Link href="/mypage" className="nexon hover:text-custom-blue">
                     My Page
                   </Link>
                 </li>
                 <li>
-                  <button onClick={handleLogout} className="hover:text-custom-blue">
+                  <button onClick={handleLogout} className="nexon hover:text-custom-blue">
                     Logout
                   </button>
                 </li>
               </>
             ) : (
               <li>
-                <Link href="/auth" className="hover:text-custom-blue">
+                <Link href="/auth" className="nexon hover:text-custom-blue">
                   Login
                 </Link>
               </li>

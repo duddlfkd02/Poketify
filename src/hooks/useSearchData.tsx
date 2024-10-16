@@ -2,7 +2,7 @@ import { SearchTrack } from "@/types/search"; // 타입스크립트
 import { searchTracks } from "@/lib/spotifyToken"; // 토큰
 import { useEffect, useState } from "react";
 
-export const useSearchData = (query: string, pageQuery: number, limit = 20) => {
+export const useSearchData = (query: string, pageQuery: number, limit = 18) => {
   const [results, setResults] = useState<SearchTrack[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);

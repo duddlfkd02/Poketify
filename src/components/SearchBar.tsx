@@ -28,25 +28,23 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSearch}>
-        <div className="relative w-full max-w-md">
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="곡 이름이나 아티스트를 검색하세요"
-            className="w-96 py-2 px-4 text-sm border-solid border border-gray-200 rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue transition duration-300"
-          />
-          <button
-            type="submit"
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 "
-            onClick={handleFocus} // 포커스 핸들러
-          >
-            <Search strokeWidth={2} size={20} className="text-custom-blue " />
-          </button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSearch}>
+      <div className="relative w-full max-w-md">
+        <button
+          type="submit"
+          className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 "
+          onClick={handleFocus} // 포커스 핸들러
+        >
+          <Search strokeWidth={2} size={20} className="h-auto text-custom-blue " />
+        </button>
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="곡 이름이나 아티스트를 검색하세요"
+          className="w-40 md:w-80 lg:w-96 py-2 px-4 pl-12 text-sm border-solid border border-custom-skyblue rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue transition duration-300"
+        />
+      </div>
+    </form>
   );
 }

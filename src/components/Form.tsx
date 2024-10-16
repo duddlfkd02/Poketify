@@ -5,7 +5,7 @@ import { FormType } from "@/types/FormType";
 import browserClient from "@/supabase/client";
 import { supabase } from "@/supabase/supabase";
 import { useRouter } from "next/navigation";
-import GetUserNickname from "./GetUserNickname";
+import { UserToken } from "@/types/UserData";
 
 const randomId = crypto.randomUUID();
 const initialData = {
@@ -31,14 +31,10 @@ const Form = ({ params, isEdit }: Props) => {
     setFormData(data ? data[0] : initialData);
   };
 
-  const getUserNickname = async () => {
-    const { userNickname } = await GetUserNickname();
-
-    setFormData({ ...formData, user_nickname: userNickname });
-  };
-
   useEffect(() => {
-    getUserNickname();
+    const loginData: UserToken = JSON.parse(localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token") as string);
+
+    setFormData({ ...formData, user_nickname: loginData.user.identities[0].identity_data.name });
 
     if (!!isEdit) {
       fetchData();

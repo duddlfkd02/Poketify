@@ -22,6 +22,10 @@
   font-family: "NEXON Lv1 Gothic OTF", sans-serif;
 }
 @layer components {
+  .nexon {
+    @apply !font-nexon;
+  }
+
   .wrap {
     @apply w-[96%] max-w-[1600px] mx-auto mt-10 mb-20;
   }
