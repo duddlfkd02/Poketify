@@ -51,7 +51,7 @@ export default function Auth() {
 
     console.log("existingProfile =>", existingProfile);
     // 기존 프로필이 업데이트 되었으면 이미지를 바로 리턴
-    if (existingProfile.profile_image) {
+    if (existingProfile?.profile_image) {
       return;
     }
 
