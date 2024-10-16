@@ -50,9 +50,7 @@ const Form = ({ params, isEdit }: Props) => {
   };
 
   const writeHandler = async () => {
-    await supabase
-      .from("posts")
-      .insert({ ...formData, playlist_id: formData.playlist_id.split("playlist/")[1].trim() });
+    await supabase.from("posts").insert(formData);
   };
 
   const editHandler = async () => {
@@ -74,7 +72,7 @@ const Form = ({ params, isEdit }: Props) => {
       await writeHandler();
     }
 
-    router.push(`/community/detail/${randomId}`);
+    router.replace(`/community/detail/${randomId}`);
   };
 
   return (
@@ -143,7 +141,7 @@ const Form = ({ params, isEdit }: Props) => {
           </div>
         </div>
 
-        <button type="submit" className="button mt-8">
+        <button type="submit" className="button blue_button mt-3 ml-auto">
           완료
         </button>
       </form>

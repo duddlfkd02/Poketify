@@ -51,7 +51,7 @@ const List = () => {
         <WriteButton />
       </div>
 
-      <div className="paging flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center font-cafe24meongi text-3xl font-thin">
         <Paging nowPage={parseInt(page)} totalCount={Math.ceil(listData?.count / perPage)} />
       </div>
     </div>
