@@ -49,14 +49,12 @@ export default function Auth() {
       return;
     }
 
-    console.log("existingProfile =>", existingProfile);
-    console.log("fetchError =>", fetchError);
     // 기존 프로필이 업데이트 되었으면 이미지를 바로 리턴
-    if (existingProfile.profile_image) {
+    if (existingProfile?.profile_image) {
       return;
     }
-    if (existingProfile) {
-      console.log("test =>", profileData);
+
+    if (!!existingProfile) {
       const { error: updateError } = await supabase.from("profile").update(profileData).eq("id", user.id);
 
       if (updateError) {
@@ -65,8 +63,7 @@ export default function Auth() {
         console.log("프로필이 업데이트 되었습니다.:", profileData);
       }
     } else {
-      console.log("profileData =>", profileData);
-      const { error: insertError } = await supabase.from("profile").insert([profileData]);
+      const { error: insertError } = await supabase.from("profile").insert(profileData);
 
       if (insertError) {
         console.error("프로필을 삽입하는 중에 오류가 발생했습니다:", insertError);
