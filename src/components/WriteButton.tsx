@@ -4,14 +4,19 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const WriteButton = () => {
-  const [isLogin, setIsLogin] = useState<string>("undefined");
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLogin(String(localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token")));
+    const getToken = localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token");
+    if (!getToken) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
   }, []);
   return (
     <>
-      {isLogin !== "undefined" ? (
+      {!isLogin ? (
         <Link className="button blue_button" href={"/community/write"}>
           글쓰기
         </Link>

@@ -30,9 +30,9 @@ const Paging = ({ nowPage, totalCount }: Props) => {
         <Link
           key={"page" + i}
           href={`/community/list?page=${i}`}
-          className={`flex items-center justify-center w-8 h-8 ${
-            nowPage === i ? "font-bold text-custom-blue" : undefined
-          }`}
+          className={`mx-1 px-3 py-1 cursor-pointer ${
+            nowPage === i ? "text-custom-blue font-semibold" : "text-gray-500 hover:text-custom-blue"
+          } transition-all duration-300 ease-in-out`}
         >
           {i}
         </Link>
@@ -66,11 +66,11 @@ const Paging = ({ nowPage, totalCount }: Props) => {
   return (
     <>
       <div className="prev cursor-pointer" onClick={handleClickPrev}>
-        <ChevronLeft />
+        <ChevronLeft strokeWidth={1} size={30} className="text-gray-500 hover:text-custom-blue my-2 text-2xl" />
       </div>
       {makePaging(pageOfPaging)}
       <div className="next cursor-pointer" onClick={handleClickNext}>
-        <ChevronRight />
+        <ChevronRight strokeWidth={1} size={30} className="text-gray-500 hover:text-custom-blue my-2 text-2xl" />
       </div>
     </>
   );

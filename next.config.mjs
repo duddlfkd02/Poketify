@@ -20,6 +20,15 @@ const nextConfig = {
       }
     ],
     domains: ["i.scdn.co", "fhecalqtqccmzoqyjytv.supabase.co"]
+  },
+  async redirects() {
+    return [
+      {
+        source: "/playlist",
+        destination: "/auth",
+        permanent: true
+      }
+    ];
   }
 };
 
