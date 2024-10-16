@@ -72,7 +72,7 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
             )}
             {error && (
               <li className="flex justify-center items-center w-full h-[100px] text-lg font-bold">
-                플레이리스트를 불러오는 데 실패했습니다. 다시 시도해 주세요.
+                로그인 후 사용가능합니다
               </li>
             )}
             {myplaylist && Array.isArray(myplaylist.items) && myplaylist.items.length === 0 && (

@@ -22,8 +22,8 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ playlistId }) => {
     <div className="border border-solid border-custom-skyblue rounded h-full p-4">
       <h3 className="font-bold mb-4 text-[1.3rem] text-center bg-gray-200 pt-2 pb-2">현재 플레이리스트</h3>
 
-      {isLoading && <div>Loading...</div>}
-      {error && <div>플레이리스트를 불러오던 중 에러가 발생했습니다: {error.message}</div>}
+      {isLoading && <div className="text-center">Loading...</div>}
+      {error && <div className="text-center">로그인 후 사용가능합니다.</div>}
       {!selectPlaylist ? (
         <div className="text-center mt-4">선택된 플레이리스트가 없습니다</div>
       ) : (
