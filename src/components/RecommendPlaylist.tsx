@@ -56,13 +56,13 @@ const RecommendPlaylist = ({ onPlaylistSelect }: RecommendPlaylistProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-between gap-4 pt-4 bg-blue-100 p-4 rounded min-h-full relative">
-      <h3 className="font-bold text-playlist-h3 text-left">추천 플레이리스트</h3>
+    <div className="flex flex-col justify-between gap-4 pt-4 border border-solid border-custom-skyblue  p-4  min-h-full relative">
+      <h3 className="font-bold text-left text-[1.3rem]">추천 플레이리스트</h3>
       <div className="min-h-[90%]">
         <button onClick={handlePrevPage} disabled={offset === 0} className="absolute top-1/2 left-5">
           <IoMdArrowDropleft size={30} />
         </button>
-        <div className="flex gap-4 overflow-hidden w-full justify-center p-4">
+        <div className="flex gap-4 overflow-hidden w-full justify-center ">
           <ul className="w-[30%] flex list-none gap-4 items-center justify-center ">
             {isLoading && (
               <li className="flex justify-center items-center w-full text-lg font-bold min-h-[130px]">Loading...</li>

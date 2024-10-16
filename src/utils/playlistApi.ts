@@ -13,12 +13,12 @@ export const fetchSongsByPlaylist = async (playlistId: string) => {
       Authorization: `Bearer ${accessToken}`
     }
   });
-  console.log(res.data);
+  console.log("항목을 보여줘", res.data);
   return res.data;
 };
 
-// 내 플레이리스트 불러오기 (limit을 화면 크기에 맞게 동적 설정)
-// playlistApi.ts
+// 내 플레이리스트 불러오기
+
 export const fetchPlaylist = async (offset = 0, limit = 5) => {
   const accessToken = await getPrivateAccessToken();
 
@@ -31,11 +31,11 @@ export const fetchPlaylist = async (offset = 0, limit = 5) => {
       limit: limit
     }
   });
-
+  console.log("내플", res.data);
   return res.data;
 };
 
-// 추천 플레이리스트 불러오기 (limit을 화면 크기에 맞게 동적 설정)
+// 추천 플레이리스트 불러오기
 export const recommandPlaylist = async (offset = 0, limit = 5) => {
   const accessToken = await getAccessToken();
 
@@ -54,12 +54,18 @@ export const recommandPlaylist = async (offset = 0, limit = 5) => {
 };
 
 // 플레이리스트에 곡 추가하기
-export const addPlaylist = async (playlistId: string, newSongUri: string) => {
+export const addPlaylist = async (playlistId: string | null, uri: string) => {
   const accessToken = await getPrivateAccessToken();
+  console.log("ididid", playlistId);
+  console.log("추가", uri);
+  console.log("Access Token:", accessToken);
 
   const res = await axios.post(
     `${BASEURL}/playlists/${playlistId}/tracks`,
-    { uris: [newSongUri] },
+    {
+      uris: [uri], // 배열로 수정
+      position: 0
+    },
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -68,21 +74,25 @@ export const addPlaylist = async (playlistId: string, newSongUri: string) => {
     }
   );
 
+  console.log(res.data);
   return res.data;
 };
 
-// 플레이리스트 삭제하기
-export const deletePlaylist = async (playlistId: string) => {
-  const accessToken = await getAccessToken();
+// 플레이리스트에서 트랙 삭제하기
+export const removeTrackFromPlaylist = async (playlistId: string, trackUri: string) => {
+  const accessToken = await getPrivateAccessToken();
 
-  const res = await axios.delete(`${BASEURL}/playlists/${playlistId}/followers`, {
+  const response = await axios.delete(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json"
+    },
+    data: {
+      tracks: [{ uri: trackUri }]
     }
   });
 
-  return res.data;
+  return response.data;
 };
 
 // 항목 검색 (곡 & 아티스트)
@@ -99,6 +109,20 @@ export const searchMenu = async (query: string | null) => {
       limit: 10
     }
   });
-  console.log(res.data.tracks.items);
+
   return res.data.tracks.items;
+};
+
+// 플레이리스트 불러오기
+export const getPlaylist = async (playlistId: string | null) => {
+  const accessToken = await getPrivateAccessToken();
+  const res = await axios.get(`${BASEURL}/playlists/${playlistId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json"
+    }
+  });
+
+  console.log(res.data);
+  return res.data;
 };

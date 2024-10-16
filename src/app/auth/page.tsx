@@ -17,7 +17,8 @@ export default function Auth() {
       provider: "spotify",
       options: {
         redirectTo: "http://localhost:3000/auth/callback",
-        scopes: "user-read-private playlist-read-private playlist-read-collaborative"
+        scopes:
+          "user-read-private playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public"
       }
     });
 

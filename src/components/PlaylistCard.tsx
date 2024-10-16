@@ -2,7 +2,7 @@ import { Playlists } from "@/types/playlist";
 import Image from "next/image";
 import React from "react";
 
-interface PlaylistCardProps {
+export interface PlaylistCardProps {
   playlist: Playlists;
 }
 
