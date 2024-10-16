@@ -18,7 +18,7 @@ export default function Auth() {
       options: {
         redirectTo: "http://localhost:3000/auth/callback",
         scopes:
-          "user-read-private playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public"
+          "user-read-private playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-playback-state user-modify-playback-state user-read-currently-playing app-remote-control streaming"
       }
     });
 

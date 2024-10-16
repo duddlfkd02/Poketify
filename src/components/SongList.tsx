@@ -1,8 +1,11 @@
-import { fetchSongsByPlaylist, removeTrackFromPlaylist } from "@/utils/playlistApi";
+import { fetchSongsByPlaylist, playTrack, removeTrackFromPlaylist } from "@/utils/playlistApi";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import Image from "next/image";
 import { PlaylistData } from "@/types/playlist";
+import { useTrackStore } from "@/store/useTrackStore";
+import { FaPlay } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 interface SongListProps {
   playlistId: string | null;
@@ -10,8 +13,20 @@ interface SongListProps {
 
 const SongList = ({ playlistId }: SongListProps) => {
   const queryClient = useQueryClient();
-  const [hoveredTrackId, setHoveredTrackId] = useState<string | null>(null); // 트랙 ID 상태 관리
+  const [hoveredTrackId, setHoveredTrackId] = useState<string | null>(null);
+  const setTrackUri = useTrackStore((state) => state.setTrackUri);
 
+  // 곡 재생
+  const handlePlayTrack = async (trackUri: string) => {
+    const currentPosition = useTrackStore.getState().currentPosition;
+    setTrackUri(trackUri);
+    try {
+      await playTrack(trackUri, currentPosition);
+      console.log("트랙 재생 성공");
+    } catch (error) {
+      console.error("트랙 재생 실패:", error);
+    }
+  };
   // 곡 목록 가져오기
   const {
     data: playlistData,
@@ -60,8 +75,8 @@ const SongList = ({ playlistId }: SongListProps) => {
             <li
               key={song.track.id}
               className="flex items-center space-x-4 mb-2 relative border border-solid p-2 border-gray-400"
-              onMouseEnter={() => setHoveredTrackId(song.track.id)} // 마우스 오버 시 트랙 ID 설정
-              onMouseLeave={() => setHoveredTrackId(null)} // 마우스 리브 시 트랙 ID 초기화
+              onMouseEnter={() => setHoveredTrackId(song.track.id)}
+              onMouseLeave={() => setHoveredTrackId(null)}
             >
               <Image
                 src={song.track.album.images[0]?.url}
@@ -74,14 +89,15 @@ const SongList = ({ playlistId }: SongListProps) => {
                 <p className="font-bold">{song.track.name}</p>
                 <p>{song.track.artists.map((artist) => artist.name).join(", ")}</p>
               </div>
-              {/* 버튼의 가시성을 상태에 따라 조정 */}
+              <button className="cursor-pointer" onClick={() => handlePlayTrack(song.track.uri)}>
+                <FaPlay />
+              </button>
               {hoveredTrackId === song.track.id && (
-                <button
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-custom-green p-2 border border-solid"
-                  onClick={() => handleRemoveTrack(song.track.uri)}
-                >
-                  삭제
-                </button>
+                <div className="flex flex-col">
+                  <button className="absolute right-2 top-2  text-sm" onClick={() => handleRemoveTrack(song.track.uri)}>
+                    <IoClose size={20} />
+                  </button>
+                </div>
               )}
             </li>
           ))}

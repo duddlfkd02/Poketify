@@ -56,14 +56,10 @@ export const recommandPlaylist = async (offset = 0, limit = 5) => {
 // 플레이리스트에 곡 추가하기
 export const addPlaylist = async (playlistId: string | null, uri: string) => {
   const accessToken = await getPrivateAccessToken();
-  console.log("ididid", playlistId);
-  console.log("추가", uri);
-  console.log("Access Token:", accessToken);
-
   const res = await axios.post(
     `${BASEURL}/playlists/${playlistId}/tracks`,
     {
-      uris: [uri], // 배열로 수정
+      uris: [uri],
       position: 0
     },
     {
@@ -125,4 +121,62 @@ export const getPlaylist = async (playlistId: string | null) => {
 
   console.log(res.data);
   return res.data;
+};
+
+// 재생바 실행 -----------------------------
+// 재생 시작 API 호출
+export const playTrack = async (trackUri: string | null, position: number) => {
+  const accessToken = await getPrivateAccessToken();
+
+  try {
+    const response = await axios.put(
+      `${BASEURL}/me/player/play`,
+      {
+        uris: [trackUri],
+        position_ms: position
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error playing track:", error);
+    throw error;
+  }
+};
+
+// 일시 정지 API 호출
+export const pauseTrack = async () => {
+  const accessToken = await getPrivateAccessToken();
+  try {
+    await axios.put(
+      `${BASEURL}/me/player/pause`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    const response = await axios.get(`${BASEURL}/me/player/currently-playing`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+
+    if (response.data && response.data.item) {
+      return response.data.progress_ms;
+    }
+    return 0;
+  } catch (error) {
+    console.error("Error pausing track:", error);
+    throw error;
+  }
 };
