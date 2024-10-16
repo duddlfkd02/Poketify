@@ -22,7 +22,6 @@ const SongList = ({ playlistId }: SongListProps) => {
     setTrackUri(trackUri);
     try {
       await playTrack(trackUri, currentPosition);
-      console.log("트랙 재생 성공");
     } catch (error) {
       console.error("트랙 재생 실패:", error);
     }

@@ -14,7 +14,6 @@ export default function SpotifyAnimelist() {
     const fetchSpotifyData = async () => {
       try {
         const playlistData = await getSpotifyAnimelist();
-        console.log("Fetched Spotify Data:", playlistData);
         setTracks(playlistData.items.filter((item: SpotifyAnimelistTrack) => item.track !== null)); // 받아온 데이터를 상태에 저장
       } catch (error) {
         console.error("Error fetching Spotify animation list:", error);
@@ -27,7 +26,7 @@ export default function SpotifyAnimelist() {
   const handleNext = () => {
     setCurrentIndex((prevIndex) => {
       const number = Math.min(prevIndex + itemsPerPage, tracks.length - itemsPerPage);
-      console.log("number=>", number);
+
       return number;
     });
   };
