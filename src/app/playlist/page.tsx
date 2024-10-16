@@ -5,7 +5,7 @@ import RecommendPlaylist from "@/components/RecommendPlaylist";
 import SearchSong from "@/components/SearchSong";
 import SelectedPlaylist from "@/components/SelectedPlaylist";
 import SongList from "@/components/SongList";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PlaylistPage = () => {
