@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { FaRegSquarePlus } from "react-icons/fa6";
+import Playbar from "./Playbar";
 
 // Throttle 함수
 const useThrottle = <T,>(value: T, limit: number): T => {
@@ -60,7 +61,7 @@ const SearchSong: React.FC<{ playlistId: string }> = ({ playlistId }) => {
         placeholder="곡을 입력해주세요"
         value={song}
         onChange={(e) => setSong(e.target.value)}
-        className="w-full h-[2.5rem] p-2 focus:outline-none bg-blue-100 pl-4 mx-auto"
+        className="w-full h-[2.5rem] p-2 focus:outline-none border border-solid border-custom-blue rounded pl-4 mx-auto"
       />
       {throttledSong && (
         <div className="absolute top-24 left-4 bg-white border mt-2 p-4 w-[calc(100%-2rem)] z-10">
@@ -87,6 +88,7 @@ const SearchSong: React.FC<{ playlistId: string }> = ({ playlistId }) => {
           </ul>
         </div>
       )}
+      <Playbar />
     </div>
   );
 };
