@@ -13,9 +13,13 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "mosaic.scdn.co"
+      },
+      {
+        protocol: "https",
+        hostname: "fhecalqtqccmzoqyjytv.supabase.co"
       }
     ],
-    domains: ["i.scdn.co"]
+    domains: ["i.scdn.co", "fhecalqtqccmzoqyjytv.supabase.co"]
   }
 };
 
