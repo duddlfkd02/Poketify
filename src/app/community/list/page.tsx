@@ -7,7 +7,7 @@ import { supabase } from "@/supabase/supabase";
 import { FormType } from "@/types/FormType";
 import { useEffect, useState } from "react";
 
-const perPage: number = 1; // 한 번에 보여 줄 게시글 개수
+const perPage: number = 20; // 한 번에 보여 줄 게시글 개수
 
 type ListType = {
   data?: FormType[];

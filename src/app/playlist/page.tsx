@@ -12,7 +12,6 @@ const PlaylistPage = () => {
 
   // 플레이리스트 선택 핸들러
   const onPlaylistSelect = (id: string | null) => {
-    console.log("Selected Playlist ID:", id);
     setSelectedPlaylist(id);
   };
 

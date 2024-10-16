@@ -13,7 +13,6 @@ export const fetchSongsByPlaylist = async (playlistId: string) => {
       Authorization: `Bearer ${accessToken}`
     }
   });
-  console.log("항목을 보여줘", res.data);
   return res.data;
 };
 
@@ -31,7 +30,6 @@ export const fetchPlaylist = async (offset = 0, limit = 5) => {
       limit: limit
     }
   });
-  console.log("내플", res.data);
   return res.data;
 };
 
@@ -70,7 +68,6 @@ export const addPlaylist = async (playlistId: string | null, uri: string) => {
     }
   );
 
-  console.log(res.data);
   return res.data;
 };
 
@@ -119,7 +116,6 @@ export const getPlaylist = async (playlistId: string | null) => {
     }
   });
 
-  console.log(res.data);
   return res.data;
 };
 
