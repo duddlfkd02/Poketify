@@ -69,17 +69,17 @@ const Header = () => {
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <Link href="/playlist" className="hover:text-custom-blue">
-                Playlist
-              </Link>
-            </li>
-            <li>
               <Link href={"/community/list"} className="hover:text-custom-blue">
                 Community
               </Link>
             </li>
             {session ? (
               <>
+                <li>
+                  <Link href="/playlist" className="hover:text-custom-blue">
+                    Playlist
+                  </Link>
+                </li>
                 <li>
                   <Link href="/mypage" className="hover:text-custom-blue">
                     My Page
