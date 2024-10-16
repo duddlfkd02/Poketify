@@ -4,6 +4,7 @@ import { CommentType } from "@/types/CommentType";
 import { useEffect, useState } from "react";
 import { Comment } from "@/components/Comment";
 import { UserToken } from "@/types/UserData";
+import browserClient from "@/supabase/client";
 
 type Props = {
   postId: string;
@@ -20,7 +21,7 @@ const CommentList = ({ postId }: Props) => {
   const [commentList, setCommentList] = useState<CommentListType>({ data: null, count: 0 });
 
   const getCommentList = async () => {
-    const { data, count } = await supabase.from("comment").select("*", { count: "exact" }).eq("post_id", postId);
+    const { data, count } = await browserClient.from("comment").select("*", { count: "exact" }).eq("post_id", postId);
 
     setCommentList({
       data: data!,
@@ -32,8 +33,8 @@ const CommentList = ({ postId }: Props) => {
     const loginData = localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token");
     setUserData(JSON.parse(loginData as string));
 
-    getCommentList();
-  }, []);
+    if (postId !== undefined) getCommentList();
+  }, [postId]);
 
   const addComment = async () => {
     if (!commentData) return alert("댓글을 입력해주세요");
