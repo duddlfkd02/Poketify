@@ -3,6 +3,7 @@ import { supabase } from "@/app/api/supabaseClient";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Session } from "@supabase/supabase-js";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const router = useRouter();
@@ -47,7 +48,7 @@ const Header = () => {
       const logoutWindow = window.open("https://accounts.spotify.com/logout", "_blank", "width=500,height=600");
       setTimeout(() => {
         logoutWindow?.close(); // Spotify 로그아웃을 하는 것을 새창으로 보여주기
-        router.push("/auth");
+        router.push("/main");
       }, 2000);
     }
   };
@@ -56,38 +57,43 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full p-4 shadow-md bg-white z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div>
-          <Link href="/" className="text-2xl font-bold">
+          <Link href="/main" className="text-2xl font-medium font-cafe24meongi text-custom-blue">
             poketify
           </Link>
         </div>
+
+        <div>
+          <SearchBar />
+        </div>
+
         <nav>
           <ul className="flex space-x-6">
             <li>
-              <Link href="/playlist" className="hover:text-gray-300">
+              <Link href="/playlist" className="hover:text-custom-blue">
                 Playlist
               </Link>
             </li>
             <li>
-              <Link href="/community" className="hover:text-gray-300">
+              <Link href={"/community/list"} className="hover:text-custom-blue">
                 Community
               </Link>
             </li>
             {session ? (
               <>
                 <li>
-                  <Link href="/mypage" className="hover:text-gray-300">
+                  <Link href="/mypage" className="hover:text-custom-blue">
                     My Page
                   </Link>
                 </li>
                 <li>
-                  <button onClick={handleLogout} className="hover:text-gray-300">
+                  <button onClick={handleLogout} className="hover:text-custom-blue">
                     Logout
                   </button>
                 </li>
               </>
             ) : (
               <li>
-                <Link href="/auth" className="hover:text-gray-300">
+                <Link href="/auth" className="hover:text-custom-blue">
                   Login
                 </Link>
               </li>

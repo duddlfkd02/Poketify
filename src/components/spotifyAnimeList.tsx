@@ -1,22 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getSpotifyNewlistItems } from "@/lib/spotifyToken";
-import { SpotifyNewTrack } from "@/types/spotify";
+import { getSpotifyAnimelist } from "@/lib/spotifyToken";
+import { SpotifyAnimelistTrack } from "@/types/spotify";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
-export default function SpotifyNewlist() {
-  const [tracks, setTracks] = useState<SpotifyNewTrack[]>([]);
+export default function SpotifyAnimelist() {
+  const [tracks, setTracks] = useState<SpotifyAnimelistTrack[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 6; // 한 번에 보여줄 항목 수
 
   useEffect(() => {
     const fetchSpotifyData = async () => {
       try {
-        const playlistData = await getSpotifyNewlistItems();
-        setTracks(playlistData.items);
+        const playlistData = await getSpotifyAnimelist();
+        console.log("Fetched Spotify Data:", playlistData);
+        setTracks(playlistData.items.filter((item: SpotifyAnimelistTrack) => item.track !== null)); // 받아온 데이터를 상태에 저장
       } catch (error) {
-        console.error("Error fetching Spotify data:", error);
+        console.error("Error fetching Spotify animation list:", error);
       }
     };
 
@@ -24,7 +25,11 @@ export default function SpotifyNewlist() {
   }, []);
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => Math.min(prevIndex + itemsPerPage, tracks.length - itemsPerPage));
+    setCurrentIndex((prevIndex) => {
+      const number = Math.min(prevIndex + itemsPerPage, tracks.length - itemsPerPage);
+      console.log("number=>", number);
+      return number;
+    });
   };
 
   const handlePrev = () => {
@@ -34,7 +39,7 @@ export default function SpotifyNewlist() {
   return (
     <div className="group relative mb-8">
       <div className="flex items-center mb-4">
-        <h2 className="text-xl font-semibold mr-auto">최신 발매</h2>
+        <h2 className="text-xl font-semibold mr-auto">애니메이션 발매</h2>
 
         <div className="flex w-14 md:w-20">
           {/* 왼쪽 버튼 */}
@@ -52,16 +57,18 @@ export default function SpotifyNewlist() {
           )}
         </div>
       </div>
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+        {/* 80 + 5 =85 84번 트랙까지 있, 85가 없음 */}
         {tracks.slice(currentIndex, currentIndex + itemsPerPage).map((item) => (
-          <div key={crypto.randomUUID()} className="flex flex-col relative ">
+          <div key={item.track.id} className="flex flex-col relative">
             <a href={item.track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
               <img
-                src={item.track.album.images[0].url}
+                src={item.track.album?.images?.[0]?.url || "/default-image.jpg"} // album과 images가 존재하는지 확인
                 alt={item.track.name}
-                className="rounded w-full h-auto cursor-pointer"
+                className="rounded w-full h-auto"
               />
-              <p className="mt-5 text-left cursor-pointer line-clamp-2">{item.track.name}</p>
+              <p className="mt-5 text-left line-clamp-2">{item.track.name}</p>
               <p className="text-left text-sm text-gray-400 mt-1 line-clamp-2">
                 {item.track.artists.map((artist) => artist.name).join(", ")}
               </p>

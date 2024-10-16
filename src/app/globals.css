@@ -4,3 +4,44 @@
 
 :root {
 }
+@font-face {
+  font-family: "Cafe24Meongi";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Meongi-W-v1.0.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NEXON Lv1 Gothic OTF";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: "NEXON Lv1 Gothic OTF", sans-serif;
+}
+@layer components {
+  .wrap {
+    @apply w-[96%] max-w-[1600px] mx-auto mt-10 mb-20;
+  }
+
+  .title {
+    @apply text-3xl font-bold py-4;
+  }
+
+  .button {
+    @apply flex w-fit py-2 px-4 border-solid border border-[#121212] rounded;
+  }
+
+  .blue_button {
+    @apply border-custom-blue bg-custom-blue hover:border-custom-skyblue hover:bg-custom-skyblue transition duration-300 text-white rounded;
+  }
+
+  .left_button {
+    @apply transition duration-300 scale-125 hover:scale-150;
+  }
+  .right_button {
+    @apply ml-auto transition duration-300 scale-125 hover:scale-150;
+  }
+}

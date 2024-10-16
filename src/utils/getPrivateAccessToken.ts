@@ -1,23 +1,4 @@
-// export const getAccessToken = async () => {
-//   const params = new URLSearchParams({
-//     grant_type: "client_credentials",
-//     client_id: SPOTIFY_CLIENT_ID,
-//     client_secret: SPOTIFY_CLIENT_SECRET
-//   });
-
-import { supabase } from "@/app/api/supabaseClient";
-
-//   const res = await fetch("https://accounts.spotify.com/api/token", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded"
-//     },
-//     body: params.toString()
-//   });
-
-//   const { access_token } = await res.json();
-//   return access_token;
-// };
+import { supabase } from "@/supabase/supabase";
 
 export const getPrivateAccessToken = async () => {
   const {

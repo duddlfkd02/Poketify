@@ -14,8 +14,8 @@ export function generateMetadata({ params }: Props) {
 
 const Edit = async ({ params }: { params: { id: string } }) => {
   return (
-    <div>
-      <h2>Edit</h2>
+    <div className="wrap ">
+      <h2 className="title">Edit</h2>
       <Form params={params.id} isEdit={true} />
     </div>
   );

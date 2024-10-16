@@ -47,6 +47,7 @@ export default function MyPage() {
         setError(profileError.message);
       } else {
         setProfile(data);
+        console.log(data);
       }
       setLoading(false);
     };
@@ -58,10 +59,15 @@ export default function MyPage() {
     const { name, value } = e.target;
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImageFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile((prev) => ({ ...prev, profile_image: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -71,7 +77,7 @@ export default function MyPage() {
     const { data, error: sessionError } = await supabase.auth.getSession();
 
     if (sessionError) {
-      console.error("세션을 가져오는 중에 오류가 발생했습니다.:", sessionError);
+      console.error("세션을 가져오는 중 오류:", sessionError);
       setError(sessionError.message);
       return;
     }
@@ -86,32 +92,36 @@ export default function MyPage() {
 
     if (imageFile) {
       try {
-        // UUID를 사용하여 새 파일 이름 생성
+        // 이미지 업로드 로직
         const fileExtension = imageFile.name.split(".").pop(); // 파일 확장자 가져오기
-        const newFileName = `${uuidv4()}.${fileExtension}`; // UUID와 확장자를 결합하여 새 파일 이름 생성
-        const filePath = `profile-image/${user.id}/${newFileName}`;
+        const newFileName = `${uuidv4()}.${fileExtension}`; // UUID로 새 파일명 생성
+        const filePath = `profile-image/${user.id}/${newFileName}`; // 파일 경로
 
+        // 파일 업로드
         const { error: uploadError } = await supabase.storage.from("default-image").upload(filePath, imageFile, {
           cacheControl: "3600",
-          upsert: false
+          upsert: false // 파일 덮어쓰지 않도록 설정
         });
 
         if (uploadError) {
-          console.error("Error uploading image:", uploadError);
+          console.error("이미지 업로드 중 오류:", uploadError);
           setError(uploadError.message);
           return;
         }
 
-        const { data: publicUrl } = supabase.storage.from("default-image").getPublicUrl(filePath);
-        if (publicUrl) {
-          profileImageUrl = publicUrl.publicUrl;
+        // Public URL 가져오기
+        const { data: publicUrlData } = supabase.storage.from("default-image").getPublicUrl(filePath);
 
+        console.log("업로드된 이미지의 Public URL:", profileImageUrl); // URL 확인용 로그
+        console.log("Public URL:", publicUrlData?.publicUrl);
+
+        if (publicUrlData?.publicUrl) {
+          profileImageUrl = publicUrlData.publicUrl;
           setProfile((prev) => ({ ...prev, profile_image: profileImageUrl }));
         }
-        console.log(profileImageUrl);
       } catch (error) {
-        console.error("이미지 업로드를 처리하는 중 오류가 발생했습니다.:", error);
-        setError("이미지를 업로드 하지 못 했습니다.");
+        console.error("이미지 업로드 처리 중 오류:", error);
+        setError("이미지 업로드 실패");
         return;
       }
     }
@@ -121,15 +131,15 @@ export default function MyPage() {
       .from("profile")
       .update({
         display_name: profile.display_name,
-        profile_image: profileImageUrl
+        profile_image: profileImageUrl // 저장된 Public URL을 업데이트
       })
       .eq("id", user.id);
 
     if (updateError) {
-      console.error("프로필을 업데이트 하는 중에 오류가 발생했습니다.:", updateError);
+      console.error("프로필 업데이트 중 오류:", updateError);
       setError(updateError.message);
     } else {
-      console.log("프로필이 업데이트 되었습니다.");
+      console.log("프로필이 성공적으로 업데이트되었습니다.");
       alert("프로필이 수정되었습니다!");
       router.refresh();
     }
@@ -151,6 +161,7 @@ export default function MyPage() {
               height={200}
               className="rounded-full"
               priority
+              unoptimized={true}
             />
           ) : (
             <Image
