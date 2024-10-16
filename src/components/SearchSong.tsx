@@ -39,7 +39,9 @@ const SearchSong: React.FC<{ playlistId: string }> = ({ playlistId }) => {
   const addTrackMutation = useMutation({
     mutationFn: (uri: string) => addPlaylist(playlistId, uri),
     onSuccess: () => {
-      queryClient.invalidateQueries(["getPlaylistTracks", playlistId]);
+      queryClient.invalidateQueries({
+        queryKey: ["getPlaylistTracks", playlistId]
+      });
       setSong("");
     }
   });
