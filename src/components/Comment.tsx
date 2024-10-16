@@ -1,15 +1,20 @@
 "use client";
 import { supabase } from "@/supabase/supabase";
 import { CommentType } from "@/types/CommentType";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import GetUserNickname from "./GetUserNickname";
 
 type Props = {
   commentData: CommentType;
   loginId: string | undefined;
   getCommentList: () => Promise<void>;
 };
-
+type LoginUser = {
+  userId: string;
+  userNickname: string;
+};
 export const Comment = ({ commentData, loginId, getCommentList }: Props) => {
+  const [loginUser, setLoginUser] = useState<LoginUser>();
   const [editComment, setEditComment] = useState<string | null>(commentData.comment);
   const [readOnly, setReadOnly] = useState<boolean>(true);
 
@@ -33,10 +38,22 @@ export const Comment = ({ commentData, loginId, getCommentList }: Props) => {
     await getCommentList();
   };
 
+  const getUserNickname = async () => {
+    const data = await GetUserNickname();
+
+    setLoginUser(data);
+  };
+
+  useEffect(() => {
+    getUserNickname();
+  }, [commentData]);
+
   return (
     <div className="relative flex flex-col gap-2 border border-solid border-[#e9e9e9] rounded p-4 pr-20 mt-4 min-h-24">
       <div className="flex items-center gap-2 text-sm">
-        <span className="writer">{commentData.user_nickname}</span>
+        <span className="writer">
+          {loginUser?.userId === commentData.user_id ? loginUser.userNickname : commentData.user_nickname}
+        </span>
         <span className="text-[#888888]">{commentData.created_at.slice(0, 10)}</span>
       </div>
       <input

@@ -3,6 +3,7 @@
 import { CommunityGetPlaylist } from "@/components/CommunityGetPlaylist";
 import DetailLayout from "@/components/DetailLayout";
 import DetailPlaylist from "@/components/DetailPlaylist";
+import GetUserNickname from "@/components/GetUserNickname";
 import { getAccessToken } from "@/lib/spotifyToken";
 import browserClient from "@/supabase/client";
 import { FormType } from "@/types/FormType";
@@ -19,13 +20,19 @@ const Detail = ({ params }: { params: { id: string } }) => {
   const [detailData, setDetailData] = useState<FormType>(initialData);
   const [hassPlaylist, setHasPlaylist] = useState<boolean>(false);
 
+  const getUserNickname = async (postData: FormType) => {
+    const { userNickname } = await GetUserNickname();
+
+    setDetailData({ ...postData, user_nickname: userNickname });
+  };
+
   useEffect(() => {
     const getDetail = async () => {
       const token = await getAccessToken();
 
       const { data } = await browserClient.from("posts").select().eq("id", params.id);
       const postData: FormType = data![0];
-      setDetailData(postData);
+      getUserNickname(postData);
 
       const playlist = await CommunityGetPlaylist(postData.playlist_id, token);
 

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Comment } from "@/components/Comment";
 import { UserToken } from "@/types/UserData";
 import browserClient from "@/supabase/client";
+import GetUserNickname from "./GetUserNickname";
 
 type Props = {
   postId: string;
@@ -15,8 +16,14 @@ type CommentListType = {
   count: number;
 };
 
+type LoginUser = {
+  userId: string;
+  userNickname: string;
+};
+
 const CommentList = ({ postId }: Props) => {
   const [userData, setUserData] = useState<UserToken | null>(null);
+  const [loginUser, setLoginUser] = useState<LoginUser>();
   const [commentData, setCommentData] = useState<string | null>("");
   const [commentList, setCommentList] = useState<CommentListType>({ data: null, count: 0 });
 
@@ -29,9 +36,16 @@ const CommentList = ({ postId }: Props) => {
     });
   };
 
+  const getUserNickname = async () => {
+    const data = await GetUserNickname();
+
+    setLoginUser(data);
+  };
+
   useEffect(() => {
     const loginData = localStorage.getItem("sb-fhecalqtqccmzoqyjytv-auth-token");
     setUserData(JSON.parse(loginData as string));
+    getUserNickname();
 
     if (postId !== undefined) getCommentList();
   }, [postId]);
@@ -43,7 +57,7 @@ const CommentList = ({ postId }: Props) => {
       comment: commentData,
       user_id: userData?.user.id,
       post_id: postId,
-      user_nickname: userData?.user.identities[0].identity_data.name
+      user_nickname: loginUser?.userNickname
     });
     if (res.error) {
       return console.error("error=>", res.error.message);
