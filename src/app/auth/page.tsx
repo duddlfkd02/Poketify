@@ -31,6 +31,7 @@ export default function Auth() {
   // 로그인 완료
   const handleLoginSuccess = async (session: Session) => {
     const { user } = session;
+    console.log("abc", user);
 
     const profileData = {
       id: user.id,
