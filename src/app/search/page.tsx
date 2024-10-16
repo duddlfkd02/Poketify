@@ -34,12 +34,11 @@ export default function SearchPage({
           {results.map((track: SearchTrack) => (
             <div
               key={track.id}
-              className="w-full sm:w-1/3 p-2" // 작은 화면에서는 1열, 큰 화면에서는 2열
+              className="w-full sm:w-1/3 p-2" // 작은 화면에서는 1열, 중간 화면에서는 2열 큰 화면에서는 3열
             >
               <div className="p-4">
                 <TrackCard track={track} />
               </div>
-              {/* <hr className="mb-4 border-t border-custom-blue" /> */}
             </div>
           ))}
         </div>

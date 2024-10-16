@@ -105,18 +105,22 @@ export default function Auth() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white">
-      <div className="bg-blue-200 justify-center p-12 rounded-lg w-96 border border-blue-400">
-        <h1 className="text-2xl font-semibold mb-4 text-center">Spotify 계정이 필요합니다.</h1>
+    <div className="flex justify-center wrap mx-auto mt-32">
+      <div>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
         {!session && (
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center">
             <button
               onClick={handleSpotifyLogin}
-              className="bg-custom-blue text-white py-2 px-4 rounded hover:bg-blue-800 transition duration-200 font-bold"
+              className="bg-custom-skyblue text-white py-3 px-28 rounded-full hover:bg-custom-blue transition duration-200 font-bold text-lg w-full text-center"
             >
-              Spotify login
+              Spotify Login
             </button>
+            <div>
+              <p className="text-custom-blue text-xs mt-2 text-center">
+                * Poketify를 이용하려면 Spotify 계정이 필요합니다.
+              </p>
+            </div>
           </div>
         )}
       </div>
