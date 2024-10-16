@@ -44,7 +44,13 @@ const DetailLayout = ({ postData, children }: Props) => {
       </div>
 
       <div className="content border-b border-solid border-custom-blue pb-6">
-        <div className="playlist">{children ? children : "플레이 리스트 정보가 없습니다."}</div>
+        <div className="playlist">
+          {children ? (
+            children
+          ) : (
+            <div className="flex items-center justify-center py-8 bg-[#f4f4f4]">플레이 리스트 정보가 없습니다.</div>
+          )}
+        </div>
 
         <div className="mt-6">{postData.content}</div>
 

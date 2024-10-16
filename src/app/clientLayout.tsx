@@ -13,7 +13,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   return (
     <>
       {showHeaderFooter && <Header />}
-      <main className={showHeaderFooter ? "pt-16" : undefined}>{children}</main>
+      <main className={showHeaderFooter ? "pt-20" : undefined}>{children}</main>
       {showHeaderFooter && <Footer />}
     </>
   );
