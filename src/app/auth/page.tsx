@@ -46,7 +46,7 @@ export default function Auth() {
 
     if (fetchError && fetchError.code !== "PGRST116") {
       console.error("기존 프로필을 가져오는 중에 오류가 발생 했습니다:", fetchError);
-      return;
+      //return;
     }
     // 기존 프로필이 업데이트 되었으면 이미지를 바로 리턴
     if (existingProfile.profile_image) {
