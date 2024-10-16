@@ -23,25 +23,17 @@ export default function SearchTrackDetail() {
     queryFn: () => getRecommendedTracks(id as string)
   });
 
-  if (isTrackLoading) {
-    return <div>로딩 중...</div>;
+  if (isTrackLoading || isRecommendedLoading) {
+    return <div className="m-4 text-center">정보를 불러오는 중입니다.</div>;
   }
 
-  if (isTrackError) {
-    return <div>곡 상세정보를 불러오지 못했습니다.</div>;
-  }
-  if (isRecommendedLoading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (isRecommendedError) {
-    return <div>추천정보를 불러오지 못했습니다.</div>;
+  if (isTrackError || isRecommendedError) {
+    return <div className="m-4 text-center">정보를 불러오지 못했습니다.</div>;
   }
 
   return (
     <div className="min-h-screen wrap mx-auto mt-32 ">
       <div>
-        {/* <h1 className="text-4xl mb-8 text-center font-semibold text-custom-blue">Now Your Pick!</h1> */}
         {track && <TrackCard track={track} showPopularity={true} isDetailPage={true} />}
         <hr className="mt-20 mb-8 border-t border-custom-blue" />
         <div className="mt-10">
