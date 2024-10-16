@@ -50,11 +50,13 @@ export default function Auth() {
     }
 
     console.log("existingProfile =>", existingProfile);
-    console.log("fetchError =>", fetchError);
     // 기존 프로필이 업데이트 되었으면 이미지를 바로 리턴
-    if (existingProfile.profile_image) {
+    if (existingProfile?.profile_image) {
       return;
     }
+
+    console.log("existingProfile.profile_image 이후 =>", fetchError);
+
     if (!!existingProfile) {
       console.log("test =>", profileData);
       const { error: updateError } = await supabase.from("profile").update(profileData).eq("id", user.id);
