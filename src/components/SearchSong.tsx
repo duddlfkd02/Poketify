@@ -40,7 +40,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
     mutationFn: (uri: string) => addPlaylist(playlistId, uri),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getPlaylistTracks", playlistId]
+        queryKey: ["songList", playlistId]
       });
       setSong("");
     }
