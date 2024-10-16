@@ -55,7 +55,7 @@ export default function Auth() {
     if (existingProfile.profile_image) {
       return;
     }
-    if (existingProfile) {
+    if (!!existingProfile) {
       console.log("test =>", profileData);
       const { error: updateError } = await supabase.from("profile").update(profileData).eq("id", user.id);
 
@@ -66,7 +66,7 @@ export default function Auth() {
       }
     } else {
       console.log("profileData =>", profileData);
-      const { error: insertError } = await supabase.from("profile").insert([profileData]);
+      const { error: insertError } = await supabase.from("profile").insert(profileData);
 
       if (insertError) {
         console.error("프로필을 삽입하는 중에 오류가 발생했습니다:", insertError);
