@@ -5,7 +5,7 @@ import RecommendPlaylist from "@/components/RecommendPlaylist";
 import SearchSong from "@/components/SearchSong";
 import SelectedPlaylist from "@/components/SelectedPlaylist";
 import SongList from "@/components/SongList";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const PlaylistPage = () => {
@@ -16,13 +16,15 @@ const PlaylistPage = () => {
     setSelectedPlaylist(id);
   };
 
+  const router = useRouter();
+
   useEffect(() => {
     const token = localStorage.getItem("provider_token");
 
     if (!token) {
-      navigation.push("/auth");
+      router.push("/auth");
     }
-  }, [navigation]);
+  }, [router]);
 
   return (
     <main className="w-full md:h-screen mx-auto flex flex-col justify-center items-center mt-8">

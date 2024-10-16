@@ -31,7 +31,6 @@ export default function Auth() {
   // 로그인 완료
   const handleLoginSuccess = async (session: Session) => {
     const { user } = session;
-    console.log("abc", user);
 
     const profileData = {
       id: user.id,
@@ -49,11 +48,15 @@ export default function Auth() {
       console.error("기존 프로필을 가져오는 중에 오류가 발생 했습니다:", fetchError);
       return;
     }
+
+    console.log("existingProfile =>", existingProfile);
+    console.log("fetchError =>", fetchError);
     // 기존 프로필이 업데이트 되었으면 이미지를 바로 리턴
     if (existingProfile.profile_image) {
       return;
     }
     if (existingProfile) {
+      console.log("test =>", profileData);
       const { error: updateError } = await supabase.from("profile").update(profileData).eq("id", user.id);
 
       if (updateError) {
@@ -62,6 +65,7 @@ export default function Auth() {
         console.log("프로필이 업데이트 되었습니다.:", profileData);
       }
     } else {
+      console.log("profileData =>", profileData);
       const { error: insertError } = await supabase.from("profile").insert([profileData]);
 
       if (insertError) {
