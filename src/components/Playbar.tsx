@@ -15,7 +15,6 @@ const Playbar: React.FC = () => {
       try {
         await playTrack(trackUri, currentPosition);
         setIsPlaying(true);
-        console.log("트랙 재생 성공");
       } catch (error) {
         console.error("트랙 재생 실패:", error);
       }

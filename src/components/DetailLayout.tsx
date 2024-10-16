@@ -30,7 +30,7 @@ const DetailLayout = ({ postData, children }: Props) => {
     }
     alert("삭제되었습니다.");
 
-    router.replace(`/community/list/1`);
+    router.replace(`/community/list`);
   };
 
   return (

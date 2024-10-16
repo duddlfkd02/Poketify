@@ -15,7 +15,7 @@ export default function FeaturedPlaylists() {
     const fetchSpotifyData = async () => {
       try {
         const featuredData: FeaturedPlaylistsResponse = await getFeaturedPlaylists();
-        console.log("Fetched Spotify Data:", featuredData);
+
         setFeaturedPlaylists(featuredData.playlists.items); // 가져온 데이터 상태에 저장
       } catch (error) {
         console.error("Error fetching featured playlists:", error);

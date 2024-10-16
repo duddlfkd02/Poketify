@@ -16,7 +16,7 @@ export default function Auth() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "spotify",
       options: {
-        redirectTo: "http://localhost:3000/auth/callback",
+        redirectTo: "https://poketify.vercel.app/",
         scopes:
           "user-read-private playlist-read-private playlist-read-collaborative playlist-modify-private playlist-modify-public user-read-playback-state user-modify-playback-state user-read-currently-playing app-remote-control streaming"
       }

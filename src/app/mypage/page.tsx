@@ -47,7 +47,6 @@ export default function MyPage() {
         setError(profileError.message);
       } else {
         setProfile(data);
-        console.log(data);
       }
       setLoading(false);
     };
@@ -111,9 +110,6 @@ export default function MyPage() {
 
         // Public URL 가져오기
         const { data: publicUrlData } = supabase.storage.from("default-image").getPublicUrl(filePath);
-
-        console.log("업로드된 이미지의 Public URL:", profileImageUrl); // URL 확인용 로그
-        console.log("Public URL:", publicUrlData?.publicUrl);
 
         if (publicUrlData?.publicUrl) {
           profileImageUrl = publicUrlData.publicUrl;

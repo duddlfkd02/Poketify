@@ -52,10 +52,6 @@ export interface PlaylistData {
   };
 }
 
-interface Artist {
-  name: string;
-}
-
 export interface SongMenu {
   id: string;
   name: string;

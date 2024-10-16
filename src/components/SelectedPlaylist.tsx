@@ -17,7 +17,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ playlistId }) => {
     queryFn: () => getPlaylist(playlistId),
     enabled: !!playlistId
   });
-  console.log(selectPlaylist);
+
   return (
     <div className="border border-solid border-custom-skyblue rounded h-full p-4">
       <h3 className="font-bold mb-4 text-[1.3rem] text-center bg-gray-200 pt-2 pb-2">현재 플레이리스트</h3>
