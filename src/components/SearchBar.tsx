@@ -27,6 +27,8 @@ export default function SearchBar() {
     } else {
       router.push(`/search?query=${query}`);
     }
+
+    setQuery("");
   };
 
   return (
