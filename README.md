@@ -6,7 +6,7 @@ Poketify는 음악 서비스를 제공해 앨범 타이틀, 아티스트 등의 
 
 ## 🚀 배포 링크
 
-- (배포 링크 추가 예정)
+[Poketify 배포 링크](https://poketify.vercel.app/)
 
 ## 👥 팀 구성 및 역할
 
@@ -31,6 +31,7 @@ Poketify는 음악 서비스를 제공해 앨범 타이틀, 아티스트 등의 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E.svg?style=for-the-badge&logo=supabase&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Spotify](https://img.shields.io/badge/Spotify-1ED760?&style=for-the-badge&logo=spotify&logoColor=white)
 
 ### 1️⃣ Main Page (지우)
 
