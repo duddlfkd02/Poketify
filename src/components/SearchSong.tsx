@@ -47,7 +47,6 @@ const SearchSong: React.FC<{ playlistId: string }> = ({ playlistId }) => {
   const handleAddTrack = (uri: string) => {
     addTrackMutation.mutate(uri);
   };
-  console.log("playlistIdplaylistIdplaylistId", playlistId);
 
   if (error) {
     return <div>곡을 찾아 오는 도중 에러가 발생했습니다.</div>;
