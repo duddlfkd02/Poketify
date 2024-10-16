@@ -36,14 +36,36 @@ export default function FeaturedPlaylists() {
   };
 
   return (
-    <div className="relative mb-8">
-      <div className="grid grid-cols-4 gap-4">
+    <div className="group relative mb-8">
+      <div className="flex items-center mb-4">
+        <h2 className="text-xl font-semibold mr-auto">플레이리스트 추천</h2>
+
+        <div className="flex w-14 md:w-20">
+          {/* 왼쪽 버튼 */}
+          {currentIndex > 0 && (
+            <button onClick={handlePrev} className="left_button">
+              <ChevronLeft strokeWidth={1} size={40} color={"#0079FF"} className="w-7 h-7 md:w-10 md:h-10" />
+            </button>
+          )}
+
+          {/* 오른쪽 버튼 */}
+          {currentIndex + itemsPerPage < featuredPlaylists.length && (
+            <button onClick={handleNext} className="right_button">
+              <ChevronRight strokeWidth={1} size={40} color={"#0079FF"} className="w-7 h-7 md:w-10 md:h-10" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {featuredPlaylists.slice(currentIndex, currentIndex + itemsPerPage).map((playlist) => (
           <div key={playlist.id} className="flex flex-col">
             <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
               <img
                 src={playlist.images[0]?.url || "/default-image.jpg"} // 이미지가 없을 경우 기본 이미지 사용
                 alt={playlist.name}
+                width={600}
+                height={600}
                 className="rounded w-full h-auto"
               />
               <p className="mt-5 text-left">{playlist.name}</p>
@@ -51,26 +73,6 @@ export default function FeaturedPlaylists() {
           </div>
         ))}
       </div>
-
-      {/* 왼쪽 화살표 버튼 */}
-      {currentIndex > 0 && (
-        <button
-          onClick={handlePrev}
-          className="absolute left-[-50px] top-1/2 transform -translate-y-1/2 opacity-0 hover:opacity-100 transition duration-300 scale-125 hover:scale-150"
-        >
-          <ChevronLeft strokeWidth={0.2} size={40} />
-        </button>
-      )}
-
-      {/* 오른쪽 화살표 버튼 */}
-      {currentIndex + itemsPerPage < featuredPlaylists.length && (
-        <button
-          onClick={handleNext}
-          className="absolute right-[-50px] top-1/2 transform -translate-y-1/2 opacity-0 hover:opacity-100 transition duration-300 scale-125 hover:scale-150"
-        >
-          <ChevronRight strokeWidth={0.2} size={40} />
-        </button>
-      )}
     </div>
   );
 }

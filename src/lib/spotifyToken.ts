@@ -91,6 +91,6 @@ export async function getTrackById(id: string): Promise<SearchTrack> {
 
 // 추천 곡 가져오기
 export async function getRecommendedTracks(id: string): Promise<SearchTrack[]> {
-  const data = await spotifyFetch(`/recommendations`, `?seed_tracks=${id}&limit=5`);
+  const data = await spotifyFetch(`/recommendations`, `?seed_tracks=${id}&limit=6`);
   return data.tracks;
 }

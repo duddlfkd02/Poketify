@@ -39,7 +39,7 @@ const DetailPlaylist = ({ postId }: Props) => {
     <>
       <div className="playlist_info flex gap-4 items-center justify-center py-6">
         <div className="thumbnail flex-shrink-0 w-1/3 md:w-1/5">
-          <img src={info?.images[0].url} alt={info?.name} className="w-full h-auto" />
+          <img src={info?.images[0].url} alt={info?.name} className="w-full h-auto rounded" />
         </div>
 
         <div className="info flex flex-col gap-3">
@@ -57,10 +57,10 @@ const DetailPlaylist = ({ postId }: Props) => {
               <Link
                 href={song.track.external_urls.spotify}
                 target="_blank"
-                className="relative flex flex-wrap md:flex-nowrap flex-shrink-0 items-center gap-2 w-1/3"
+                className="relative flex flex-wrap rounded overflow-hidden md:rounded-none md:overflow-auto md:flex-nowrap flex-shrink-0 items-center gap-2 w-1/3"
               >
                 <div className="album flex-shrink-0 w-full md:max-w-20">
-                  <img src={song.track.album.images[0].url} alt="" className="w-full h-auto" />
+                  <img src={song.track.album.images[0].url} alt="" className="w-full h-auto rounded" />
                 </div>
 
                 <div className="absolute top-0 left-0 w-full h-full p-2 text-center flex flex-col items-center justify-center gap-2 text-sm bg-[rgba(0,0,0,0.4)] text-white md:relative md:w-fit md:h-auto md:items-start md:p-0 md:text-left md:bg-transparent md:text-black">
