@@ -150,8 +150,8 @@ export default function MyPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-200">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+    <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="bg-blue-200 p-8 rounded-lg w-96 border border-blue-400">
         <div className="flex justify-center mb-4">
           {profile.profile_image ? (
             <Image
@@ -200,7 +200,7 @@ export default function MyPage() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="w-32 h-12 bg-blue-500 text-white rounded hover:bg-blue-800 transition duration-200 font-bold"
+              className="w-32 h-12 bg-custom-blue text-white rounded hover:bg-blue-800 transition duration-200 font-bold"
             >
               프로필 수정
             </button>
