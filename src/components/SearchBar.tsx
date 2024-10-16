@@ -22,9 +22,8 @@ export default function SearchBar() {
       return;
     }
 
-    if (pathname === "/search") {
-      router.push(`/search?query=${query}`);
-    }
+    router.push(`/search?query=${query}`);
+
     setQuery("");
   };
 
