@@ -5,7 +5,8 @@ import RecommendPlaylist from "@/components/RecommendPlaylist";
 import SearchSong from "@/components/SearchSong";
 import SelectedPlaylist from "@/components/SelectedPlaylist";
 import SongList from "@/components/SongList";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const PlaylistPage = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null);
@@ -14,6 +15,16 @@ const PlaylistPage = () => {
   const onPlaylistSelect = (id: string | null) => {
     setSelectedPlaylist(id);
   };
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("provider_token");
+
+    if (!token) {
+      router.push("/auth");
+    }
+  }, [router]);
 
   return (
     <main className="w-full md:h-screen mx-auto flex flex-col justify-center items-center mt-8">
