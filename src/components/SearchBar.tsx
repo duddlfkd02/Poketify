@@ -22,8 +22,9 @@ export default function SearchBar() {
       return;
     }
 
-    // 검색어를 쿼리 파라미터로 추가하여 리디렉션
     router.push(`/search?query=${query}`);
+
+    setQuery("");
   };
 
   return (
