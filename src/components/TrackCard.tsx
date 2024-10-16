@@ -40,6 +40,7 @@ export default function TrackCard({
           }`}
         />
 
+<<<<<<< HEAD
         <div
           className={`flex ${
             isRecommended ? "flex-col text-left" : `${isDetailPage ? "items-end gap-4 w-full" : "flex-col"}`
@@ -92,6 +93,23 @@ export default function TrackCard({
               <IoPlayCircleSharp size={120} className="h-auto w-16 md:w-20 lg:w-[120px]" />
             </div>
           )}
+=======
+        <div className={`flex ${isRecommended ? "flex-col text-left" : "flex-col"}`}>
+          <p
+            className={`${isRecommended ? "mt-4 text-base font-normal" : `${isDetailPage ? "text-8xl font-semibold" : "line-clamp-2 text-xl font-semibold"}`}`}
+          >
+            {track.name}
+          </p>
+          <p
+            className={`${isRecommended ? " text-sm text-gray-400" : `${isDetailPage ? "mt-4 text-3xl font-semibold text-gray-400" : "text-base text-gray-400"}`}`}
+          >
+            {track.artists.map((artist) => artist.name).join(", ")}
+          </p>
+          <p className={`${isDetailPage ? "text-3xl font-medium text-gray-300" : "text-xs text-gray-400"}`}>
+            {track.album.release_date}
+          </p>
+          {/* {showPopularity && <p className="text-sm">선호도: {track.popularity} / 100</p>} */}
+>>>>>>> bef1abd305417f8b262041c969bfb5e5f7879fe4
         </div>
       </Link>
     </div>

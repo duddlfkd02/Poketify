@@ -19,6 +19,10 @@ const config: Config = {
       fontFamily: {
         nexon: ["NEXON Lv1 Gothic OTF", "sans-serif"],
         cafe24meongi: ["Cafe24Meongi", "sans-serif"] // 커스텀 폰트 추가
+      },
+      screens: {
+        xs: { max: "375px" },
+        desktop: "1400px"
       }
     }
   },
