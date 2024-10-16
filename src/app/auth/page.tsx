@@ -48,7 +48,10 @@ export default function Auth() {
       console.error("기존 프로필을 가져오는 중에 오류가 발생 했습니다:", fetchError);
       return;
     }
-
+    // 기존 프로필이 업데이트 되었으면 이미지를 바로 리턴
+    if (existingProfile.profile_image) {
+      return;
+    }
     if (existingProfile) {
       const { error: updateError } = await supabase.from("profile").update(profileData).eq("id", user.id);
 
@@ -100,15 +103,15 @@ export default function Auth() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-blue-200">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+    <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="bg-blue-200 justify-center p-12 rounded-lg w-96 border border-blue-400">
         <h1 className="text-2xl font-semibold mb-4 text-center">Spotify 계정이 필요합니다.</h1>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
         {!session && (
           <div className="flex justify-center">
             <button
               onClick={handleSpotifyLogin}
-              className=" bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-800 transition duration-200 font-bold"
+              className="bg-custom-blue text-white py-2 px-4 rounded hover:bg-blue-800 transition duration-200 font-bold"
             >
               Spotify login
             </button>
