@@ -17,6 +17,8 @@ const initialData = {
 
 const Detail = ({ params }: { params: { id: string } }) => {
   const [detailData, setDetailData] = useState<FormType>(initialData);
+  const [hassPlaylist, setHasPlaylist] = useState<boolean>(false);
+
   useEffect(() => {
     const getDetail = async () => {
       const token = await getAccessToken();
@@ -26,16 +28,19 @@ const Detail = ({ params }: { params: { id: string } }) => {
       setDetailData(postData);
 
       const playlist = await CommunityGetPlaylist(postData.playlist_id, token);
-      if (!playlist.ok) return <DetailLayout postData={postData} />;
+
+      setHasPlaylist(playlist.ok);
     };
 
     getDetail();
   }, []);
 
-  return (
+  return hassPlaylist ? (
     <DetailLayout postData={detailData}>
       <DetailPlaylist postId={params.id} />
     </DetailLayout>
+  ) : (
+    <DetailLayout postData={detailData} />
   );
 };
 
