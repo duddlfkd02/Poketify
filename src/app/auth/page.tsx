@@ -61,7 +61,7 @@ export default function Auth() {
         console.log("프로필이 업데이트 되었습니다.:", profileData);
       }
     } else {
-      const { error: insertError } = await supabase.from("profile").insert([profileData]);
+      const { error: insertError } = await supabase.from("profile").insert(profileData);
 
       if (insertError) {
         console.error("프로필을 삽입하는 중에 오류가 발생했습니다:", insertError);
