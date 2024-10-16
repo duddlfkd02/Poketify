@@ -5,19 +5,17 @@ import Paging from "@/components/Paging";
 import WriteButton from "@/components/WriteButton";
 import { supabase } from "@/supabase/supabase";
 import { FormType } from "@/types/FormType";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const perPage: number = 20; // 한 번에 보여 줄 게시글 개수
+const perPage: number = 1; // 한 번에 보여 줄 게시글 개수
 
 type ListType = {
   data?: FormType[];
   count: number;
 };
 
-const List = () => {
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
+const List = ({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) => {
+  const page = searchParams?.page ?? "1";
 
   const [listData, setListData] = useState<ListType>({ count: 0 });
 
