@@ -5,6 +5,7 @@ import { supabase } from "@/app/api/supabaseClient";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid"; // UUID 생성 라이브러리
 import Image from "next/image";
+import { IoCamera } from "react-icons/io5";
 
 export default function MyPage() {
   const router = useRouter();
@@ -146,16 +147,17 @@ export default function MyPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white">
-      <div className="bg-blue-200 p-8 rounded-lg w-96 border border-blue-400">
-        <div className="flex justify-center mb-4">
+    <div className="flex justify-center wrap mx-auto mt-32">
+      <div className="flex flex-col items-center">
+        <div className=" mb-7 relative">
+          {/* 프로필 이미지 */}
           {profile.profile_image ? (
             <Image
               src={profile.profile_image}
               alt="Profile Image"
               width={200}
               height={200}
-              className="rounded-full"
+              className="rounded-full border-custom-skyblue border-4"
               priority
               unoptimized={true}
             />
@@ -165,40 +167,37 @@ export default function MyPage() {
               alt="Default Profile Image"
               width={200}
               height={200}
-              className="rounded-full"
+              className="rounded-full border-custom-blue border-4"
               priority
             />
           )}
-        </div>
-        <div className="flex justify-center mb-4">
-          <input type="file" accept="image/*" onChange={handleFileChange} id="file-upload" className="hidden" />
           <label
             htmlFor="file-upload"
-            className="cursor-pointer bg-gray-400 text-white rounded-md py-2 px-4 hover:bg-gray-600 transition duration-200 font-bold"
+            className="absolute bottom-0 right-0 mb-3 mr-2 cursor-pointer text-white bg-custom-blue rounded-full p-2 transition duration-200"
           >
-            이미지 업로드
+            <IoCamera size={23} />
           </label>
+          <input type="file" accept="image/*" onChange={handleFileChange} id="file-upload" className="hidden" />
         </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
+
+        <form onSubmit={handleSubmit} className="space-y-4 w-full">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              이름
-              <input
-                type="text"
-                name="display_name"
-                value={profile.display_name}
-                onChange={handleChange}
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-500"
-              />
-            </label>
+            <label className="block text-lg font-medium">닉네임 변경</label>
+            <input
+              type="text"
+              name="display_name"
+              value={profile.display_name}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-96 p-3 border border-gray-300 rounded-md  focus:ring focus:ring-blue-500"
+            />
           </div>
           <div className="flex justify-center">
             <button
               type="submit"
-              className="w-32 h-12 bg-custom-blue text-white rounded hover:bg-blue-800 transition duration-200 font-bold"
+              className="w-full h-12 bg-custom-skyblue text-white rounded hover:bg-custom-blue transition duration-200 font-bold"
             >
-              프로필 수정
+              변경하기
             </button>
           </div>
           {error && <p className="text-red-500 text-center">{error}</p>}

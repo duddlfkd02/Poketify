@@ -30,7 +30,7 @@ export default function TrackCard({
           className={`${isRecommended ? "rounded w-full h-auto" : `${isDetailPage ? " flex-shrink-0 w-80 rounded h-fit" : "w-24 rounded h-fit"}`}`}
         />
 
-        <div className={`flex ${isRecommended ? "flex-col text-left" : "flex-col"} ${isDetailPage ? "mt-36 " : ""}`}>
+        <div className={`flex ${isRecommended ? "flex-col text-left" : "flex-col"}`}>
           <p
             className={`${isRecommended ? "mt-4 text-base font-normal" : `${isDetailPage ? "text-8xl font-semibold" : "line-clamp-2 text-xl font-semibold"}`}`}
           >
