@@ -12,8 +12,8 @@ interface TrackStore {
 export const useTrackStore = create<TrackStore>((set) => ({
   trackUri: null,
   isPlaying: false,
-  currentPosition: 0, // 현재 위치 상태 추가
+  currentPosition: 0,
   setTrackUri: (uri) => set({ trackUri: uri }),
   setIsPlaying: (isPlaying) => set({ isPlaying }),
-  setCurrentPosition: (position) => set({ currentPosition: position }) // 위치 설정
+  setCurrentPosition: (position) => set({ currentPosition: position })
 }));

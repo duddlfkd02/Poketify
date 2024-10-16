@@ -23,7 +23,7 @@ const useThrottle = <T,>(value: T, limit: number): T => {
   return throttledValue;
 };
 
-const SearchSong: React.FC<{ playlistId: string }> = ({ playlistId }) => {
+const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => {
   const [song, setSong] = useState<string>("");
   const throttledSong = useThrottle(song, 300);
   const queryClient = useQueryClient();
@@ -39,7 +39,9 @@ const SearchSong: React.FC<{ playlistId: string }> = ({ playlistId }) => {
   const addTrackMutation = useMutation({
     mutationFn: (uri: string) => addPlaylist(playlistId, uri),
     onSuccess: () => {
-      queryClient.invalidateQueries(["getPlaylistTracks", playlistId]);
+      queryClient.invalidateQueries({
+        queryKey: ["getPlaylistTracks", playlistId]
+      });
       setSong("");
     }
   });
