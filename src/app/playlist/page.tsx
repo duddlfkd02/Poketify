@@ -16,7 +16,7 @@ const PlaylistPage = () => {
 
   return (
     <main className="wrap">
-      <section className="flex flex-col md:flex-row gap-16 md:gap-6">
+      <section className="flex flex-col md:flex-row gap-16 md:gap-16">
         <article className="flex flex-col flex-shrink-0 md:w-5/12">
           <SelectedPlaylist playlistId={selectedPlaylist} />
 
