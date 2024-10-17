@@ -36,6 +36,7 @@ const SelectedPlaylist: React.FC<SelectedPlaylistProps> = ({ playlistId }) => {
                 alt={selectPlaylist.name}
                 width={130}
                 height={130}
+                unoptimized
                 className="h-auto rounded"
               />
             )}

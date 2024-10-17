@@ -15,7 +15,14 @@ const PlaylistCard = ({ playlist }: PlaylistCardProps) => {
     <div className="flex flex-col gap-2">
       <div className="max-w-[130px]  rounded">
         {playlist.images && playlist.images.length > 0 && (
-          <Image src={playlist.images[0].url} alt={playlist.name} width={130} height={130} style={{ height: "auto" }} />
+          <Image
+            src={playlist.images[0].url}
+            alt={playlist.name}
+            width={130}
+            height={130}
+            style={{ height: "auto" }}
+            unoptimized
+          />
         )}
       </div>
       <p className=" text-sm max-w-[130px] font-semibold">{playlist.name}</p>
