@@ -57,41 +57,38 @@ const MyPlaylist = ({ onPlaylistSelect }: MyPlaylistProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-4 border border-solid border-custom-skyblue p-4 rounded min-h-full relative">
-      <h3 className="font-bold text-playlist-h3 text-left text-[1.3rem] ">내 플레이리스트</h3>
+    <div className="w-full flex flex-col gap-6">
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="text-left text-2xl md:text-3xl font-bold ">내 플레이리스트</h3>
 
-      <div>
-        <button onClick={handlePrevPage} disabled={offset === 0} className="absolute top-1/2 l-5">
-          <IoMdArrowDropleft size={30} />
-        </button>
-
-        <div className="flex gap-4 overflow-hidden w-full justify-center">
-          <ul className="w-[90%] list-none flex justify-center gap-4">
-            {isLoading && (
-              <li className="flex justify-center items-center w-full h-[100px] text-lg font-bold">Loading...</li>
-            )}
-            {error && (
-              <li className="flex justify-center items-center w-full h-[100px] text-lg font-bold">
-                로그인 후 사용가능합니다
-              </li>
-            )}
-            {myplaylist && Array.isArray(myplaylist.items) && myplaylist.items.length === 0 && (
-              <li className="flex justify-center items-center w-full h-[100px] text-lg font-bold">
-                playlist가 없습니다
-              </li>
-            )}
-            {myplaylist?.items?.map((playlist) => (
-              <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer ">
-                <PlaylistCard playlist={playlist} />
-              </li>
-            ))}
-          </ul>
+        <div className="flex gap-2">
+          <button onClick={handlePrevPage} disabled={offset === 0}>
+            <IoMdArrowDropleft size={30} />
+          </button>
+          <button onClick={handleNextPage}>
+            <IoMdArrowDropright size={30} />
+          </button>
         </div>
-
-        <button onClick={handleNextPage} className="absolute top-1/2 right-5">
-          <IoMdArrowDropright size={30} />
-        </button>
       </div>
+
+      <ul className=" list-none flex  gap-4">
+        {isLoading && (
+          <li className="flex justify-center items-center w-full h-[100px] text-lg font-bold">Loading...</li>
+        )}
+        {error && (
+          <li className="flex justify-center items-center w-full h-[100px] text-lg font-bold">
+            로그인 후 사용가능합니다
+          </li>
+        )}
+        {myplaylist && Array.isArray(myplaylist.items) && myplaylist.items.length === 0 && (
+          <li className="flex justify-center items-center w-full h-[100px] text-lg font-bold">playlist가 없습니다</li>
+        )}
+        {myplaylist?.items?.map((playlist) => (
+          <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer ">
+            <PlaylistCard playlist={playlist} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

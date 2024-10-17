@@ -105,7 +105,7 @@ export default function Auth() {
   }
 
   return (
-    <div className="flex justify-center wrap mx-auto mt-32">
+    <div className="flex justify-center wrap mx-auto my-auto">
       <div>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
         {!session && (

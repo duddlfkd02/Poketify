@@ -21,7 +21,11 @@ const CommentList = ({ postId }: Props) => {
   const [commentList, setCommentList] = useState<CommentListType>({ data: null, count: 0 });
 
   const getCommentList = async () => {
-    const { data, count } = await browserClient.from("comment").select("*", { count: "exact" }).eq("post_id", postId);
+    const { data, count } = await browserClient
+      .from("comment")
+      .select("*", { count: "exact" })
+      .order("created_at", { ascending: true })
+      .eq("post_id", postId);
 
     setCommentList({
       data: data!,

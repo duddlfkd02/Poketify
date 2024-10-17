@@ -55,8 +55,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
   }
 
   return (
-    <div className="relative flex flex-col gap-4 pt-4 border border-solid border-custom-blue p-4 rounded h-full ">
-      <h3 className="font-bold text-[1.3rem] text-center bg-gray-200 pt-2 pb-2">곡을 찾아서 재생목록에 추가하세요</h3>
+    <div className="relative flex items-center">
       <input
         type="search"
         placeholder="곡을 입력해주세요"
@@ -65,7 +64,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
         className="w-full h-[2.5rem] p-2 focus:outline-none border border-solid border-custom-blue rounded pl-4 mx-auto"
       />
       {throttledSong && (
-        <div className="absolute top-24 left-4 bg-white border mt-2 p-4 w-[calc(100%-2rem)] z-10">
+        <div className="absolute top-12 left-4 bg-white border mt-2 p-4 w-[calc(100%-2rem)] z-10">
           <ul className="flex flex-col max-h-[29rem] overflow-y-auto">
             {searchResult.length > 0 ? (
               searchResult.map((result) => (

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <>
       <FixedBtn />
-      <footer className="px-6 py-5 md:px-3 md:py-5 mt-auto bg-custom-blue min-h-[150px] flex flex-col justify-center">
+      <footer className="px-6 py-5 md:px-3 md:py-5 bg-custom-blue min-h-[150px] flex flex-col justify-center">
         <div className="container mx-auto flex justify-between items-center">
           <p className="text-sm text-white">© Copyright 2024 poketify. All rights reserved</p>
         </div>

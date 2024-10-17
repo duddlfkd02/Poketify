@@ -147,20 +147,22 @@ export default function MyPage() {
   }
 
   return (
-    <div className="flex justify-center wrap mx-auto mt-32">
-      <div className="flex flex-col items-center">
+    <div className="flex justify-center wrap mx-auto my-auto">
+      <div className="flex flex-col items-center w-full">
         <div className=" mb-7 relative">
           {/* 프로필 이미지 */}
           {profile.profile_image ? (
-            <Image
-              src={profile.profile_image}
-              alt="Profile Image"
-              width={200}
-              height={200}
-              className="rounded-full border-custom-skyblue border-4"
-              priority
-              unoptimized={true}
-            />
+            <div className="flex items-center justify-center w-[200px] h-[200px] rounded-full border-custom-skyblue border-4 overflow-hidden">
+              <Image
+                src={profile.profile_image}
+                alt="Profile Image"
+                width={200}
+                height={200}
+                className="min-w-full min-h-full object-cover"
+                priority
+                unoptimized={true}
+              />
+            </div>
           ) : (
             <Image
               src={defaultImageUrl}
@@ -180,7 +182,7 @@ export default function MyPage() {
           <input type="file" accept="image/*" onChange={handleFileChange} id="file-upload" className="hidden" />
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 w-full">
+        <form onSubmit={handleSubmit} className="space-y-4 w-[92%] max-w-96">
           <div>
             <label className="block text-lg font-medium">닉네임 변경</label>
             <input
@@ -189,7 +191,7 @@ export default function MyPage() {
               value={profile.display_name}
               onChange={handleChange}
               required
-              className="mt-1 block w-96 p-3 border border-gray-300 rounded-md  focus:ring focus:ring-blue-500"
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md  focus:ring focus:ring-blue-500"
             />
           </div>
           <div className="flex justify-center">

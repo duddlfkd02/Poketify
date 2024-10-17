@@ -17,6 +17,7 @@ const config: Config = {
         "custom-lightyellow": "#FFF5B7"
       },
       fontFamily: {
+        nexon: ["NEXON Lv1 Gothic OTF", "sans-serif"],
         cafe24meongi: ["Cafe24Meongi", "sans-serif"] // 커스텀 폰트 추가
       },
       screens: {

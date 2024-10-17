@@ -4,8 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { PlaylistData } from "@/types/playlist";
 import { useTrackStore } from "@/store/useTrackStore";
-import { FaPlay } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoPlayCircleSharp } from "react-icons/io5";
 
 interface SongListProps {
   playlistId: string | null;
@@ -55,53 +54,52 @@ const SongList = ({ playlistId }: SongListProps) => {
   };
 
   return (
-    <div className="bg-blue-100 rounded p-4 h-[85vh]">
-      <h3 className="text-center font-extrabold text-[1.5rem] mb-4 border-2 border-solid border-r-0 border-t-0 border-l-0 pb-4">
-        TRACK LIST
-      </h3>
-      <ul className="h-[70vh] max-h-[70vh] overflow-y-auto">
-        {isLoading && <li className="flex justify-center items-center h-full text-lg font-bold">Loading...</li>}
-        {error && (
-          <li className="flex justify-center items-center h-full text-lg font-bold">
-            곡 목록을 불러오는 데 실패했습니다.
-          </li>
-        )}
-        {playlistData && playlistData.tracks.items.length === 0 && (
-          <li className="flex justify-center items-center h-full text-lg font-bold">재생목록이 비어있습니다.</li>
-        )}
-        {playlistData &&
-          playlistData.tracks.items.map((song) => (
-            <li
-              key={song.track.id}
-              className="flex items-center space-x-4 mb-2 relative border border-solid p-2 border-gray-400"
-              onMouseEnter={() => setHoveredTrackId(song.track.id)}
-              onMouseLeave={() => setHoveredTrackId(null)}
-            >
-              <Image
-                src={song.track.album.images[0]?.url}
-                alt={song.track.name}
-                width={80}
-                height={80}
-                className="rounded"
-              />
-              <div className="h-full flex flex-col gap-2 w-[50%]  pt-4 pb-4">
-                <p className="font-bold">{song.track.name}</p>
-                <p>{song.track.artists.map((artist) => artist.name).join(", ")}</p>
-              </div>
-              <button className="cursor-pointer" onClick={() => handlePlayTrack(song.track.uri)}>
-                <FaPlay />
+    <ul
+      className={`max-h-[33vh] md:max-h-[55vh] overflow-y-auto mt-4 ${
+        playlistData && "border-2 border-solid border-custom-blue rounded p-2"
+      }`}
+    >
+      {isLoading && <li className="flex justify-center items-center h-full text-lg font-bold">Loading...</li>}
+      {error && (
+        <li className="flex justify-center items-center h-full text-lg font-bold">
+          곡 목록을 불러오는 데 실패했습니다.
+        </li>
+      )}
+      {playlistData && playlistData.tracks.items.length === 0 && (
+        <li className="flex justify-center items-center h-full text-lg font-bold">재생목록이 비어있습니다.</li>
+      )}
+      {playlistData &&
+        playlistData.tracks.items.map((song) => (
+          <li
+            key={song.track.id}
+            className="flex items-center gap-4 mb-2 relative border border-solid py-3 px-4 border-gray-400"
+            onMouseEnter={() => setHoveredTrackId(song.track.id)}
+            onMouseLeave={() => setHoveredTrackId(null)}
+          >
+            <Image
+              src={song.track.album.images[0]?.url}
+              alt={song.track.name}
+              width={80}
+              height={80}
+              className="rounded"
+            />
+
+            <div className="h-full flex flex-col gap-2 w-[50%] mr-auto pt-4 pb-4">
+              <p className="font-bold">{song.track.name}</p>
+              <p>{song.track.artists.map((artist) => artist.name).join(", ")}</p>
+            </div>
+
+            <button className="cursor-pointer" onClick={() => handlePlayTrack(song.track.uri)}>
+              <IoPlayCircleSharp size={40} className="fill-custom-blue" />
+            </button>
+            {hoveredTrackId === song.track.id && (
+              <button className="absolute right-2 top-2  text-sm" onClick={() => handleRemoveTrack(song.track.uri)}>
+                <IoClose size={20} />
               </button>
-              {hoveredTrackId === song.track.id && (
-                <div className="flex flex-col">
-                  <button className="absolute right-2 top-2  text-sm" onClick={() => handleRemoveTrack(song.track.uri)}>
-                    <IoClose size={20} />
-                  </button>
-                </div>
-              )}
-            </li>
-          ))}
-      </ul>
-    </div>
+            )}
+          </li>
+        ))}
+    </ul>
   );
 };
 
