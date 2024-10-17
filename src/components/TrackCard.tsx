@@ -33,6 +33,7 @@ export default function TrackCard({
           alt={track.name}
           width={600}
           height={600}
+          unoptimized
           className={`${
             isRecommended
               ? "rounded w-full h-auto"
