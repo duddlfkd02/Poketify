@@ -54,55 +54,59 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full p-4 shadow-md bg-white z-50">
-      <div className="relative   w-[98%] mx-auto flex flex-col gap-4">
-        <div className="flex justify-between md:justify-end items-start">
-          <Link
-            href="/main"
-            className="md:absolute md:top-1/2 md:left-0 md:-translate-y-1/2 text-4xl font-medium font-cafe24meongi text-custom-blue"
-          >
-            poketify
-          </Link>
+    <>
+      <header className="fixed top-0 left-0 w-full p-4 shadow-md bg-white z-50">
+        <div className="relative   w-[98%] mx-auto flex flex-col gap-4">
+          <div className="flex justify-between gap-2 md:justify-end items-start">
+            <Link
+              href="/main"
+              className="md:absolute md:top-1/2 md:left-0 md:-translate-y-1/2 text-4xl font-medium font-cafe24meongi text-custom-blue"
+            >
+              poketify
+            </Link>
 
-          <SearchBar />
-        </div>
+            <SearchBar />
+          </div>
 
-        <nav className="ml-auto">
-          <ul className="flex space-x-6">
-            <li>
-              <Link href={"/community/list"} className="nexon hover:text-custom-blue">
-                Community
-              </Link>
-            </li>
-            {session ? (
-              <>
-                <li>
-                  <Link href="/playlist" className="nexon hover:text-custom-blue">
-                    Playlist
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/mypage" className="nexon hover:text-custom-blue">
-                    My Page
-                  </Link>
-                </li>
-                <li>
-                  <button onClick={handleLogout} className="nexon hover:text-custom-blue">
-                    Logout
-                  </button>
-                </li>
-              </>
-            ) : (
+          <nav className="ml-auto">
+            <ul className="flex space-x-6">
               <li>
-                <Link href="/auth" className="nexon hover:text-custom-blue">
-                  Login
+                <Link href={"/community/list"} className="nexon hover:text-custom-blue">
+                  Community
                 </Link>
               </li>
-            )}
-          </ul>
-        </nav>
-      </div>
-    </header>
+              {session ? (
+                <>
+                  <li>
+                    <Link href="/playlist" className="nexon hover:text-custom-blue">
+                      Playlist
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/mypage" className="nexon hover:text-custom-blue">
+                      My Page
+                    </Link>
+                  </li>
+                  <li>
+                    <button onClick={handleLogout} className="nexon hover:text-custom-blue">
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link href="/auth" className="nexon hover:text-custom-blue">
+                    Login
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <div className="header_blank h-[105px]"></div>
+    </>
   );
 };
 

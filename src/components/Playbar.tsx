@@ -1,7 +1,7 @@
 import { useTrackStore } from "@/store/useTrackStore";
 import { pauseTrack, playTrack } from "@/utils/playlistApi";
 import React, { useState } from "react";
-import { FaPlay, FaPause } from "react-icons/fa";
+import { IoPauseCircleSharp, IoPlayCircleSharp } from "react-icons/io5";
 
 const Playbar: React.FC = () => {
   const trackUri = useTrackStore((state) => state.trackUri);
@@ -33,14 +33,14 @@ const Playbar: React.FC = () => {
   };
 
   return (
-    <div className="bg-pink-200 p-4 mx-auto flex gap-4 justify-center">
+    <div className="">
       {isPlaying ? (
         <button onClick={handlePause}>
-          <FaPause />
+          <IoPauseCircleSharp size={40} className="fill-custom-blue" />
         </button>
       ) : (
         <button onClick={handlePlay}>
-          <FaPlay />
+          <IoPlayCircleSharp size={40} className="fill-custom-blue" />
         </button>
       )}
     </div>

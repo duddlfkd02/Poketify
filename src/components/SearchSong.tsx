@@ -55,8 +55,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
   }
 
   return (
-    <div className="relative flex flex-col gap-4 pt-4 border border-solid border-custom-blue p-4 rounded h-full ">
-      <h3 className="font-bold text-[1.3rem] text-center bg-gray-200 pt-2 pb-2">곡을 찾아서 재생목록에 추가하세요</h3>
+    <div className="flex items-center">
       <input
         type="search"
         placeholder="곡을 입력해주세요"

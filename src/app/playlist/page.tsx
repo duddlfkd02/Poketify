@@ -2,7 +2,6 @@
 
 import MyPlaylist from "@/components/MyPlaylist";
 import RecommendPlaylist from "@/components/RecommendPlaylist";
-import SearchSong from "@/components/SearchSong";
 import SelectedPlaylist from "@/components/SelectedPlaylist";
 import SongList from "@/components/SongList";
 import { useState } from "react";
@@ -16,27 +15,18 @@ const PlaylistPage = () => {
   };
 
   return (
-    <main className="w-full md:h-screen mx-auto flex flex-col justify-center items-center mt-8">
-      <section className="w-full md:w-[95%] mx-auto flex flex-col md:flex-row">
-        <article className="w-full md:w-[30%] bg-white p-7 flex-grow min-h-[700px]">
+    <main className="wrap">
+      <section className="flex flex-col md:flex-row gap-16 md:gap-6">
+        <article className="flex flex-col flex-shrink-0 md:w-5/12">
+          <SelectedPlaylist playlistId={selectedPlaylist} />
+
           <SongList playlistId={selectedPlaylist} />
         </article>
 
-        <article className="w-full md:w-[70%] min-h-[80vh] bg-white p-7 flex flex-col justify-between flex-grow gap-3">
-          <div className="flex-1 flex gap-3">
-            <div className="flex-1">
-              <SearchSong playlistId={selectedPlaylist} />
-            </div>
-            <div className="flex-1">
-              <SelectedPlaylist playlistId={selectedPlaylist} />
-            </div>
-          </div>
-          <div className="flex-1">
-            <MyPlaylist onPlaylistSelect={onPlaylistSelect} />
-          </div>
-          <div className="flex-1">
-            <RecommendPlaylist onPlaylistSelect={onPlaylistSelect} />
-          </div>
+        <article className="flex-1 flex flex-col gap-14 md:gap-9">
+          <MyPlaylist onPlaylistSelect={onPlaylistSelect} />
+
+          <RecommendPlaylist onPlaylistSelect={onPlaylistSelect} />
         </article>
       </section>
     </main>

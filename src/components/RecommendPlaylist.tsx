@@ -56,34 +56,35 @@ const RecommendPlaylist = ({ onPlaylistSelect }: RecommendPlaylistProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-between gap-4 pt-4 border border-solid border-custom-skyblue  p-4  min-h-full relative">
-      <h3 className="font-bold text-left text-[1.3rem]">추천 플레이리스트</h3>
-      <div className="min-h-[90%]">
-        <button onClick={handlePrevPage} disabled={offset === 0} className="absolute top-1/2 left-5">
-          <IoMdArrowDropleft size={30} />
-        </button>
-        <div className="flex gap-4 overflow-hidden w-full justify-center ">
-          <ul className="w-[30%] flex list-none gap-4 items-center justify-center ">
-            {isLoading && (
-              <li className="flex justify-center items-center w-full text-lg font-bold min-h-[130px]">Loading...</li>
-            )}
-            {error && (
-              <li className="flex justify-center items-center w-full text-lg font-bold min-h-[130px]">
-                플레이리스트를 불러오는 데 실패했습니다. 다시 시도해 주세요.
-              </li>
-            )}
-            {playlists &&
-              playlists.items.map((playlist) => (
-                <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="cursor-pointer">
-                  <PlaylistCard playlist={playlist} />
-                </li>
-              ))}
-          </ul>
+    <div className="w-full flex flex-col gap-6">
+      <div className="flex items-center justify-between mb-5">
+        <h3 className="text-left text-2xl md:text-3xl font-bold">추천 플레이리스트</h3>
+        <div className="flex gap-2">
+          <button onClick={handlePrevPage} disabled={offset === 0} className="">
+            <IoMdArrowDropleft size={30} />
+          </button>
+          <button onClick={handleNextPage} className="">
+            <IoMdArrowDropright size={30} />
+          </button>
         </div>
-        <button onClick={handleNextPage} className="absolute top-1/2 right-5">
-          <IoMdArrowDropright size={30} />
-        </button>
       </div>
+
+      <ul className="flex  list-none gap-4">
+        {isLoading && (
+          <li className="flex justify-center items-center w-full text-lg font-bold min-h-[130px]">Loading...</li>
+        )}
+        {error && (
+          <li className="flex justify-center items-center w-full text-lg font-bold min-h-[130px]">
+            플레이리스트를 불러오는 데 실패했습니다. 다시 시도해 주세요.
+          </li>
+        )}
+        {playlists &&
+          playlists.items.map((playlist) => (
+            <li key={playlist.id} onClick={() => onPlaylistSelect(playlist.id)} className="flex-1 cursor-pointer">
+              <PlaylistCard playlist={playlist} />
+            </li>
+          ))}
+      </ul>
     </div>
   );
 };

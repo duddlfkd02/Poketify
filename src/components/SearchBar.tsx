@@ -28,8 +28,8 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={handleSearch}>
-      <div className="relative w-full max-w-md">
+    <form onSubmit={handleSearch} className="w-1/2 md:w-auto">
+      <div className="relative w-full">
         <button
           type="submit"
           className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 "
@@ -37,12 +37,13 @@ export default function SearchBar() {
         >
           <Search strokeWidth={2} size={20} className="h-auto text-custom-blue " />
         </button>
+
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="곡 이름이나 아티스트를 검색하세요"
-          className="w-40 md:w-80 lg:w-96 py-2 px-4 pl-12 text-sm border-solid border border-custom-skyblue rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue transition duration-300"
+          className="w-full md:w-80 lg:w-96 py-2 px-4 pl-8 md:pl-12 text-sm border-solid border border-custom-skyblue rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-custom-blue transition duration-300"
         />
       </div>
     </form>
