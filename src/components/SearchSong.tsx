@@ -72,7 +72,7 @@ const SearchSong: React.FC<{ playlistId: string | null }> = ({ playlistId }) => 
                   key={result.id}
                   className="flex items-center gap-5 relative mb-4 h-full border border-solid border-custom-skyblue p-2 rounded"
                 >
-                  <Image src={result.album.images[0].url} alt={result.name} width={50} height={50} />
+                  <Image src={result.album.images[0].url} alt={result.name} width={50} height={50} unoptimized />
                   <div className="w-[60%]">
                     <p className="font-semibold mb-2">{result.name}</p>
                     <p>{result.artists.map((artist) => artist.name).join(", ")}</p>

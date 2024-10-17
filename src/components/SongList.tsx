@@ -81,6 +81,7 @@ const SongList = ({ playlistId }: SongListProps) => {
               alt={song.track.name}
               width={80}
               height={80}
+              unoptimized
               className="rounded"
             />
 
